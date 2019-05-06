@@ -1,0 +1,28 @@
+{
+  "name": "cosmosjs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint-fix": "tslint -c tslint.json -p tsconfig.json --fix"
+  },
+  "keywords": [],
+  "author": "Thunnini",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "big-integer": "^1.6.43"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.13.2",
+    "mocha": "^6.1.4",
+    "node-fetch": "^2.5.0",
+    "ts-node": "^8.1.0",
+    "tslint": "^5.15.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.4.2"
+  }
+}
