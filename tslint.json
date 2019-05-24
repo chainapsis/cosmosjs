@@ -1,13 +1,15 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint-config-airbnb"
-    ],
-    "jsRules": {},
-    "rules": {
-        "semicolon": false,
-        "max-line-length": false,
-        "object-shorthand-properties-first": false
-    },
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "prettier": true,
+    "no-unused-variable": true,
+    "interface-name": false,
+    "object-literal-sort-keys": false
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"]
 }
