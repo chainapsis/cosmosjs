@@ -12,14 +12,18 @@ describe("Test wallet", () => {
         return crypto.randomBytes(array.length);
       }
     );
-    assert.equal(mnemonic.split(" ").length, 24);
+    assert.equal(
+      mnemonic.split(" ").length,
+      24,
+      "should generate 24 words by default"
+    );
 
     const recovered = Wallet.generateWalletFromMnemonic(mnemonic);
-    assert.equal(recovered.privateKey.toString(), wallet.privateKey.toString());
-    assert.equal(recovered.publicKey.toString(), wallet.publicKey.toString());
+    assert.equal(recovered.privKey.toString(), wallet.privKey.toString());
+    assert.equal(recovered.pubKey.toString(), wallet.pubKey.toString());
     assert.equal(
-      Wallet.publicToBech32Address(recovered.publicKey, "cosmos"),
-      Wallet.publicToBech32Address(wallet.publicKey, "cosmos")
+      recovered.pubKey.toAddress().toBech32("cosmos"),
+      wallet.pubKey.toAddress().toBech32("cosmos")
     );
   });
 
@@ -30,7 +34,7 @@ describe("Test wallet", () => {
     );
 
     assert.equal(
-      Wallet.publicToBech32Address(wallet.publicKey, "cosmos"),
+      wallet.pubKey.toAddress().toBech32("cosmos"),
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );
   });

@@ -2,12 +2,9 @@
 const bip39 = require("bip39");
 // tslint:disable-next-line:no-var-requires
 const bip32 = require("bip32");
-import bech32 from "bech32";
 // tslint:disable-next-line:no-submodule-imports
 import { Buffer } from "buffer/";
-import ripemd160 from "ripemd160";
-import secp256k1 from "secp256k1";
-import { sha256 } from "sha.js";
+import { PrivKey, PrivKeySecp256k1, PubKey } from "../crypto";
 
 export type RNG = <
   T extends
@@ -27,8 +24,8 @@ export type RNG = <
 ) => T;
 
 interface Wallet {
-  publicKey: Uint8Array;
-  privateKey: Uint8Array;
+  pubKey: PubKey;
+  privKey: PrivKey;
 }
 
 export function generateWallet(
@@ -61,11 +58,12 @@ export function generateWalletFromMnemonic(
   if (!privateKey) {
     throw new Error("null hd key");
   }
-  const publicKey = secp256k1.publicKeyCreate(privateKey, true);
+  const privKey = new PrivKeySecp256k1(privateKey);
+  const pubKey = privKey.toPubKey();
 
   return {
-    publicKey,
-    privateKey
+    pubKey,
+    privKey
   };
 }
 
@@ -76,20 +74,4 @@ export function generateSeed(rng: RNG, strength: number = 128): string {
   let bytes = new Uint8Array(strength / 8);
   bytes = rng(bytes);
   return bip39.entropyToMnemonic(Buffer.from(bytes).toString("hex"));
-}
-
-export function publicToAddress(publicKey: Uint8Array): Uint8Array {
-  let hash = new sha256().update(publicKey).digest("latin1");
-  hash = new ripemd160().update(hash, "latin1").digest("hex");
-
-  return Buffer.from(hash, "hex");
-}
-
-export function publicToBech32Address(
-  publicKey: Uint8Array,
-  prefix: string
-): string {
-  const address = publicToAddress(publicKey);
-  const words = bech32.toWords(Buffer.from(address) as any);
-  return bech32.encode(prefix, words);
 }
