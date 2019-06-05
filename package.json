@@ -11,7 +11,10 @@
     "prettier": "find ./src -type f | xargs prettier --check",
     "prettier-write": "find ./src -type f | xargs prettier --write"
   },
-  "pre-commit": ["lint", "prettier"],
+  "pre-commit": [
+    "lint",
+    "prettier"
+  ],
   "keywords": [],
   "author": "Thunnini",
   "license": "Apache-2.0",
@@ -23,7 +26,8 @@
     "buffer": "^5.2.1",
     "ripemd160": "^2.0.2",
     "secp256k1": "^3.7.0",
-    "sha.js": "^2.4.11"
+    "sha.js": "^2.4.11",
+    "ts-amino": "git+https://github.com/Thunnini/ts-amino.git#ac0cefc"
   },
   "devDependencies": {
     "@types/bech32": "^1.1.1",
