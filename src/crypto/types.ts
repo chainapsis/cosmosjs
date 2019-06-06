@@ -4,6 +4,14 @@ import bech32 from "bech32";
 
 @DefineType()
 export class Address {
+  public static fromBech32(prefix: string, bech32Addr: string): Address {
+    const { prefix: b32Prefix, words } = bech32.decode(bech32Addr);
+    if (b32Prefix !== prefix) {
+      throw new Error("Prefix doesn't match");
+    }
+    return new Address(bech32.fromWords(words));
+  }
+
   @Field.Array(0, { type: Type.Uint8 })
   private address: Uint8Array;
 
