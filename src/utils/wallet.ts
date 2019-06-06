@@ -2,7 +2,6 @@
 const bip39 = require("bip39");
 // tslint:disable-next-line:no-var-requires
 const bip32 = require("bip32");
-// tslint:disable-next-line:no-submodule-imports
 import { Buffer } from "buffer/";
 import { PrivKey, PrivKeySecp256k1, PubKey } from "../crypto";
 

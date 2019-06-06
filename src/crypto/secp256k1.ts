@@ -1,13 +1,10 @@
 import { Amino, Type } from "ts-amino";
 const { Field, DefineType, Concrete, marshalBinaryBare } = Amino;
-// tslint:disable-next-line: no-submodule-imports
 import { Buffer } from "buffer/";
 import ripemd160 from "ripemd160";
 import secp256k1 from "secp256k1";
 import { sha256 } from "sha.js";
 import { Address, PrivKey, PubKey } from "./types";
-
-// tslint:disable: max-classes-per-file
 
 @Concrete("tendermint/PrivKeySecp256k1")
 @DefineType()
