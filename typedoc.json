@@ -1,0 +1,7 @@
+{
+  "out": "docs",
+  "excludeNotExported": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "exclude": "**/*+(index|.spec|.e2e).ts"
+}
