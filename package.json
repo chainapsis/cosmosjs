@@ -28,7 +28,7 @@
     "ripemd160": "^2.0.2",
     "secp256k1": "^3.7.0",
     "sha.js": "^2.4.11",
-    "ts-amino": "git+https://github.com/Thunnini/ts-amino.git#15ff0f9"
+    "ts-amino": "git+https://github.com/Thunnini/ts-amino.git#2fa81ed"
   },
   "devDependencies": {
     "@types/bech32": "^1.1.1",

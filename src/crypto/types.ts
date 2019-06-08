@@ -23,6 +23,10 @@ export class Address {
     const words = bech32.toWords(Buffer.from(this.address) as any);
     return bech32.encode(prefix, words);
   }
+
+  public toBytes(): Uint8Array {
+    return this.address;
+  }
 }
 
 export interface PubKey {
