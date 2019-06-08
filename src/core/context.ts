@@ -1,6 +1,8 @@
 import { TxEncoder } from "./tx";
 import { AxiosInstance } from "axios";
 import { TxBuilder } from "./txBuilder";
+import { Bech32Config } from "./bech32Config";
+import { WalletProvider } from "./walletProvider";
 
 export class ImmutableContext<T> {
   constructor(private context: T) {}
@@ -18,6 +20,8 @@ export interface IContext {
   chainId: string;
   txEncoder: TxEncoder;
   txBuilder: TxBuilder;
+  bech32Config: Bech32Config;
+  walletProvider: WalletProvider;
   rpc: AxiosInstance;
   rest: AxiosInstance;
 }

@@ -1,5 +1,5 @@
 import { Context } from "./context";
-import { Tx } from "./tx";
+import { Tx, Msg } from "./tx";
 import bigInteger from "big-integer";
 import { Coin } from "../common/coin";
 
@@ -28,4 +28,8 @@ export interface TxBuilderConfig {
   gasPrice: number;
 }
 
-export type TxBuilder = (context: Context, config: TxBuilderConfig) => Tx;
+export type TxBuilder = (
+  context: Context,
+  msgs: Msg[],
+  config: TxBuilderConfig
+) => Promise<Tx>;

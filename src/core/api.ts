@@ -3,6 +3,8 @@ import Axios from "axios";
 import { TxEncoder } from "./tx";
 import { TxBuilder } from "./txBuilder";
 import { defaultTxEncoder } from "../common/stdTx";
+import { Bech32Config } from "./bech32Config";
+import { WalletProvider } from "./walletProvider";
 
 export interface ApiConfig {
   chainId: string;
@@ -18,6 +20,8 @@ export interface ApiConfig {
    * this uses default standard builder.
    */
   txBuilder: TxBuilder;
+  bech32Config: Bech32Config;
+  walletProvider: WalletProvider;
   /** Endpoint of rpc */
   rpc: string;
   /** Endpoint of rest api */
@@ -33,6 +37,8 @@ export class Api {
       chainId: config.chainId,
       txEncoder: config.txEncoder ? config.txEncoder : defaultTxEncoder,
       txBuilder: config.txBuilder,
+      bech32Config: config.bech32Config,
+      walletProvider: config.walletProvider,
       rpc: Axios.create({
         baseURL: config.rpc
       }),
