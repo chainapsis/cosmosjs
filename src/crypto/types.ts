@@ -25,7 +25,7 @@ export class Address {
   }
 
   public toBytes(): Uint8Array {
-    return this.address;
+    return new Uint8Array(this.address);
   }
 }
 
