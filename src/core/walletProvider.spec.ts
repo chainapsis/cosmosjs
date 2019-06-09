@@ -2,6 +2,7 @@ import assert from "assert";
 // tslint:disable-next-line:no-implicit-dependencies
 import "mocha";
 import { LocalWalletProvider } from "./walletProvider";
+import { Address } from "../crypto";
 
 import crypto from "crypto";
 
@@ -22,6 +23,17 @@ describe("Test local wallet provider", () => {
     const account = accounts[0];
     assert.equal(
       account.pubKey.toAddress().toBech32("cosmos"),
+      "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
+    );
+    assert.equal(
+      (await localWalletProvider.getPubKey(
+        Address.fromBech32(
+          "cosmos",
+          "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
+        ).toBytes()
+      ))
+        .toAddress()
+        .toBech32("cosmos"),
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );
   });
