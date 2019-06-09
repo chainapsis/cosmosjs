@@ -17,7 +17,7 @@ export class PrivKeySecp256k1 implements PrivKey {
   }
 
   public toBytes(): Uint8Array {
-    return marshalBinaryBare(this.privKey);
+    return marshalBinaryBare(this);
   }
 
   public toPubKey(): PubKey {
@@ -34,7 +34,7 @@ export class PrivKeySecp256k1 implements PrivKey {
 
   public sign(msg: Uint8Array): Uint8Array {
     return secp256k1.sign(
-      Buffer.from(msg) as any,
+      Buffer.from(new sha256().update(msg).digest()) as any,
       Buffer.from(this.privKey) as any
     ).signature;
   }
@@ -55,7 +55,7 @@ export class PubKeySecp256k1 implements PubKey {
   }
 
   public toBytes(): Uint8Array {
-    return marshalBinaryBare(this.pubKey);
+    return marshalBinaryBare(this);
   }
 
   public toAddress(): Address {
