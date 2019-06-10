@@ -2,8 +2,7 @@ import { TxBuilder, TxBuilderConfig } from "../core/txBuilder";
 import { Tx, Msg } from "../core/tx";
 import { StdTx, StdFee, StdSignature, StdSignDoc } from "./stdTx";
 import { Context } from "../core/context";
-import { useBech32ConfigPromise } from "./address";
-import { Address } from "../crypto";
+import { AccAddress, useBech32ConfigPromise } from "./address";
 
 export const stdTxBuilder: TxBuilder = (
   context: Context,
@@ -25,7 +24,7 @@ export const stdTxBuilder: TxBuilder = (
       );
 
       const seenSigners: any = {};
-      const signers: Address[] = [];
+      const signers: AccAddress[] = [];
       for (const msg of msgs) {
         msg.validateBasic();
         for (const signer of msg.getSigners()) {

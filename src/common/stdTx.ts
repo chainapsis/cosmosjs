@@ -1,13 +1,20 @@
 import { Tx, Msg, TxEncoder } from "../core/tx";
 import { Amino, Type } from "ts-amino";
-const { Field, DefineStruct, marshalBinaryLengthPrefixed } = Amino;
+const {
+  Field,
+  Concrete,
+  DefineStruct,
+  DefineType,
+  marshalBinaryLengthPrefixed,
+  marshalJson
+} = Amino;
 import { Coin } from "./coin";
 import bigInteger from "big-integer";
 import { PubKey } from "../crypto";
-import { marshalJson, DefineType } from "ts-amino/dist/amino";
 import { Buffer } from "buffer/";
 import { sortJSON } from "../utils/sortJson";
 
+@Concrete("auth/StdTx")
 @DefineStruct()
 export class StdTx implements Tx {
   @Field.Slice(0, { type: Type.Interface }, { jsonName: "msg" })

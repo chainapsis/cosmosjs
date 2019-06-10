@@ -1,0 +1,39 @@
+import { Amino, Type } from "ts-amino";
+const { Field, Concrete, DefineStruct } = Amino;
+import { Msg } from "../../core/tx";
+import { AccAddress } from "../../common/address";
+import { Coin } from "../../common/coin";
+
+@Concrete("cosmos-sdk/MsgSend")
+@DefineStruct()
+export class MsgSend extends Msg {
+  @Field.Defined(0, {
+    jsonName: "from_address"
+  })
+  public fromAddress: AccAddress;
+
+  @Field.Defined(1, {
+    jsonName: "to_address"
+  })
+  public toAddress: AccAddress;
+
+  @Field.Slice(
+    2,
+    { type: Type.Defined },
+    {
+      jsonName: "amount"
+    }
+  )
+  public amount: Coin[];
+
+  constructor(fromAddress: AccAddress, toAddress: AccAddress, amount: Coin[]) {
+    super();
+    this.fromAddress = fromAddress;
+    this.toAddress = toAddress;
+    this.amount = amount;
+  }
+
+  public getSigners(): AccAddress[] {
+    return [this.fromAddress];
+  }
+}

@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts",
+    "test": "mocha -r ts-node/register src/**/**/*.spec.ts src/**/*.spec.ts src/*.spec.ts",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint-fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "prettier": "find ./src -type f | xargs prettier --check",
@@ -28,7 +28,7 @@
     "ripemd160": "^2.0.2",
     "secp256k1": "^3.7.0",
     "sha.js": "^2.4.11",
-    "ts-amino": "git+https://github.com/Thunnini/ts-amino.git#4de7a55"
+    "ts-amino": "git+https://github.com/Thunnini/ts-amino.git#cac0962"
   },
   "devDependencies": {
     "@types/bech32": "^1.1.1",

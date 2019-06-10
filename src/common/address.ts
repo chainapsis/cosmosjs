@@ -11,6 +11,9 @@ const bech32ConfigStack: Bech32Config[] = [];
 
 export function useGlobalBech32Config(config: Bech32Config | undefined) {
   globalBech32Config = config;
+  if (bech32ConfigStack.length === 0) {
+    bech32Config = config;
+  }
 }
 
 /**
@@ -48,7 +51,7 @@ export async function useBech32ConfigPromise<T>(
 
 @DefineType()
 export class AccAddress {
-  public static fromBech32(bech32Addr: string): Address {
+  public static fromBech32(bech32Addr: string): AccAddress {
     if (!bech32Config) {
       throw new Error("bech32 config is null");
     }
@@ -56,7 +59,7 @@ export class AccAddress {
     if (b32Prefix !== bech32Config.bech32PrefixAccAddr) {
       throw new Error("Prefix doesn't match");
     }
-    return new Address(bech32.fromWords(words));
+    return new AccAddress(bech32.fromWords(words));
   }
 
   @Field.Array(0, { type: Type.Uint8 })
@@ -74,6 +77,10 @@ export class AccAddress {
     return bech32.encode(bech32Config.bech32PrefixAccAddr, words);
   }
 
+  public toBytes(): Uint8Array {
+    return new Uint8Array(this.address);
+  }
+
   public marshalJSON(): Uint8Array {
     return Buffer.from(`"${this.toBech32()}"`, "utf8");
   }
@@ -81,7 +88,7 @@ export class AccAddress {
 
 @DefineType()
 export class ValAddress {
-  public static fromBech32(bech32Addr: string): Address {
+  public static fromBech32(bech32Addr: string): ValAddress {
     if (!bech32Config) {
       throw new Error("bech32 config is null");
     }
@@ -89,7 +96,7 @@ export class ValAddress {
     if (b32Prefix !== bech32Config.bech32PrefixValAddr) {
       throw new Error("Prefix doesn't match");
     }
-    return new Address(bech32.fromWords(words));
+    return new ValAddress(bech32.fromWords(words));
   }
 
   @Field.Array(0, { type: Type.Uint8 })
@@ -107,6 +114,10 @@ export class ValAddress {
     return bech32.encode(bech32Config.bech32PrefixValAddr, words);
   }
 
+  public toBytes(): Uint8Array {
+    return new Uint8Array(this.address);
+  }
+
   public marshalJSON(): Uint8Array {
     return Buffer.from(`"${this.toBech32()}"`, "utf8");
   }
@@ -114,7 +125,7 @@ export class ValAddress {
 
 @DefineType()
 export class ConsAddress {
-  public static fromBech32(bech32Addr: string): Address {
+  public static fromBech32(bech32Addr: string): ConsAddress {
     if (!bech32Config) {
       throw new Error("bech32 config is null");
     }
@@ -122,7 +133,7 @@ export class ConsAddress {
     if (b32Prefix !== bech32Config.bech32PrefixConsAddr) {
       throw new Error("Prefix doesn't match");
     }
-    return new Address(bech32.fromWords(words));
+    return new ConsAddress(bech32.fromWords(words));
   }
 
   @Field.Array(0, { type: Type.Uint8 })
@@ -138,6 +149,10 @@ export class ConsAddress {
     }
     const words = bech32.toWords(Buffer.from(this.address) as any);
     return bech32.encode(bech32Config.bech32PrefixConsAddr, words);
+  }
+
+  public toBytes(): Uint8Array {
+    return new Uint8Array(this.address);
   }
 
   public marshalJSON(): Uint8Array {

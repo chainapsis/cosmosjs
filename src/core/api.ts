@@ -1,7 +1,7 @@
 import { Context } from "./context";
 import Axios from "axios";
-import { TxEncoder } from "./tx";
-import { TxBuilder } from "./txBuilder";
+import { TxEncoder, Msg } from "./tx";
+import { TxBuilder, TxBuilderConfig } from "./txBuilder";
 import { defaultTxEncoder } from "../common/stdTx";
 import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
@@ -13,7 +13,7 @@ export interface ApiConfig {
    * If this parameter is undefined,
    * this uses default encoder that uses amino marshalBinaryLengthPrefixed instead.
    */
-  txEncoder: TxEncoder | undefined;
+  txEncoder?: TxEncoder;
   /**
    * Builder for transaction.<br/>
    * If this parameter is undefined,
@@ -46,6 +46,13 @@ export class Api {
         baseURL: config.rest
       })
     });
+  }
+
+  public async sendMsgs(msgs: Msg[], config: TxBuilderConfig): Promise<void> {
+    const tx = await this.context.get("txBuilder")(this.context, msgs, config);
+    const bz = this.context.get("txEncoder")(tx);
+    // tslint:disable-next-line: no-console
+    console.log(Buffer.from(bz).toString("hex"));
   }
 
   get context(): Context {

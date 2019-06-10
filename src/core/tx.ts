@@ -1,4 +1,4 @@
-import { Address } from "../crypto";
+import { AccAddress } from "../common/address";
 import { Amino } from "ts-amino";
 const { marshalJson } = Amino;
 import { Buffer } from "buffer/";
@@ -29,7 +29,7 @@ export class Msg {
   public getSignBytes(): Uint8Array {
     return Buffer.from(sortJSON(marshalJson(this)), "utf8");
   }
-  public getSigners(): Address[] {
+  public getSigners(): AccAddress[] {
     throw new Error("You should implement getSigners()");
   }
 }
