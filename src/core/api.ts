@@ -71,6 +71,10 @@ export class Api<R extends Rest> {
     return this._context;
   }
 
+  get wallet(): WalletProvider {
+    return this.context.get("walletProvider");
+  }
+
   get rpc(): TendermintRPC {
     return this._rpc;
   }
