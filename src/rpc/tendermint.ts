@@ -1,16 +1,14 @@
 import { RPC } from "../core/rpc";
 import { Context } from "../core/context";
-import Axios, { AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 import { Buffer } from "buffer/";
 
 export class TendermintRPC extends RPC {
-  private rpc: AxiosInstance;
+  private instance: AxiosInstance;
 
-  constructor(context: Context, baseURL: string) {
+  constructor(context: Context) {
     super(context);
-    this.rpc = Axios.create({
-      baseURL
-    });
+    this.instance = context.get("rpcInstance");
   }
 
   public broadcastTx(
@@ -18,7 +16,7 @@ export class TendermintRPC extends RPC {
     mode: "commit" | "sync" | "async"
   ): Promise<any> {
     const hex = Buffer.from(tx).toString("hex");
-    return this.rpc.get(`/broadcast_tx_${mode}`, {
+    return this.instance.get(`/broadcast_tx_${mode}`, {
       params: {
         tx: "0x" + hex
       }

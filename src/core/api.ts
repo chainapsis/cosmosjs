@@ -6,6 +6,7 @@ import { defaultTxEncoder } from "../common/stdTx";
 import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
 import { TendermintRPC } from "../rpc/tendermint";
+import { Rest } from "./rest";
 
 export interface ApiConfig {
   chainId: string;
@@ -29,22 +30,31 @@ export interface ApiConfig {
   rest: string;
 }
 
-export class Api {
+export class Api<R extends Rest> {
   // tslint:disable-next-line: variable-name
   private _context: Context;
+  // tslint:disable-next-line: variable-name
+  private _rpc: TendermintRPC;
+  // tslint:disable-next-line: variable-name
+  private _rest: R;
 
-  constructor(config: ApiConfig) {
+  constructor(config: ApiConfig, restFactory: (context: Context) => R) {
     this._context = new Context({
       chainId: config.chainId,
       txEncoder: config.txEncoder ? config.txEncoder : defaultTxEncoder,
       txBuilder: config.txBuilder,
       bech32Config: config.bech32Config,
       walletProvider: config.walletProvider,
-      rpc: new TendermintRPC(this.context, config.rpc),
-      rest: Axios.create({
+      rpcInstance: Axios.create({
+        baseURL: config.rpc
+      }),
+      restInstance: Axios.create({
         baseURL: config.rest
       })
     });
+
+    this._rpc = new TendermintRPC(this.context);
+    this._rest = restFactory(this.context);
   }
 
   public async sendMsgs(
@@ -54,10 +64,18 @@ export class Api {
   ): Promise<void> {
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
     const bz = this.context.get("txEncoder")(tx);
-    return this.context.get("rpc").broadcastTx(bz, mode);
+    return this.rpc.broadcastTx(bz, mode);
   }
 
   get context(): Context {
     return this._context;
+  }
+
+  get rpc(): TendermintRPC {
+    return this._rpc;
+  }
+
+  get rest(): R {
+    return this._rest;
   }
 }
