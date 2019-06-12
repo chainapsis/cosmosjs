@@ -32,6 +32,10 @@ export class Int {
   public marshalAmino(): string {
     return this.int.toString(10);
   }
+
+  public toString(): string {
+    return this.int.toString(10);
+  }
 }
 
 @DefineStruct()
@@ -66,6 +70,10 @@ export class Uint {
 
   @Method.AminoMarshaler({ type: Type.String })
   public marshalAmino(): string {
+    return this.uint.toString(10);
+  }
+
+  public toString(): string {
     return this.uint.toString(10);
   }
 }
