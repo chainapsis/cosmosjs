@@ -5,6 +5,7 @@ import { TxBuilder, TxBuilderConfig } from "./txBuilder";
 import { defaultTxEncoder } from "../common/stdTx";
 import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
+import { TendermintRPC } from "../rpc/tendermint";
 
 export interface ApiConfig {
   chainId: string;
@@ -39,20 +40,21 @@ export class Api {
       txBuilder: config.txBuilder,
       bech32Config: config.bech32Config,
       walletProvider: config.walletProvider,
-      rpc: Axios.create({
-        baseURL: config.rpc
-      }),
+      rpc: new TendermintRPC(this.context, config.rpc),
       rest: Axios.create({
         baseURL: config.rest
       })
     });
   }
 
-  public async sendMsgs(msgs: Msg[], config: TxBuilderConfig): Promise<void> {
+  public async sendMsgs(
+    msgs: Msg[],
+    config: TxBuilderConfig,
+    mode: "commit" | "sync" | "async" = "sync"
+  ): Promise<void> {
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
     const bz = this.context.get("txEncoder")(tx);
-    // tslint:disable-next-line: no-console
-    console.log(Buffer.from(bz).toString("hex"));
+    return this.context.get("rpc").broadcastTx(bz, mode);
   }
 
   get context(): Context {

@@ -3,6 +3,7 @@ import { AxiosInstance } from "axios";
 import { TxBuilder } from "./txBuilder";
 import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
+import { TendermintRPC } from "../rpc/tendermint";
 
 export class ImmutableContext<T> {
   constructor(private context: T) {}
@@ -22,7 +23,7 @@ export interface IContext {
   txBuilder: TxBuilder;
   bech32Config: Bech32Config;
   walletProvider: WalletProvider;
-  rpc: AxiosInstance;
+  rpc: TendermintRPC;
   rest: AxiosInstance;
 }
 
