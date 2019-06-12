@@ -36,6 +36,50 @@ export class Int {
   public toString(): string {
     return this.int.toString(10);
   }
+
+  public equals(i: Int): boolean {
+    return this.int.equals(i.int);
+  }
+
+  public gt(i: Int): boolean {
+    return this.int.gt(i.int);
+  }
+
+  public gte(i: Int): boolean {
+    return this.int.greaterOrEquals(i.int);
+  }
+
+  public lt(i: Int): boolean {
+    return this.int.lt(i.int);
+  }
+
+  public lte(i: Int): boolean {
+    return this.int.lesserOrEquals(i.int);
+  }
+
+  public add(i: Int): Int {
+    return new Int(this.int.add(i.int));
+  }
+
+  public sub(i: Int): Int {
+    return new Int(this.int.subtract(i.int));
+  }
+
+  public mul(i: Int): Int {
+    return new Int(this.int.multiply(i.int));
+  }
+
+  public div(i: Int): Int {
+    return new Int(this.int.divide(i.int));
+  }
+
+  public mod(i: Int): Int {
+    return new Int(this.int.mod(i.int));
+  }
+
+  public neg(): Int {
+    return new Int(this.int.negate());
+  }
 }
 
 @DefineStruct()
@@ -75,5 +119,45 @@ export class Uint {
 
   public toString(): string {
     return this.uint.toString(10);
+  }
+
+  public equals(i: Uint): boolean {
+    return this.uint.equals(i.uint);
+  }
+
+  public gt(i: Uint): boolean {
+    return this.uint.gt(i.uint);
+  }
+
+  public gte(i: Uint): boolean {
+    return this.uint.greaterOrEquals(i.uint);
+  }
+
+  public lt(i: Uint): boolean {
+    return this.uint.lt(i.uint);
+  }
+
+  public lte(i: Uint): boolean {
+    return this.uint.lesserOrEquals(i.uint);
+  }
+
+  public add(i: Uint): Uint {
+    return new Uint(this.uint.add(i.uint));
+  }
+
+  public sub(i: Uint): Uint {
+    return new Uint(this.uint.subtract(i.uint));
+  }
+
+  public mul(i: Uint): Uint {
+    return new Uint(this.uint.multiply(i.uint));
+  }
+
+  public div(i: Uint): Uint {
+    return new Uint(this.uint.divide(i.uint));
+  }
+
+  public mod(i: Uint): Uint {
+    return new Uint(this.uint.mod(i.uint));
   }
 }
