@@ -3,6 +3,23 @@ import { Tx, Msg } from "../core/tx";
 import { StdTx, StdFee, StdSignature, StdSignDoc } from "./stdTx";
 import { Context } from "../core/context";
 import { AccAddress, useBech32ConfigPromise } from "./address";
+import bigInteger from "big-integer";
+
+function nullableBnToBI(
+  bn: bigInteger.BigNumber | undefined
+): bigInteger.BigInteger {
+  let result = bigInteger(-1);
+  if (bn) {
+    if (typeof bn === "string") {
+      result = bigInteger(bn);
+    } else if (typeof bn === "number") {
+      result = bigInteger(bn);
+    } else {
+      result = bigInteger(bn);
+    }
+  }
+  return result;
+}
 
 export const stdTxBuilder: TxBuilder = (
   context: Context,
@@ -13,15 +30,6 @@ export const stdTxBuilder: TxBuilder = (
     context.get("bech32Config"),
     async (): Promise<Tx> => {
       const stdFee = new StdFee([config.fee], config.gas);
-
-      const signDoc = new StdSignDoc(
-        config.accountNumber,
-        context.get("chainId"),
-        stdFee,
-        config.memo,
-        msgs,
-        config.sequence
-      );
 
       const seenSigners: any = {};
       const signers: AccAddress[] = [];
@@ -38,6 +46,31 @@ export const stdTxBuilder: TxBuilder = (
 
       const signatures: StdSignature[] = [];
       for (const signer of signers) {
+        let accountNumber = nullableBnToBI(config.accountNumber);
+        let sequence = nullableBnToBI(config.sequence);
+
+        if (accountNumber.lt(bigInteger(0)) || sequence.lt(bigInteger(0))) {
+          const account = await context.get("queryAccount")(
+            context,
+            signers[0].toBech32()
+          );
+          if (accountNumber.lt(bigInteger(0))) {
+            accountNumber = account.getAccountNumber();
+          }
+          if (sequence.lt(bigInteger(0))) {
+            sequence = account.getSequence();
+          }
+        }
+
+        const signDoc = new StdSignDoc(
+          accountNumber,
+          context.get("chainId"),
+          stdFee,
+          config.memo,
+          msgs,
+          sequence
+        );
+
         const sig = await context
           .get("walletProvider")
           .sign(signer.toBytes(), signDoc.getSignBytes());

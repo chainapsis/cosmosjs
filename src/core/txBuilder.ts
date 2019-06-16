@@ -5,11 +5,13 @@ import { Coin } from "../common/coin";
 
 export interface TxBuilderConfig {
   /**
-   * @param accountNumber - uint64
+   * @param accountNumber - uint64, If this is undefined or negative, tx builder should calculate that automatically or throw error.
+   * If there are several signers, this should be undefined or negative.
    */
   accountNumber?: bigInteger.BigNumber;
   /**
-   * @param sequence - uint64
+   * @param sequence - uint64, If this is undefined or negative, tx builder should calculate that automatically or throw error.
+   * If there are several signers, this should be undefined or negative.
    */
   sequence?: bigInteger.BigNumber;
   /**
