@@ -4,14 +4,7 @@ import bigInteger from "big-integer";
 import { Coin } from "./coin";
 import { Int } from "./int";
 import { Buffer } from "buffer/";
-
-export interface Account {
-  getAddress(): AccAddress;
-  getPubKey(): PubKey;
-  getAccountNumber(): bigInteger.BigInteger;
-  getSequence(): bigInteger.BigInteger;
-  getCoins(): Coin[];
-}
+import { Account } from "../core/account";
 
 export class BaseAccount implements Account {
   public static fromJSON(obj: any): BaseAccount {
