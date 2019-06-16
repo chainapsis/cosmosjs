@@ -3,6 +3,7 @@ const { Field, Concrete, DefineStruct } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress } from "../../common/address";
 import { Coin } from "../../common/coin";
+import { Int } from "../../common/int";
 
 @Concrete("cosmos-sdk/MsgSend")
 @DefineStruct()
@@ -35,5 +36,13 @@ export class MsgSend extends Msg {
 
   public getSigners(): AccAddress[] {
     return [this.fromAddress];
+  }
+
+  public validateBasic(): void {
+    for (const coin of this.amount) {
+      if (coin.amount.lte(new Int(0))) {
+        throw new Error("Send amount is invalid");
+      }
+    }
   }
 }
