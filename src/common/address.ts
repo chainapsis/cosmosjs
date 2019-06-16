@@ -22,15 +22,16 @@ export function useGlobalBech32Config(config: Bech32Config | undefined) {
  * Use Bech32 encoding, decoding within this function.
  * But if you just use only one chain api in general way, you can use [[useGlobalBech32Config]] for convenience
  */
-export function useBech32Config(config: Bech32Config, fn: () => void) {
+export function useBech32Config<T>(config: Bech32Config, fn: () => T): T {
   bech32ConfigStack.push(config);
   bech32Config = config;
-  fn();
+  const result = fn();
   bech32ConfigStack.pop();
   bech32Config =
     bech32ConfigStack.length > 0
       ? bech32ConfigStack[bech32ConfigStack.length - 1]
       : globalBech32Config;
+  return result;
 }
 
 export async function useBech32ConfigPromise<T>(
