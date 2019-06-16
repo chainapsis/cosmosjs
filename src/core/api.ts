@@ -2,7 +2,6 @@ import { Context } from "./context";
 import Axios from "axios";
 import { TxEncoder, Msg } from "./tx";
 import { TxBuilder, TxBuilderConfig } from "./txBuilder";
-import { defaultTxEncoder } from "../common/stdTx";
 import { Bech32Config } from "./bech32Config";
 import { useGlobalBech32Config } from "../common/address";
 import { WalletProvider } from "./walletProvider";
@@ -11,18 +10,6 @@ import { Rest } from "./rest";
 
 export interface ApiConfig {
   chainId: string;
-  /**
-   * Encoder for transaction.<br/>
-   * If this parameter is undefined,
-   * this uses default encoder that uses amino marshalBinaryLengthPrefixed instead.
-   */
-  txEncoder?: TxEncoder;
-  /**
-   * Builder for transaction.<br/>
-   * If this parameter is undefined,
-   * this uses default standard builder.
-   */
-  txBuilder: TxBuilder;
   bech32Config: Bech32Config;
   walletProvider: WalletProvider;
   /** Endpoint of rpc */
@@ -30,6 +17,18 @@ export interface ApiConfig {
   /** Endpoint of rest api */
   rest: string;
   disableGlobalBech32Config?: boolean;
+}
+
+export interface CoreConfig<R extends Rest> {
+  /**
+   * Encoder for transaction.
+   */
+  txEncoder: TxEncoder;
+  /**
+   * Builder for transaction.
+   */
+  txBuilder: TxBuilder;
+  restFactory: (context: Context) => R;
 }
 
 export class Api<R extends Rest> {
@@ -40,11 +39,11 @@ export class Api<R extends Rest> {
   // tslint:disable-next-line: variable-name
   private _rest: R;
 
-  constructor(config: ApiConfig, restFactory: (context: Context) => R) {
+  constructor(config: ApiConfig, coreConfig: CoreConfig<R>) {
     this._context = new Context({
       chainId: config.chainId,
-      txEncoder: config.txEncoder ? config.txEncoder : defaultTxEncoder,
-      txBuilder: config.txBuilder,
+      txEncoder: coreConfig.txEncoder,
+      txBuilder: coreConfig.txBuilder,
       bech32Config: config.bech32Config,
       walletProvider: config.walletProvider,
       rpcInstance: Axios.create({
@@ -56,7 +55,7 @@ export class Api<R extends Rest> {
     });
 
     this._rpc = new TendermintRPC(this.context);
-    this._rest = restFactory(this.context);
+    this._rest = coreConfig.restFactory(this.context);
 
     if (!config.disableGlobalBech32Config) {
       useGlobalBech32Config(config.bech32Config);
