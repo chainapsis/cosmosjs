@@ -26,12 +26,16 @@ export class BaseAccount implements Account {
       }
       let pubKey: PubKey;
       if (
-        !obj.public_key ||
-        obj.public_key.type !== "tendermint/PubKeySecp256k1"
+        !value.public_key ||
+        value.public_key.type !== "tendermint/PubKeySecp256k1"
       ) {
-        throw new Error(`Unsupported public key type: ${obj.public_key.type}`);
+        throw new Error(
+          `Unsupported public key type: ${value.public_key.type}`
+        );
       }
-      pubKey = new PubKeySecp256k1(Buffer.from(obj.public_key.value, "base64"));
+      pubKey = new PubKeySecp256k1(
+        Buffer.from(value.public_key.value, "base64")
+      );
       const accountNumber = value.account_number;
       const sequence = value.sequence;
 
