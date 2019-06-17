@@ -22,7 +22,7 @@ export interface TxBuilderConfig {
   /**
    * @param gasAdjustment - TODO: If gas parameter is negative(auto), simulated gas will be multiplied with this.
    */
-  gasAdjustment: number;
+  gasAdjustment?: number;
   memo: string;
   // TODO: support multi-asset fee
   fee: Coin;
