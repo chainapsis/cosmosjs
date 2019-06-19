@@ -9,16 +9,23 @@
 
 > General purpose library for cosmos-sdk
 
-## Basic usage
+Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.
+
+## Install
+```sh
+npm install --save @node-a-team/cosmosjs
+```
+
+## How to use
 More examples will be provided [here](https://github.com/node-a-team/cosmosjs/tree/master/example) soon.
 ```ts
-import { GaiaApi } from "../src/gaia/api";
-import { defaultBech32Config } from "../src/core/bech32Config";
-import { LocalWalletProvider } from "../src/core/walletProvider";
-import { MsgSend } from "../src/gaia/msgs/bank";
-import { AccAddress, useGlobalBech32Config } from "../src/common/address";
-import { Coin } from "../src/common/coin";
-import { Int } from "../src/common/int";
+import { GaiaApi } from "@node-a-team/cosmosjs/dist/gaia/api";
+import { defaultBech32Config } from "@node-a-team/cosmosjs/dist/core/bech32Config";
+import { LocalWalletProvider } from "@node-a-team/cosmosjs/dist/core/walletProvider";
+import { MsgSend } from "@node-a-team/cosmosjs/dist/gaia/msgs/bank";
+import { AccAddress, useGlobalBech32Config } from "@node-a-team/cosmosjs/dist/common/address";
+import { Coin } from "@node-a-team/cosmosjs/dist/common/coin";
+import { Int } from "@node-a-team/cosmosjs/dist/common/int";
 import bigInteger from "big-integer";
 
 (async () => {
@@ -77,34 +84,34 @@ import { Int } from "../../common/int";
 
 @Concrete("cosmos-sdk/MsgSend")
 @DefineStruct()
-export  class  MsgSend  extends  Msg {
+export class MsgSend extends Msg {
   @Field.Defined(0, {
     jsonName:  "from_address"
   })
-  public fromAddress:  AccAddress;
+  public fromAddress: AccAddress;
 
   @Field.Defined(1, {
     jsonName:  "to_address"
   })
-  public toAddress:  AccAddress;
+  public toAddress: AccAddress;
 
   @Field.Slice(
     2,
-    { type:  Type.Defined },
+    { type: Type.Defined },
     {
-      jsonName:  "amount"
+      jsonName: "amount"
     }
   )
-  public amount:  Coin[];
+  public amount: Coin[];
 
-  constructor(fromAddress:  AccAddress, toAddress:  AccAddress, amount:  Coin[]) {
+  constructor(fromAddress: AccAddress, toAddress: AccAddress, amount: Coin[]) {
     super();
-    this.fromAddress  = fromAddress;
-    this.toAddress  = toAddress;
-    this.amount  = amount;
+    this.fromAddress = fromAddress;
+    this.toAddress = toAddress;
+    this.amount = amount;
   }
 
-  public  getSigners():  AccAddress[] {
+  public getSigners(): AccAddress[] {
     return [this.fromAddress];
   }
 
@@ -113,10 +120,10 @@ export  class  MsgSend  extends  Msg {
   * doesn't require access to any other information.
   * You can throw error in this when msg is invalid.
   */
-  public  validateBasic():  void {
-    for (const  coin  of  this.amount) {
+  public validateBasic(): void {
+    for (const coin of this.amount) {
       if (coin.amount.lte(new  Int(0))) {
-        throw  new  Error("Send amount is invalid");
+        throw new Error("Send amount is invalid");
       }
     }
   }
@@ -125,8 +132,8 @@ export  class  MsgSend  extends  Msg {
   * Get the canonical byte representation of the Msg.
   * @return Return sorted by alphabetically amino encoded json by default.
   */
-  // public  getSignBytes():  Uint8Array {
-  //   return  Buffer.from(sortJSON(marshalJson(this)), "utf8");
+  // public getSignBytes(): Uint8Array {
+  //   return Buffer.from(sortJSON(marshalJson(this)), "utf8");
   // }
 }
 ```
@@ -150,7 +157,7 @@ Give a ⭐️ if this project helped you!
 **If you find this project interesting, you can always donate by delegating to Node A-Team!**
 
 Node A-Team (Moniker: ATEAM) is a Cosmos-SDK and Tendermint-based Blockchain Validator, which currently participates in Cosmos, IRISnet and Terra. Based on the knowledge and experience gained from various testnets and mainnet, Node A-Team contributes to Cosmos Ecosystem and operates highly secure nodes.
-> ATEAM History
+> ATEAM History  
  — Cosmos: “Game of Stakes” — Never Jailed  
  — IRISnet: “FUXI Betanet” — Reward Winner  
  — Terra-project: “Genesis Drill” — Top Tier  
