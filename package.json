@@ -1,8 +1,10 @@
 {
-  "name": "cosmosjs",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@node-a-team/cosmosjs",
+  "version": "0.0.1-alpha.1",
+  "homepage": "https://github.com/node-a-team/cosmosjs",
+  "description": "General purpose library for cosmos-sdk",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register src/**/**/*.spec.ts src/**/*.spec.ts src/*.spec.ts",
@@ -16,7 +18,7 @@
     "prettier"
   ],
   "keywords": [],
-  "author": "Thunnini",
+  "author": "node-a-team",
   "license": "Apache-2.0",
   "dependencies": {
     "axios": "^0.19.0",
