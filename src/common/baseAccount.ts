@@ -21,8 +21,10 @@ export class BaseAccount implements Account {
       const value = obj.value;
       const address = AccAddress.fromBech32(value.address);
       const coins: Coin[] = [];
-      for (const coin of value.coins) {
-        coins.push(new Coin(coin.denom, new Int(coin.amount)));
+      if (value.coins) {
+        for (const coin of value.coins) {
+          coins.push(new Coin(coin.denom, new Int(coin.amount)));
+        }
       }
       let pubKey: PubKey;
       if (
