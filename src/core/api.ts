@@ -8,6 +8,7 @@ import { WalletProvider } from "./walletProvider";
 import { TendermintRPC } from "../rpc/tendermint";
 import { Rest } from "./rest";
 import { QueryAccount } from "./account";
+import { ResultBroadcastTx, ResultBroadcastTxCommit } from "../rpc/tx";
 
 export interface ApiConfig {
   chainId: string;
@@ -65,14 +66,23 @@ export class Api<R extends Rest> {
     }
   }
 
+  /**
+   * Send msgs.
+   * @return If mode is commit, this will return [[ResultBroadcastTx]].
+   * Or if mode is sync or async, this will return [[ResultBroadcastTxCommit]].
+   */
   public async sendMsgs(
     msgs: Msg[],
     config: TxBuilderConfig,
     mode: "commit" | "sync" | "async" = "sync"
-  ): Promise<void> {
+  ): Promise<ResultBroadcastTx | ResultBroadcastTxCommit> {
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
     const bz = this.context.get("txEncoder")(tx);
-    return this.rpc.broadcastTx(bz, mode);
+    if (mode === "commit") {
+      return this.rpc.broadcastTxCommit(bz);
+    } else {
+      return this.rpc.broadcastTx(bz, mode);
+    }
   }
 
   get context(): Context {

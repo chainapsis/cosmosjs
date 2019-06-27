@@ -5,6 +5,7 @@ import bigInteger from "big-integer";
 import { JSONRPC } from "./types";
 import { ResultStatus } from "./status";
 import { ResultABCIInfo, ResultABCIQuery, ABCIQueryOptions } from "./abci";
+import { ResultBroadcastTx, ResultBroadcastTxCommit } from "./tx";
 
 export class TendermintRPC extends RPC {
   constructor(context: Context) {
@@ -13,11 +14,23 @@ export class TendermintRPC extends RPC {
 
   public async status(): Promise<ResultStatus> {
     const result = await this.instance.get<JSONRPC>("/status");
+    if (result.data.error) {
+      const error = result.data.error;
+      throw new Error(
+        `code: ${error.code},  message: ${error.message}, data: ${error.data}`
+      );
+    }
     return ResultStatus.fromJSON(result.data);
   }
 
   public async abciInfo(): Promise<ResultABCIInfo> {
     const result = await this.instance.get<JSONRPC>("/abci_info");
+    if (result.data.error) {
+      const error = result.data.error;
+      throw new Error(
+        `code: ${error.code},  message: ${error.message}, data: ${error.data}`
+      );
+    }
     return ResultABCIInfo.fromJSON(result.data);
   }
 
@@ -43,18 +56,49 @@ export class TendermintRPC extends RPC {
         "hex"
       )}&prove=${prove}&height=${height.toString()}"`
     );
+    if (result.data.error) {
+      const error = result.data.error;
+      throw new Error(
+        `code: ${error.code},  message: ${error.message}, data: ${error.data}`
+      );
+    }
     return ResultABCIQuery.fromJSON(result.data);
   }
 
-  public broadcastTx(
+  public async broadcastTx(
     tx: Uint8Array,
-    mode: "commit" | "sync" | "async"
-  ): Promise<any> {
+    mode: "sync" | "async"
+  ): Promise<ResultBroadcastTx> {
     const hex = Buffer.from(tx).toString("hex");
-    return this.instance.get(`/broadcast_tx_${mode}`, {
+    const result = await this.instance.get(`/broadcast_tx_${mode}`, {
       params: {
         tx: "0x" + hex
       }
     });
+    if (result.data.error) {
+      const error = result.data.error;
+      throw new Error(
+        `code: ${error.code},  message: ${error.message}, data: ${error.data}`
+      );
+    }
+    return ResultBroadcastTx.fromJSON(result.data, mode);
+  }
+
+  public async broadcastTxCommit(
+    tx: Uint8Array
+  ): Promise<ResultBroadcastTxCommit> {
+    const hex = Buffer.from(tx).toString("hex");
+    const result = await this.instance.get(`/broadcast_tx_commit`, {
+      params: {
+        tx: "0x" + hex
+      }
+    });
+    if (result.data.error) {
+      const error = result.data.error;
+      throw new Error(
+        `code: ${error.code},  message: ${error.message}, data: ${error.data}`
+      );
+    }
+    return ResultBroadcastTxCommit.fromJSON(result.data);
   }
 }
