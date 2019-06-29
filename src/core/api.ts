@@ -9,6 +9,7 @@ import { TendermintRPC } from "../rpc/tendermint";
 import { Rest } from "./rest";
 import { QueryAccount } from "./account";
 import { ResultBroadcastTx, ResultBroadcastTxCommit } from "../rpc/tx";
+import { BIP44 } from "./bip44";
 
 export interface ApiConfig {
   chainId: string;
@@ -32,6 +33,7 @@ export interface CoreConfig<R extends Rest> {
   txBuilder: TxBuilder;
   restFactory: (context: Context) => R;
   queryAccount: QueryAccount;
+  bip44: BIP44;
 }
 
 export class Api<R extends Rest> {
@@ -55,7 +57,8 @@ export class Api<R extends Rest> {
       restInstance: Axios.create({
         baseURL: config.rest
       }),
-      queryAccount: coreConfig.queryAccount
+      queryAccount: coreConfig.queryAccount,
+      bip44: coreConfig.bip44
     });
 
     this._rpc = new TendermintRPC(this.context);
@@ -64,6 +67,11 @@ export class Api<R extends Rest> {
     if (!config.disableGlobalBech32Config) {
       useGlobalBech32Config(config.bech32Config);
     }
+  }
+
+  public async signIn(index: number, change: number = 0): Promise<void> {
+    await this.wallet.signIn(this.context, index, change);
+    return Promise.resolve();
   }
 
   /**

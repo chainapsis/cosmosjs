@@ -4,6 +4,7 @@ import { TxBuilder } from "./txBuilder";
 import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
 import { QueryAccount } from "./account";
+import { BIP44 } from "./bip44";
 
 export class ImmutableContext<T> {
   constructor(private context: T) {}
@@ -26,6 +27,7 @@ export interface IContext<> {
   rpcInstance: AxiosInstance;
   restInstance: AxiosInstance;
   queryAccount: QueryAccount;
+  bip44: BIP44;
 }
 
 export class Context extends ImmutableContext<IContext> {}

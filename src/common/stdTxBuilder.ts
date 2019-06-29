@@ -73,11 +73,11 @@ export const stdTxBuilder: TxBuilder = (
 
         const sig = await context
           .get("walletProvider")
-          .sign(signer.toBytes(), signDoc.getSignBytes());
+          .sign(context, signer.toBytes(), signDoc.getSignBytes());
 
         const pubKey = await context
           .get("walletProvider")
-          .getPubKey(signer.toBytes());
+          .getPubKey(context, signer.toBytes());
 
         const signature = new StdSignature(pubKey, sig);
 

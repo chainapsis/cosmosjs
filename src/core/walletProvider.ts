@@ -1,16 +1,31 @@
 import { PubKey, PrivKey } from "../crypto";
+import { AccAddress, useBech32Config } from "../common/address";
 import { generateWalletFromMnemonic, generateSeed, RNG } from "../utils/key";
+import { Context } from "./context";
 
 export interface WalletProvider {
-  signIn(path: string): Promise<void>;
-  getPubKey(address: Uint8Array): Promise<PubKey>;
-  getSignerAccounts(): Promise<
+  /**
+   * Return path
+   * @param index Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
+   * Public derivation is used at this level.
+   * @param change Constant 0 is used for external chain and constant 1 for internal chain (also known as change addresses). External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments). Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.
+   * Public derivation is used at this level.
+   */
+  signIn(context: Context, index: number, change?: number): Promise<void>;
+  getPubKey(context: Context, address: Uint8Array): Promise<PubKey>;
+  getSignerAccounts(
+    context: Context
+  ): Promise<
     Array<{
       address: Uint8Array;
       pubKey: PubKey;
     }>
   >;
-  sign(address: Uint8Array, message: Uint8Array): Promise<Uint8Array>;
+  sign(
+    context: Context,
+    address: Uint8Array,
+    message: Uint8Array
+  ): Promise<Uint8Array>;
 }
 
 /**
@@ -29,12 +44,19 @@ export class LocalWalletProvider implements WalletProvider {
     }
   }
 
-  public signIn(path: string): Promise<void> {
-    this.privKey = generateWalletFromMnemonic(this.mnemonic, path);
+  public signIn(
+    context: Context,
+    index: number,
+    change: number = 0
+  ): Promise<void> {
+    this.privKey = generateWalletFromMnemonic(
+      this.mnemonic,
+      context.get("bip44").pathString(index, change)
+    );
     return Promise.resolve();
   }
 
-  public getPubKey(address: Uint8Array): Promise<PubKey> {
+  public getPubKey(context: Context, address: Uint8Array): Promise<PubKey> {
     if (!this.privKey) {
       throw new Error("Not signed in");
     }
@@ -46,7 +68,9 @@ export class LocalWalletProvider implements WalletProvider {
     return Promise.resolve(pubKey);
   }
 
-  public getSignerAccounts(): Promise<
+  public getSignerAccounts(
+    context: Context
+  ): Promise<
     Array<{
       address: Uint8Array;
       pubKey: PubKey;
@@ -64,14 +88,23 @@ export class LocalWalletProvider implements WalletProvider {
       }
     ]);
   }
-  public sign(address: Uint8Array, message: Uint8Array): Promise<Uint8Array> {
+
+  public sign(
+    context: Context,
+    address: Uint8Array,
+    message: Uint8Array
+  ): Promise<Uint8Array> {
     if (!this.privKey) {
       throw new Error("Not signed in");
     }
     const pubKey = this.privKey.toPubKey();
     const addressFromPubKey = pubKey.toAddress().toBytes();
     if (address.toString() !== addressFromPubKey.toString()) {
-      throw new Error("Unknown address");
+      useBech32Config(context.get("bech32Config"), () => {
+        throw new Error(
+          `Unknown address: ${new AccAddress(address).toBech32()}`
+        );
+      });
     }
 
     return Promise.resolve(this.privKey.sign(message));

@@ -5,6 +5,8 @@ import { LocalWalletProvider } from "./walletProvider";
 import { Address } from "../crypto";
 
 import crypto from "crypto";
+import { Context } from "./context";
+import { BIP44 } from "./bip44";
 
 describe("Test local wallet provider", () => {
   it("local wallet provider should generate correct priv key", async () => {
@@ -15,9 +17,21 @@ describe("Test local wallet provider", () => {
       }
     );
 
-    await localWalletProvider.signIn("m/44'/118'/0'/0/0");
+    const context: Context = new Context({
+      chainId: "",
+      txEncoder: undefined as any,
+      txBuilder: undefined as any,
+      bech32Config: undefined as any,
+      walletProvider: undefined as any,
+      rpcInstance: undefined as any,
+      restInstance: undefined as any,
+      queryAccount: undefined as any,
+      bip44: new BIP44(44, 118, 0)
+    });
 
-    const accounts = await localWalletProvider.getSignerAccounts();
+    await localWalletProvider.signIn(context, 0);
+
+    const accounts = await localWalletProvider.getSignerAccounts(context);
     assert.equal(accounts.length, 1);
 
     const account = accounts[0];
@@ -27,6 +41,7 @@ describe("Test local wallet provider", () => {
     );
     assert.equal(
       (await localWalletProvider.getPubKey(
+        context,
         Address.fromBech32(
           "cosmos",
           "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
