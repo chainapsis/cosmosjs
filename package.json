@@ -12,7 +12,7 @@
     "lint-fix": "tslint -c tslint.json -p tsconfig.json --fix",
     "prettier": "find ./src -type f | xargs prettier --check",
     "prettier-write": "find ./src -type f | xargs prettier --write",
-    "deploy-docs": "typedoc ./src && touch ./docs/.nojekyll && gh-pages --dist docs -m='[ci skip] Update document' --dotfiles"
+    "deploy-docs": "typedoc ./src && touch ./docs/.nojekyll && gh-pages --dist docs -m '[ci skip] Update document' --dotfiles"
   },
   "pre-commit": [
     "lint",
