@@ -9,7 +9,9 @@
 
 > General purpose library for cosmos-sdk
 
-Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.
+Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.  
+
+Documentation can be found [here](https://node-a-team.github.io/cosmosjs/).  
 
 ## Install
 ```sh
@@ -43,7 +45,7 @@ import bigInteger from "big-integer";
     chainId: "cosmoshub-2",
     bech32Config: defaultBech32Config("cosmos"),
     walletProvider: wallet,
-    rpc: "http://35.245.26.237:26657",
+    rpc: "http://localhost:26657",
     rest: "http://localhost:1317"
   });
 

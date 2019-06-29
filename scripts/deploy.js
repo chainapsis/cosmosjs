@@ -10,9 +10,25 @@ program
   .option('-v, --semver <version>')
   .option('--npm-token <auth_token>')
   .action(() => {
+    shell.cd(__dirname + "/..")
+
     if (!program.semver) {
-      shell.echo("You should set version: --semver <version>")
-      shell.exit(1)
+      shell.echo("Semver not provided: --semver <version>")
+      shell.echo("Try to parse semver from git tags")
+
+      if (shell.exec("git rev-parse master").stdout !== shell.exec("git rev-parse HEAD").stdout) {
+        shell.echo("This is not master branch")
+        shell.exit(1)
+      }
+
+      const tags = shell.exec("git tag --points-at HEAD").stdout.split("\n")
+      for (const tag of tags) {
+        const re = /^v\d+\.\d+\.\d+-?[\w.]*$/
+        if (re.test(tag)) {
+          program.semver = tag
+          break;
+        }
+      }
     }
 
     if (!semver.valid(program.semver)) {
@@ -26,7 +42,7 @@ program
     }
 
     if (program.semver !== version) {
-      shell.echo(`Packge version(${version}) and provided version(${program.version}) don't match`)
+      shell.echo(`Packge version(${version}) and provided version(${program.semver}) don't match`)
       shell.exit(1)
     }
 
@@ -36,7 +52,6 @@ program
     }
 
     shell.echo("Build typescript...")
-    shell.cd(__dirname + "/..")
     if (shell.exec("npm run build").code !== 0) {
       shell.echo("Fail to build typescript")
       shell.exit(1)

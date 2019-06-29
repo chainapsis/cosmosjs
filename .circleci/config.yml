@@ -25,9 +25,51 @@ jobs:
       - run:
           path: ~/cosmosjs/scripts
           command: cosmosjs-test
+  deploy:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.15.3
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/cosmosjs
+
+    steps:
+      - checkout
+      - run: sudo apt-get install libusb-1.0-0-dev
+      - run: npm install
+      - run: 
+          path: ~/cosmosjs/scripts
+          command: npm install
+      - run:
+          path: ~/cosmosjs/scripts
+          command: sudo npm install -g
+      - run:
+          path: ~/cosmosjs/scripts
+          command: cosmosjs-deploy --npm-token=${NPM_AUTH}
+      - add_ssh_keys:
+          fingerprints:
+            - "b0:81:7e:ed:cc:d3:d7:a6:14:9d:93:a9:44:c5:18:27"
+      - run: git config user.email "yunjh1994@gmail.com"
+      - run: git config user.name "Thunnini"
+      - run: npm run deploy-docs
 
 workflows:
   version: 2
-  test:
+  test-deploy:
     jobs:
-      - test
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+\.\d+\.\d+-?[\w.]*$/

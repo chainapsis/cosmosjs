@@ -2,6 +2,7 @@
 .git*
 .idea
 .vscode/
+.circleci/
 docs/
 node_modules/
 scripts/
