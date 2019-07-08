@@ -2,7 +2,6 @@
 require("babel-polyfill");
 
 import { GaiaApi } from "../src/gaia/api";
-import { defaultBech32Config } from "../src/core/bech32Config";
 import { LedgerWalletProvider } from "../src/core/ledgerWallet";
 import { MsgSend } from "../src/gaia/msgs/bank";
 import { AccAddress } from "../src/common/address";
@@ -23,7 +22,6 @@ import bigInteger from "big-integer";
 
   const api = new GaiaApi({
     chainId: "cosmoshub-2",
-    bech32Config: defaultBech32Config("cosmos"),
     walletProvider: wallet,
     rpc: "http://35.245.26.237:26657",
     rest: "http://localhost:1317"

@@ -5,6 +5,7 @@ import { stdTxBuilder } from "../common/stdTxBuilder";
 import { Context } from "../core/context";
 import { Account } from "../core/account";
 import { BIP44 } from "../core/bip44";
+import { defaultBech32Config } from "../core/bech32Config";
 
 export class GaiaApi extends Api<GaiaRest> {
   constructor(config: ApiConfig) {
@@ -20,6 +21,7 @@ export class GaiaApi extends Api<GaiaRest> {
       ): Promise<Account> => {
         return this.rest.getAccount(address);
       },
+      bech32Config: defaultBech32Config("cosmos"),
       bip44: new BIP44(44, 118, 0)
     });
   }

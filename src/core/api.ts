@@ -13,7 +13,6 @@ import { BIP44 } from "./bip44";
 
 export interface ApiConfig {
   chainId: string;
-  bech32Config: Bech32Config;
   walletProvider: WalletProvider;
   /** Endpoint of rpc */
   rpc: string;
@@ -33,6 +32,7 @@ export interface CoreConfig<R extends Rest> {
   txBuilder: TxBuilder;
   restFactory: (context: Context) => R;
   queryAccount: QueryAccount;
+  bech32Config: Bech32Config;
   bip44: BIP44;
 }
 
@@ -49,7 +49,7 @@ export class Api<R extends Rest> {
       chainId: config.chainId,
       txEncoder: coreConfig.txEncoder,
       txBuilder: coreConfig.txBuilder,
-      bech32Config: config.bech32Config,
+      bech32Config: coreConfig.bech32Config,
       walletProvider: config.walletProvider,
       rpcInstance: Axios.create({
         baseURL: config.rpc
@@ -65,7 +65,7 @@ export class Api<R extends Rest> {
     this._rest = coreConfig.restFactory(this.context);
 
     if (!config.disableGlobalBech32Config) {
-      useGlobalBech32Config(config.bech32Config);
+      useGlobalBech32Config(coreConfig.bech32Config);
     }
   }
 

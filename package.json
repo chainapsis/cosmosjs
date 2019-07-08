@@ -1,6 +1,6 @@
 {
   "name": "@node-a-team/cosmosjs",
-  "version": "v0.0.1-alpha.3",
+  "version": "v0.0.1-alpha.4",
   "homepage": "https://github.com/node-a-team/cosmosjs",
   "description": "General purpose library for cosmos-sdk",
   "main": "dist/index.js",
