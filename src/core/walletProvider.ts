@@ -34,11 +34,29 @@ export interface WalletProvider {
  * Use a secure vault outside of the context of the webpage to ensure security when signing transactions in production.
  */
 export class LocalWalletProvider implements WalletProvider {
+  public static generateMnemonic(rng?: RNG): string {
+    if (!rng) {
+      throw new Error("You should set rng to generate seed");
+    }
+    return generateSeed(rng);
+  }
+
+  public static getPrivKeyFromMnemonic(
+    bip44: BIP44,
+    mnemonic: string,
+    index: number,
+    change: number
+  ): PrivKey {
+    return generateWalletFromMnemonic(
+      mnemonic,
+      bip44.pathString(index, change)
+    );
+  }
   private privKey?: PrivKey;
 
   constructor(private mnemonic: string = "", private readonly rng?: RNG) {
     if (this.mnemonic === "") {
-      this.mnemonic = this.generateMnemonic();
+      this.mnemonic = LocalWalletProvider.generateMnemonic(this.rng);
     }
   }
 
@@ -47,7 +65,7 @@ export class LocalWalletProvider implements WalletProvider {
     index: number,
     change: number = 0
   ): Promise<void> {
-    this.privKey = this.getPrivKeyFromMnemonic(
+    this.privKey = LocalWalletProvider.getPrivKeyFromMnemonic(
       context.get("bip44"),
       this.mnemonic,
       index,
@@ -108,24 +126,5 @@ export class LocalWalletProvider implements WalletProvider {
     }
 
     return Promise.resolve(this.privKey.sign(message));
-  }
-
-  public generateMnemonic(): string {
-    if (!this.rng) {
-      throw new Error("You should set rng to generate seed");
-    }
-    return generateSeed(this.rng);
-  }
-
-  public getPrivKeyFromMnemonic(
-    bip44: BIP44,
-    mnemonic: string,
-    index: number,
-    change: number
-  ): PrivKey {
-    return generateWalletFromMnemonic(
-      mnemonic,
-      bip44.pathString(index, change)
-    );
   }
 }
