@@ -2,6 +2,7 @@ import { PubKey, PrivKey } from "../crypto";
 import { AccAddress, useBech32Config } from "../common/address";
 import { generateWalletFromMnemonic, generateSeed, RNG } from "../utils/key";
 import { Context } from "./context";
+import { BIP44 } from "./bip44";
 
 export interface WalletProvider {
   /**
@@ -35,12 +36,9 @@ export interface WalletProvider {
 export class LocalWalletProvider implements WalletProvider {
   private privKey?: PrivKey;
 
-  constructor(private mnemonic: string = "", rng?: RNG) {
+  constructor(private mnemonic: string = "", private readonly rng?: RNG) {
     if (this.mnemonic === "") {
-      if (!rng) {
-        throw new Error("You should set rng to generate seed");
-      }
-      this.mnemonic = generateSeed(rng);
+      this.mnemonic = this.generateMnemonic();
     }
   }
 
@@ -49,9 +47,11 @@ export class LocalWalletProvider implements WalletProvider {
     index: number,
     change: number = 0
   ): Promise<void> {
-    this.privKey = generateWalletFromMnemonic(
+    this.privKey = this.getPrivKeyFromMnemonic(
+      context.get("bip44"),
       this.mnemonic,
-      context.get("bip44").pathString(index, change)
+      index,
+      change
     );
     return Promise.resolve();
   }
@@ -108,5 +108,24 @@ export class LocalWalletProvider implements WalletProvider {
     }
 
     return Promise.resolve(this.privKey.sign(message));
+  }
+
+  public generateMnemonic(): string {
+    if (!this.rng) {
+      throw new Error("You should set rng to generate seed");
+    }
+    return generateSeed(this.rng);
+  }
+
+  public getPrivKeyFromMnemonic(
+    bip44: BIP44,
+    mnemonic: string,
+    index: number,
+    change: number
+  ): PrivKey {
+    return generateWalletFromMnemonic(
+      mnemonic,
+      bip44.pathString(index, change)
+    );
   }
 }
