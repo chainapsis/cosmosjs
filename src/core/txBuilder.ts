@@ -27,7 +27,7 @@ export interface TxBuilderConfig {
   // TODO: support multi-asset fee
   fee: Coin;
   // TODO: support multi-asset fee
-  gasPrice: number;
+  gasPrice?: number;
 }
 
 export type TxBuilder = (
