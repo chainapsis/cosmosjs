@@ -23,7 +23,7 @@ import bigInteger from "big-integer";
   const api = new GaiaApi({
     chainId: "cosmoshub-2",
     walletProvider: wallet,
-    rpc: "http://35.245.26.237:26657",
+    rpc: "http://localhost:26657",
     rest: "http://localhost:1317"
   });
 
