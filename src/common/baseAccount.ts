@@ -26,18 +26,19 @@ export class BaseAccount implements Account {
           coins.push(new Coin(coin.denom, new Int(coin.amount)));
         }
       }
-      let pubKey: PubKey;
-      if (
-        !value.public_key ||
-        value.public_key.type !== "tendermint/PubKeySecp256k1"
-      ) {
-        throw new Error(
-          `Unsupported public key type: ${value.public_key.type}`
-        );
+      let pubKey: PubKey | undefined;
+      if (value.public_key) {
+        if (value.public_key.type !== "tendermint/PubKeySecp256k1") {
+          throw new Error(
+            `Unsupported public key type: ${value.public_key.type}`
+          );
+        } else {
+          pubKey = new PubKeySecp256k1(
+            Buffer.from(value.public_key.value, "base64")
+          );
+        }
       }
-      pubKey = new PubKeySecp256k1(
-        Buffer.from(value.public_key.value, "base64")
-      );
+
       const accountNumber = value.account_number;
       const sequence = value.sequence;
 
@@ -48,14 +49,14 @@ export class BaseAccount implements Account {
   }
 
   private address: AccAddress;
-  private pubKey: PubKey;
+  private pubKey: PubKey | undefined; // If an account haven't sent tx at all, pubKey is undefined.
   private accountNumber: bigInteger.BigInteger;
   private sequence: bigInteger.BigInteger;
   private coins: Coin[];
 
   constructor(
     address: AccAddress,
-    pubKey: PubKey,
+    pubKey: PubKey | undefined,
     accountNumber: bigInteger.BigNumber,
     sequence: bigInteger.BigNumber,
     coins: Coin[]
@@ -83,7 +84,7 @@ export class BaseAccount implements Account {
     return this.address;
   }
 
-  public getPubKey(): PubKey {
+  public getPubKey(): PubKey | undefined {
     return this.pubKey;
   }
 
