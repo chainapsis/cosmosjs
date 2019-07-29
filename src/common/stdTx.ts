@@ -1,5 +1,5 @@
 import { Tx, Msg, TxEncoder } from "../core/tx";
-import { Amino, Type } from "ts-amino";
+import { Amino, Type } from "@node-a-team/ts-amino";
 const {
   Field,
   Concrete,

@@ -1,4 +1,4 @@
-import { Amino, Type } from "ts-amino";
+import { Amino, Type } from "@node-a-team/ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress } from "../../common/address";

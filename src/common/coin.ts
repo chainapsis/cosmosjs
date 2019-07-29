@@ -1,4 +1,4 @@
-import { Amino } from "ts-amino";
+import { Amino } from "@node-a-team/ts-amino";
 const { Field, DefineStruct } = Amino;
 import { Int } from "./int";
 import bigInteger from "big-integer";

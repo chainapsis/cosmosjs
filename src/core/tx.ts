@@ -1,5 +1,5 @@
 import { AccAddress } from "../common/address";
-import { Amino } from "ts-amino";
+import { Amino } from "@node-a-team/ts-amino";
 const { marshalJson } = Amino;
 import { Buffer } from "buffer/";
 import { sortJSON } from "../utils/sortJson";

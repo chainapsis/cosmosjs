@@ -1,4 +1,4 @@
-import { Amino, Type } from "ts-amino";
+import { Amino, Type } from "@node-a-team/ts-amino";
 const { Field, DefineType } = Amino;
 import bech32 from "bech32";
 

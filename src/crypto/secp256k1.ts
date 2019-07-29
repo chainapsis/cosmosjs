@@ -1,4 +1,4 @@
-import { Amino, Type } from "ts-amino";
+import { Amino, Type } from "@node-a-team/ts-amino";
 const { Field, DefineType, Concrete, marshalBinaryBare } = Amino;
 import { Buffer } from "buffer/";
 import ripemd160 from "ripemd160";

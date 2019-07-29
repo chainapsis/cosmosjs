@@ -8,7 +8,7 @@ import { StdSignDoc, StdFee } from "./stdTx";
 import { Msg } from "../core/tx";
 import { AccAddress, useBech32Config } from "../common/address";
 import { defaultBech32Config } from "../core/bech32Config";
-import { Amino } from "ts-amino";
+import { Amino } from "@node-a-team/ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
 
 @Concrete("test/MsgTest")

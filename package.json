@@ -35,7 +35,7 @@
     "ripemd160": "^2.0.2",
     "secp256k1": "^3.7.0",
     "sha.js": "^2.4.11",
-    "ts-amino": "git+https://github.com/node-a-team/ts-amino.git#452fdc8"
+    "@node-a-team/ts-amino": "0.0.1-alpha.1"
   },
   "devDependencies": {
     "@types/bech32": "^1.1.1",

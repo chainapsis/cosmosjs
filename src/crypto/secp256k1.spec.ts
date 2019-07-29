@@ -3,7 +3,7 @@ import assert from "assert";
 import "mocha";
 import { PrivKeySecp256k1 } from "./secp256k1";
 import { Buffer } from "buffer/";
-// import { Amino } from "ts-amino";
+// import { Amino } from "@node-a-team/ts-amino";
 // const { marshalBinaryBare } = Amino;
 
 describe("Test secp256k1", () => {
