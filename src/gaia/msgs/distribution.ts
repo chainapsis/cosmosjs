@@ -1,9 +1,8 @@
 import { Amino } from "@node-a-team/ts-amino";
-const { Field, Concrete, DefineStruct } = Amino;
+const { Field, DefineStruct } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress, ValAddress } from "../../common/address";
 
-@Concrete("cosmos-sdk/MsgModifyWithdrawAddress")
 @DefineStruct()
 export class MsgSetWithdrawAddress extends Msg {
   @Field.Defined(0, {
@@ -27,7 +26,6 @@ export class MsgSetWithdrawAddress extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgWithdrawDelegationReward")
 @DefineStruct()
 export class MsgWithdrawDelegatorReward extends Msg {
   @Field.Defined(0, {
@@ -51,7 +49,6 @@ export class MsgWithdrawDelegatorReward extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgWithdrawValidatorCommission")
 @DefineStruct()
 export class MsgWithdrawValidatorCommission extends Msg {
   @Field.Defined(0, {

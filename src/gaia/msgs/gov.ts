@@ -1,5 +1,5 @@
 import { Amino, Type } from "@node-a-team/ts-amino";
-const { Field, Concrete, DefineStruct, DefineType } = Amino;
+const { Field, DefineStruct, DefineType } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress } from "../../common/address";
 import { Coin } from "../../common/coin";
@@ -77,7 +77,6 @@ export class VoteOption {
   }
 }
 
-@Concrete("cosmos-sdk/MsgSubmitProposal")
 @DefineStruct()
 export class MsgSubmitProposal extends Msg {
   @Field.String(0, {
@@ -135,7 +134,6 @@ export class MsgSubmitProposal extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgDeposit")
 @DefineStruct()
 export class MsgDeposit extends Msg {
   @Field.Uint64(0, {
@@ -187,7 +185,6 @@ export class MsgDeposit extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgVote")
 @DefineStruct()
 export class MsgVote extends Msg {
   @Field.Uint64(0, {

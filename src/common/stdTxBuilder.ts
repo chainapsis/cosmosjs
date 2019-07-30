@@ -63,6 +63,7 @@ export const stdTxBuilder: TxBuilder = (
         }
 
         const signDoc = new StdSignDoc(
+          context.get("codec"),
           accountNumber,
           context.get("chainId"),
           stdFee,

@@ -1,20 +1,17 @@
 import { Tx, Msg, TxEncoder } from "../core/tx";
-import { Amino, Type } from "@node-a-team/ts-amino";
-const {
-  Field,
-  Concrete,
-  DefineStruct,
-  DefineType,
-  marshalBinaryLengthPrefixed,
-  marshalJson
-} = Amino;
+import { Amino, Type, Codec } from "@node-a-team/ts-amino";
+const { Field, DefineStruct, DefineType, marshalJson } = Amino;
 import { Coin } from "./coin";
 import bigInteger from "big-integer";
 import { PubKey } from "../crypto";
 import { Buffer } from "buffer/";
 import { sortJSON } from "../utils/sortJson";
+import { Context } from "../core/context";
 
-@Concrete("auth/StdTx")
+export function registerCodec(codec: Codec) {
+  codec.registerConcrete("auth/StdTx", StdTx.prototype);
+}
+
 @DefineStruct()
 export class StdTx implements Tx {
   @Field.Slice(0, { type: Type.Interface }, { jsonName: "msg" })
@@ -52,8 +49,8 @@ export class StdTx implements Tx {
   }
 }
 
-const defaultTxEncoder: TxEncoder = (tx: Tx): Uint8Array => {
-  return marshalBinaryLengthPrefixed(tx);
+const defaultTxEncoder: TxEncoder = (context: Context, tx: Tx): Uint8Array => {
+  return context.get("codec").marshalBinaryLengthPrefixed(tx);
 };
 
 export { defaultTxEncoder };
@@ -113,6 +110,7 @@ export class StdSignDoc {
   public sequence: bigInteger.BigInteger;
 
   constructor(
+    codec: Codec,
     accountNumber: bigInteger.BigNumber,
     chainId: string,
     fee: StdFee,
@@ -133,7 +131,7 @@ export class StdSignDoc {
 
     this.msgsRaws = [];
     for (const msg of msgs) {
-      this.msgsRaws.push(new RawMessage(msg.getSignBytes()));
+      this.msgsRaws.push(new RawMessage(msg.getSignBytes(codec)));
     }
 
     if (typeof sequence === "string") {

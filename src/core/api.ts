@@ -10,6 +10,7 @@ import { Rest } from "./rest";
 import { QueryAccount } from "./account";
 import { ResultBroadcastTx, ResultBroadcastTxCommit } from "../rpc/tx";
 import { BIP44 } from "./bip44";
+import { Codec } from "@node-a-team/ts-amino";
 
 export interface ApiConfig {
   chainId: string;
@@ -34,6 +35,7 @@ export interface CoreConfig<R extends Rest> {
   queryAccount: QueryAccount;
   bech32Config: Bech32Config;
   bip44: BIP44;
+  registerCodec: (codec: Codec) => void;
 }
 
 export class Api<R extends Rest> {
@@ -58,8 +60,11 @@ export class Api<R extends Rest> {
         baseURL: config.rest
       }),
       queryAccount: coreConfig.queryAccount,
-      bip44: coreConfig.bip44
+      bip44: coreConfig.bip44,
+      codec: new Codec()
     });
+
+    coreConfig.registerCodec(this.context.get("codec"));
 
     this._rpc = new TendermintRPC(this.context);
     this._rest = coreConfig.restFactory(this.context);
@@ -85,7 +90,7 @@ export class Api<R extends Rest> {
     mode: "commit" | "sync" | "async" = "sync"
   ): Promise<ResultBroadcastTx | ResultBroadcastTxCommit> {
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
-    const bz = this.context.get("txEncoder")(tx);
+    const bz = this.context.get("txEncoder")(this.context, tx);
     if (mode === "commit") {
       return this.rpc.broadcastTxCommit(bz);
     } else {

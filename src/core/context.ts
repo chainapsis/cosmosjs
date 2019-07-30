@@ -5,6 +5,7 @@ import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
 import { QueryAccount } from "./account";
 import { BIP44 } from "./bip44";
+import { Codec } from "@node-a-team/ts-amino";
 
 export class ImmutableContext<T> {
   constructor(private context: T) {}
@@ -28,6 +29,7 @@ export interface IContext<> {
   restInstance: AxiosInstance;
   queryAccount: QueryAccount;
   bip44: BIP44;
+  codec: Codec;
 }
 
 export class Context extends ImmutableContext<IContext> {}

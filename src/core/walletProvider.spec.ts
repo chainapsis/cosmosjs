@@ -7,6 +7,7 @@ import { Address } from "../crypto";
 import crypto from "crypto";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
+import { Codec } from "@node-a-team/ts-amino";
 
 describe("Test local wallet provider", () => {
   it("local wallet provider should generate correct priv key", async () => {
@@ -26,7 +27,8 @@ describe("Test local wallet provider", () => {
       rpcInstance: undefined as any,
       restInstance: undefined as any,
       queryAccount: undefined as any,
-      bip44: new BIP44(44, 118, 0)
+      bip44: new BIP44(44, 118, 0),
+      codec: new Codec()
     });
 
     await localWalletProvider.signIn(context, 0);

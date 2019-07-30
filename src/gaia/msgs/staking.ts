@@ -1,5 +1,5 @@
 import { Amino } from "@node-a-team/ts-amino";
-const { Field, Concrete, DefineStruct } = Amino;
+const { Field, DefineStruct } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress, ValAddress } from "../../common/address";
 import { Coin } from "../../common/coin";
@@ -66,7 +66,6 @@ export class CommissionMsg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgCreateValidator")
 @DefineStruct()
 export class MsgCreateValidator extends Msg {
   @Field.Defined(0, {
@@ -137,7 +136,6 @@ export class MsgCreateValidator extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgEditValidator")
 @DefineStruct()
 export class MsgEditValidator extends Msg {
   @Field.Defined(0, {
@@ -178,7 +176,6 @@ export class MsgEditValidator extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgDelegate")
 @DefineStruct()
 export class MsgDelegate extends Msg {
   @Field.Defined(0, {
@@ -212,7 +209,6 @@ export class MsgDelegate extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgBeginRedelegate")
 @DefineStruct()
 export class MsgBeginRedelegate extends Msg {
   @Field.Defined(0, {
@@ -253,7 +249,6 @@ export class MsgBeginRedelegate extends Msg {
   }
 }
 
-@Concrete("cosmos-sdk/MsgUndelegate")
 @DefineStruct()
 export class MsgUndelegate extends Msg {
   @Field.Defined(0, {

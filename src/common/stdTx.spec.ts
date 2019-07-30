@@ -4,7 +4,7 @@ import "mocha";
 import { Buffer } from "buffer/";
 import { Coin } from "./coin";
 import { Int } from "./int";
-import { StdSignDoc, StdFee } from "./stdTx";
+import { StdSignDoc, StdFee, registerCodec } from "./stdTx";
 import { Msg } from "../core/tx";
 import { AccAddress, useBech32Config } from "../common/address";
 import { defaultBech32Config } from "../core/bech32Config";
@@ -24,9 +24,12 @@ class MsgTest extends Msg {
 }
 
 describe("Test std tx", () => {
+  registerCodec(Amino.globalCodec);
+
   it("std sign doc should generate corrent sign doc", () => {
     useBech32Config(defaultBech32Config("cosmos"), () => {
       const signDoc = new StdSignDoc(
+        Amino.globalCodec,
         1,
         "test",
         new StdFee([new Coin("test", new Int(10))], 1000),

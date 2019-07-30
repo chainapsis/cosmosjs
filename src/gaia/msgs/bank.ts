@@ -1,11 +1,10 @@
 import { Amino, Type } from "@node-a-team/ts-amino";
-const { Field, Concrete, DefineStruct } = Amino;
+const { Field, DefineStruct } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress } from "../../common/address";
 import { Coin } from "../../common/coin";
 import { Int } from "../../common/int";
 
-@Concrete("cosmos-sdk/MsgSend")
 @DefineStruct()
 export class MsgSend extends Msg {
   @Field.Defined(0, {

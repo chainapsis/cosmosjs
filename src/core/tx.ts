@@ -1,8 +1,8 @@
 import { AccAddress } from "../common/address";
-import { Amino } from "@node-a-team/ts-amino";
-const { marshalJson } = Amino;
+import { Codec } from "@node-a-team/ts-amino";
 import { Buffer } from "buffer/";
 import { sortJSON } from "../utils/sortJson";
+import { Context } from "./context";
 
 export interface Tx {
   getMsgs(): Msg[];
@@ -26,12 +26,12 @@ export class Msg {
    * Get the canonical byte representation of the Msg.
    * @return Return sorted by alphabetically amino encoded json by default.
    */
-  public getSignBytes(): Uint8Array {
-    return Buffer.from(sortJSON(marshalJson(this)), "utf8");
+  public getSignBytes(codec: Codec): Uint8Array {
+    return Buffer.from(sortJSON(codec.marshalJson(this)), "utf8");
   }
   public getSigners(): AccAddress[] {
     throw new Error("You should implement getSigners()");
   }
 }
 
-export type TxEncoder = (tx: Tx) => Uint8Array;
+export type TxEncoder = (conext: Context, tx: Tx) => Uint8Array;
