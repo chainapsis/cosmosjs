@@ -21,13 +21,13 @@ npm install --save @node-a-team/cosmosjs
 ## How to use
 More examples will be provided [here](https://github.com/node-a-team/cosmosjs/tree/master/example) soon.
 ```ts
-import { GaiaApi } from "@node-a-team/cosmosjs/dist/gaia/api";
-import { defaultBech32Config } from "@node-a-team/cosmosjs/dist/core/bech32Config";
-import { LedgerWalletProvider } from "@node-a-team/cosmosjs/dist/core/ledgerWallet";
-import { MsgSend } from "@node-a-team/cosmosjs/dist/gaia/msgs/bank";
-import { AccAddress, useGlobalBech32Config } from "@node-a-team/cosmosjs/dist/common/address";
-import { Coin } from "@node-a-team/cosmosjs/dist/common/coin";
-import { Int } from "@node-a-team/cosmosjs/dist/common/int";
+import { GaiaApi } from "@node-a-team/cosmosjs/gaia/api";
+import { defaultBech32Config } from "@node-a-team/cosmosjs/core/bech32Config";
+import { LedgerWalletProvider } from "@node-a-team/cosmosjs/core/ledgerWallet";
+import { MsgSend } from "@node-a-team/cosmosjs/gaia/msgs/bank";
+import { AccAddress, useGlobalBech32Config } from "@node-a-team/cosmosjs/common/address";
+import { Coin } from "@node-a-team/cosmosjs/common/coin";
+import { Int } from "@node-a-team/cosmosjs/common/int";
 import bigInteger from "big-integer";
 
 (async () => {
@@ -43,7 +43,6 @@ import bigInteger from "big-integer";
 
   const api = new GaiaApi({
     chainId: "cosmoshub-2",
-    bech32Config: defaultBech32Config("cosmos"),
     walletProvider: wallet,
     rpc: "http://localhost:26657",
     rest: "http://localhost:1317"
