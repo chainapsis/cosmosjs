@@ -57,6 +57,13 @@ program
       shell.exit(1)
     }
 
+    if (shell.cp("-f", ["./package.json", "./README.md", "LICENSE"], "./dist").code !== 0) {
+      shell.echo("Fail to move package.json to folder under dist")
+      shell.exit(1)
+    }
+
+    shell.cd("./dist")
+
     if (shell.exec(`npm config set //registry.npmjs.org/:_authToken ${program.npmToken}`).code !== 0) {
       shell.echo("Fail to set npm token")
       shell.exit(1)
