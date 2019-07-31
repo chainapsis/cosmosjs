@@ -1,6 +1,6 @@
 import { Api, ApiConfig, CoreConfig } from "../core/api";
 import { GaiaRest } from "./rest";
-import { registerCodec as commonRegisterCodec } from "../common/codec";
+import * as CmnCdc from "../common/codec";
 import { registerCodec } from "./msgs/codec";
 import { defaultTxEncoder } from "../common/stdTx";
 import { stdTxBuilder } from "../common/stdTxBuilder";
@@ -32,7 +32,7 @@ export class GaiaApi extends Api<GaiaRest> {
         bech32Config: defaultBech32Config("cosmos"),
         bip44: new BIP44(44, 118, 0),
         registerCodec: (codec: Codec) => {
-          commonRegisterCodec(codec);
+          CmnCdc.registerCodec(codec);
           Crypto.registerCodec(codec);
           registerCodec(codec);
         }
