@@ -72,7 +72,7 @@ import bigInteger from "big-integer";
 
 ## Making your own messages
 Below is Gaia's basic sending message.
-More examples are [here](https://github.com/node-a-team/cosmosjs/tree/master/src/gaia/msgs).
+More examples are [here](https://github.com/node-a-team/cosmosjs/tree/master/src/x).
 ```ts
 import { Amino, Type } from "ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
