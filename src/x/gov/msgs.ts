@@ -1,9 +1,9 @@
 import { Amino, Type } from "@node-a-team/ts-amino";
 const { Field, DefineStruct, DefineType } = Amino;
-import { Msg } from "../../../core/tx";
-import { AccAddress } from "../../../common/address";
-import { Coin } from "../../../common/coin";
-import { Int } from "../../../common/int";
+import { Msg } from "../../core/tx";
+import { AccAddress } from "../../common/address";
+import { Coin } from "../../common/coin";
+import { Int } from "../../common/int";
 import bigInteger from "big-integer";
 
 @DefineType()

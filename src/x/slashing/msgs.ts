@@ -1,7 +1,7 @@
 import { Amino } from "@node-a-team/ts-amino";
 const { Field, DefineStruct } = Amino;
-import { Msg } from "../../../core/tx";
-import { AccAddress, ValAddress } from "../../../common/address";
+import { Msg } from "../../core/tx";
+import { AccAddress, ValAddress } from "../../common/address";
 
 @DefineStruct()
 export class MsgUnjail extends Msg {

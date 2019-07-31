@@ -1,11 +1,11 @@
 import { Amino } from "@node-a-team/ts-amino";
 const { Field, DefineStruct } = Amino;
-import { Msg } from "../../../core/tx";
-import { AccAddress, ValAddress } from "../../../common/address";
-import { Coin } from "../../../common/coin";
-import { Int } from "../../../common/int";
-import { Dec } from "../../../common/decimal";
-import { PubKey } from "../../../crypto";
+import { Msg } from "../../core/tx";
+import { AccAddress, ValAddress } from "../../common/address";
+import { Coin } from "../../common/coin";
+import { Int } from "../../common/int";
+import { Dec } from "../../common/decimal";
+import { PubKey } from "../../crypto";
 
 @DefineStruct()
 export class Description {
