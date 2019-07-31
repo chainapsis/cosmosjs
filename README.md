@@ -63,8 +63,7 @@ import bigInteger from "big-integer";
       // If account number or sequence is omitted, they are calculated automatically
       gas: bigInteger(60000),
       memo: "test",
-      fee: new Coin("uatom", new Int("111")),
-      gasPrice: 1
+      fee: new Coin("uatom", new Int("111"))
     },
     "commit"
   );
