@@ -3,7 +3,7 @@ require("babel-polyfill");
 
 import { GaiaApi } from "../src/gaia/api";
 import { LedgerWalletProvider } from "../src/core/ledgerWallet";
-import { MsgSend } from "../src/gaia/msgs/bank";
+import { MsgSend } from "../src/gaia/x/bank";
 import { AccAddress } from "../src/common/address";
 import { Coin } from "../src/common/coin";
 import { Int } from "../src/common/int";

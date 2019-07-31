@@ -1,7 +1,11 @@
 import { Api, ApiConfig, CoreConfig } from "../core/api";
 import { GaiaRest } from "./rest";
 import * as CmnCdc from "../common/codec";
-import { registerCodec } from "./msgs/codec";
+import * as Bank from "./x/bank";
+import * as Distribution from "./x/distribution";
+import * as Gov from "./x/gov";
+import * as Slashing from "./x/slashing";
+import * as Staking from "./x/staking";
 import { defaultTxEncoder } from "../common/stdTx";
 import { stdTxBuilder } from "../common/stdTxBuilder";
 import { Context } from "../core/context";
@@ -34,7 +38,11 @@ export class GaiaApi extends Api<GaiaRest> {
         registerCodec: (codec: Codec) => {
           CmnCdc.registerCodec(codec);
           Crypto.registerCodec(codec);
-          registerCodec(codec);
+          Bank.registerCodec(codec);
+          Distribution.registerCodec(codec);
+          Gov.registerCodec(codec);
+          Slashing.registerCodec(codec);
+          Staking.registerCodec(codec);
         }
       },
       ...coreConfig

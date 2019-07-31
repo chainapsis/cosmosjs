@@ -24,7 +24,7 @@ More examples will be provided [here](https://github.com/node-a-team/cosmosjs/tr
 import { GaiaApi } from "@node-a-team/cosmosjs/gaia/api";
 import { defaultBech32Config } from "@node-a-team/cosmosjs/core/bech32Config";
 import { LedgerWalletProvider } from "@node-a-team/cosmosjs/core/ledgerWallet";
-import { MsgSend } from "@node-a-team/cosmosjs/gaia/msgs/bank";
+import { MsgSend } from "@node-a-team/cosmosjs/gaia/x/bank";
 import { AccAddress, useGlobalBech32Config } from "@node-a-team/cosmosjs/common/address";
 import { Coin } from "@node-a-team/cosmosjs/common/coin";
 import { Int } from "@node-a-team/cosmosjs/common/int";
