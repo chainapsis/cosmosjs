@@ -69,7 +69,7 @@ program
       shell.exit(1)
     }
 
-    if (shell.exec("npm publish --verbose").code !== 0) {
+    if (shell.exec("npm publish --verbose --access public").code !== 0) {
       shell.echo("Fail to publish to npm")
       shell.exit(1)
     }
