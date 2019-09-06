@@ -1,0 +1,406 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@everett-protocol/cosmosjs</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@everett-protocol/cosmosjs</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @everett-protocol/cosmosjs</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1  align="center">Welcome to cosmosjs 👋</h1>
+				<p>
+					<img  src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
+					<a  href="https://twitter.com/Node_Ateam">
+						<img  alt="Twitter: Node_Ateam"  src="https://img.shields.io/twitter/follow/Node_Ateam.svg?style=social"  target="_blank" />
+					</a>
+				</p>
+				<blockquote>
+					<p>General purpose library for cosmos-sdk</p>
+				</blockquote>
+				<p>Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.  </p>
+				<p>Documentation can be found <a href="https://everett-protocol.github.io/cosmosjs/">here</a>.  </p>
+				<h2 id="install">Install</h2>
+				<pre><code class="language-sh">npm install --save @everett-protocol/cosmosjs</code></pre>
+				<h2 id="how-to-use">How to use</h2>
+				<p>More examples will be provided <a href="https://github.com/everett-protocol/cosmosjs/tree/master/example">here</a> soon.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { GaiaApi } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/gaia/api"</span>;
+<span class="hljs-keyword">import</span> { defaultBech32Config } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/core/bech32Config"</span>;
+<span class="hljs-keyword">import</span> { LedgerWalletProvider } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/core/ledgerWallet"</span>;
+<span class="hljs-keyword">import</span> { MsgSend } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/x/bank"</span>;
+<span class="hljs-keyword">import</span> { AccAddress, useGlobalBech32Config } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/common/address"</span>;
+<span class="hljs-keyword">import</span> { Coin } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/common/coin"</span>;
+<span class="hljs-keyword">import</span> { Int } <span class="hljs-keyword">from</span> <span class="hljs-string">"@everett-protocol/cosmosjs/common/int"</span>;
+<span class="hljs-keyword">import</span> bigInteger <span class="hljs-keyword">from</span> <span class="hljs-string">"big-integer"</span>;
+
+<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (<span class="hljs-params"></span>) =&gt; {
+  <span class="hljs-comment">// Here you can see the type of transport</span>
+  <span class="hljs-comment">// https://github.com/LedgerHQ/ledgerjs</span>
+  <span class="hljs-keyword">const</span> wallet = <span class="hljs-keyword">new</span> LedgerWalletProvider(<span class="hljs-params">"HID"</span>);
+  <span class="hljs-comment">/*
+    // You should not use local wallet provider in production
+    const wallet = new LocalWalletProvider(
+      "anger river nuclear pig enlist fish demand dress library obtain concert nasty wolf episode ring bargain rely off vibrant iron cram witness extra enforce"
+    );
+  */</span>
+
+  <span class="hljs-keyword">const</span> api = <span class="hljs-keyword">new</span> GaiaApi(<span class="hljs-params">{
+    chainId: "cosmoshub-2",
+    walletProvider: wallet,
+    rpc: "http:<span class="hljs-comment">//localhost:26657",</span>
+    rest: "http:<span class="hljs-comment">//localhost:1317"</span>
+  }</span>);
+
+  <span class="hljs-comment">// You should sign in before using your wallet</span>
+  <span class="hljs-keyword">await</span> api.signIn(<span class="hljs-params">0</span>);
+
+  <span class="hljs-keyword">const</span> account = (<span class="hljs-params"><span class="hljs-keyword">await</span> api.wallet.getSignerAccounts(<span class="hljs-params">api.context</span>)</span>)[0];
+  <span class="hljs-keyword">const</span> accAddress = <span class="hljs-keyword">new</span> AccAddress(<span class="hljs-params">account.address</span>);
+
+  <span class="hljs-keyword">await</span> api.sendMsgs(<span class="hljs-params">
+    [
+      <span class="hljs-keyword">new</span> MsgSend(<span class="hljs-params">accAddress, accAddress, [<span class="hljs-keyword">new</span> Coin(<span class="hljs-params">"uatom", <span class="hljs-keyword">new</span> Int(<span class="hljs-params">"1"</span>)</span>)]</span>),
+      <span class="hljs-keyword">new</span> MsgSend(<span class="hljs-params">accAddress, accAddress, [<span class="hljs-keyword">new</span> Coin(<span class="hljs-params">"uatom", <span class="hljs-keyword">new</span> Int(<span class="hljs-params">"1"</span>)</span>)]</span>)
+    ],
+    {
+      <span class="hljs-comment">// If account number or sequence is omitted, they are calculated automatically</span>
+      gas: bigInteger(<span class="hljs-params">60000</span>),
+      memo: "test",
+      fee: <span class="hljs-keyword">new</span> Coin(<span class="hljs-params">"uatom", <span class="hljs-keyword">new</span> Int(<span class="hljs-params">"111"</span>)</span>)
+    },
+    "commit"
+  </span>);
+}</span>)<span class="hljs-params">()</span>;</span></code></pre>
+				<h2 id="making-your-own-messages">Making your own messages</h2>
+				<p>Below is Gaia&#39;s basic sending message.
+				More examples are <a href="https://github.com/everett-protocol/cosmosjs/tree/master/src/x">here</a>.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Amino, Type } <span class="hljs-keyword">from</span> <span class="hljs-string">"ts-amino"</span>;
+<span class="hljs-keyword">const</span> { Field, Concrete, DefineStruct } = Amino;
+<span class="hljs-keyword">import</span> { Msg }  <span class="hljs-keyword">from</span> <span class="hljs-string">"../../core/tx"</span>;
+<span class="hljs-keyword">import</span> { AccAddress } <span class="hljs-keyword">from</span> <span class="hljs-string">"../../common/address"</span>;
+<span class="hljs-keyword">import</span> { Coin } <span class="hljs-keyword">from</span> <span class="hljs-string">"../../common/coin"</span>;
+<span class="hljs-keyword">import</span> { Int } <span class="hljs-keyword">from</span> <span class="hljs-string">"../../common/int"</span>;
+
+<span class="hljs-meta">@Concrete</span>(<span class="hljs-string">"cosmos-sdk/MsgSend"</span>)
+<span class="hljs-meta">@DefineStruct</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MsgSend <span class="hljs-keyword">extends</span> Msg {
+  <span class="hljs-meta">@Field</span>.Defined(<span class="hljs-number">0</span>, {
+    jsonName:  <span class="hljs-string">"from_address"</span>
+  })
+  <span class="hljs-keyword">public</span> fromAddress: AccAddress;
+
+  <span class="hljs-meta">@Field</span>.Defined(<span class="hljs-number">1</span>, {
+    jsonName:  <span class="hljs-string">"to_address"</span>
+  })
+  <span class="hljs-keyword">public</span> toAddress: AccAddress;
+
+  <span class="hljs-meta">@Field</span>.Slice(
+    <span class="hljs-number">2</span>,
+    { <span class="hljs-keyword">type</span>: Type.Defined },
+    {
+      jsonName: <span class="hljs-string">"amount"</span>
+    }
+  )
+  <span class="hljs-keyword">public</span> amount: Coin[];
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">fromAddress: AccAddress, toAddress: AccAddress, amount: Coin[]</span>) {
+    <span class="hljs-keyword">super</span>();
+    <span class="hljs-keyword">this</span>.fromAddress = fromAddress;
+    <span class="hljs-keyword">this</span>.toAddress = toAddress;
+    <span class="hljs-keyword">this</span>.amount = amount;
+  }
+
+  <span class="hljs-keyword">public</span> getSigners(): AccAddress[] {
+    <span class="hljs-keyword">return</span> [<span class="hljs-keyword">this</span>.fromAddress];
+  }
+
+  <span class="hljs-comment">/**
+  * ValidateBasic does a simple validation check that
+  * doesn't require access to any other information.
+  * You can throw error in this when msg is invalid.
+  */</span>
+  <span class="hljs-keyword">public</span> validateBasic(): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> coin of <span class="hljs-keyword">this</span>.amount) {
+      <span class="hljs-keyword">if</span> (coin.amount.lte(<span class="hljs-keyword">new</span>  Int(<span class="hljs-number">0</span>))) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Send amount is invalid"</span>);
+      }
+    }
+  }
+
+  <span class="hljs-comment">/**
+  * Get the canonical byte representation of the Msg.
+  * @return Return sorted by alphabetically amino encoded json by default.
+  */</span>
+  <span class="hljs-comment">// public getSignBytes(): Uint8Array {</span>
+  <span class="hljs-comment">//   return Buffer.from(sortJSON(marshalJson(this)), "utf8");</span>
+  <span class="hljs-comment">// }</span>
+}</code></pre>
+				<h2 id="making-api-for-your-own-blockchain">Making api for your own blockchain</h2>
+				<p>Check out <a href="https://github.com/everett-protocol/cosmosjs/tree/master/src/gaia">this</a>.</p>
+				<h2 id="run-tests">Run tests</h2>
+				<pre><code class="language-sh">npm run <span class="hljs-built_in">test</span></code></pre>
+				<h2 id="author">Author</h2>
+				<p>👤 <strong>everett-protocol</strong></p>
+				<ul>
+					<li>Twitter: <a href="https://twitter.com/@everettprotocol">@EverettProtocol</a></li>
+					<li>Github: <a href="https://github.com/everett-protocol">everett-protocol</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_address_.html">"common/address"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_baseaccount_.html">"common/base<wbr>Account"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_codec_.html">"common/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_coin_.html">"common/coin"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_decimal_.html">"common/decimal"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_int_.html">"common/int"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_stdtx_.html">"common/std<wbr>Tx"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_common_stdtxbuilder_.html">"common/std<wbr>TxBuilder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_account_.html">"core/account"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_api_.html">"core/api"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_bech32config_.html">"core/bech32<wbr>Config"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_bip44_.html">"core/bip44"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_context_.html">"core/context"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_ledgerwallet_.html">"core/ledger<wbr>Wallet"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_rest_.html">"core/rest"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_rpc_.html">"core/rpc"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_tx_.html">"core/tx"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_txbuilder_.html">"core/tx<wbr>Builder"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_core_walletprovider_.html">"core/wallet<wbr>Provider"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_crypto_codec_.html">"crypto/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_crypto_secp256k1_.html">"crypto/secp256k1"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_crypto_types_.html">"crypto/types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gaia_api_.html">"gaia/api"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_gaia_rest_.html">"gaia/rest"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rpc_abci_.html">"rpc/abci"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rpc_status_.html">"rpc/status"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rpc_tendermint_.html">"rpc/tendermint"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rpc_tx_.html">"rpc/tx"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rpc_types_.html">"rpc/types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_key_.html">"utils/key"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_sortjson_.html">"utils/sort<wbr>Json"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_bank_codec_.html">"x/bank/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_bank_msgs_.html">"x/bank/msgs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_distribution_codec_.html">"x/distribution/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_distribution_msgs_.html">"x/distribution/msgs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_gov_codec_.html">"x/gov/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_gov_msgs_.html">"x/gov/msgs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_slashing_codec_.html">"x/slashing/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_slashing_msgs_.html">"x/slashing/msgs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_staking_codec_.html">"x/staking/codec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_x_staking_msgs_.html">"x/staking/msgs"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
