@@ -52,7 +52,7 @@ jobs:
           command: cosmosjs-deploy --npm-token=${NPM_AUTH}
       - add_ssh_keys:
           fingerprints:
-            - "b0:81:7e:ed:cc:d3:d7:a6:14:9d:93:a9:44:c5:18:27"
+            - "d9:b3:6a:a6:8d:39:ef:6a:90:b1:af:d6:80:8b:c3:c7"
       - run: git config user.email "yunjh1994@gmail.com"
       - run: git config user.name "Thunnini"
       - run: npm run deploy-docs

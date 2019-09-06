@@ -11,23 +11,23 @@
 
 Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.  
 
-Documentation can be found [here](https://node-a-team.github.io/cosmosjs/).  
+Documentation can be found [here](https://everett-protocol.github.io/cosmosjs/).  
 
 ## Install
 ```sh
-npm install --save @node-a-team/cosmosjs
+npm install --save @everett-protocol/cosmosjs
 ```
 
 ## How to use
-More examples will be provided [here](https://github.com/node-a-team/cosmosjs/tree/master/example) soon.
+More examples will be provided [here](https://github.com/everett-protocol/cosmosjs/tree/master/example) soon.
 ```ts
-import { GaiaApi } from "@node-a-team/cosmosjs/gaia/api";
-import { defaultBech32Config } from "@node-a-team/cosmosjs/core/bech32Config";
-import { LedgerWalletProvider } from "@node-a-team/cosmosjs/core/ledgerWallet";
-import { MsgSend } from "@node-a-team/cosmosjs/x/bank";
-import { AccAddress, useGlobalBech32Config } from "@node-a-team/cosmosjs/common/address";
-import { Coin } from "@node-a-team/cosmosjs/common/coin";
-import { Int } from "@node-a-team/cosmosjs/common/int";
+import { GaiaApi } from "@everett-protocol/cosmosjs/gaia/api";
+import { defaultBech32Config } from "@everett-protocol/cosmosjs/core/bech32Config";
+import { LedgerWalletProvider } from "@everett-protocol/cosmosjs/core/ledgerWallet";
+import { MsgSend } from "@everett-protocol/cosmosjs/x/bank";
+import { AccAddress, useGlobalBech32Config } from "@everett-protocol/cosmosjs/common/address";
+import { Coin } from "@everett-protocol/cosmosjs/common/coin";
+import { Int } from "@everett-protocol/cosmosjs/common/int";
 import bigInteger from "big-integer";
 
 (async () => {
@@ -72,7 +72,7 @@ import bigInteger from "big-integer";
 
 ## Making your own messages
 Below is Gaia's basic sending message.
-More examples are [here](https://github.com/node-a-team/cosmosjs/tree/master/src/x).
+More examples are [here](https://github.com/everett-protocol/cosmosjs/tree/master/src/x).
 ```ts
 import { Amino, Type } from "ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
@@ -138,7 +138,7 @@ export class MsgSend extends Msg {
 ```
 
 ## Making api for your own blockchain
-Check out [this](https://github.com/node-a-team/cosmosjs/tree/master/src/gaia).
+Check out [this](https://github.com/everett-protocol/cosmosjs/tree/master/src/gaia).
 
 ## Run tests
 ```sh
@@ -146,24 +146,6 @@ npm run test
 ```
 
 ## Author
-👤 **node-a-team**
-* Twitter: [@Node_Ateam](https://twitter.com/Node_Ateam)
-* Github: [@node-a-team](https://github.com/node-a-team)
-
-## Show your support
-Give a ⭐️ if this project helped you!  
-***
-**If you find this project interesting, you can always donate by delegating to Node A-Team!**
-
-Node A-Team (Moniker: ATEAM) is a Cosmos-SDK and Tendermint-based Blockchain Validator, which currently participates in Cosmos, IRISnet and Terra. Based on the knowledge and experience gained from various testnets and mainnet, Node A-Team contributes to Cosmos Ecosystem and operates highly secure nodes.
-> ATEAM History  
- — Cosmos: “Game of Stakes” — Never Jailed  
- — IRISnet: “FUXI Betanet” — Reward Winner  
- — Terra-project: “Genesis Drill” — Top Tier  
-
-[ATEAM Validator Address: cosmosvaloper14l0fp639yudfl46zauvv8rkzjgd4u0zk2aseys]
-
-Webpage: https://nodeateam.com/  
-Twitter: https://twitter.com/Node_Ateam  
-E-mail: contact@nodeateam.com  
-***
+👤 **everett-protocol**
+* Twitter: [@EverettProtocol](https://twitter.com/@everettprotocol)
+* Github: [everett-protocol](https://github.com/everett-protocol)

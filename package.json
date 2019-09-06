@@ -1,7 +1,7 @@
 {
-  "name": "@node-a-team/cosmosjs",
+  "name": "@everett-protocol/cosmosjs",
   "version": "v0.0.2-alpha.1",
-  "homepage": "https://github.com/node-a-team/cosmosjs",
+  "homepage": "https://github.com/everett-protocol/cosmosjs",
   "description": "General purpose library for cosmos-sdk",
   "main": "index.js",
   "types": "index.d.ts",
@@ -18,8 +18,11 @@
     "lint",
     "prettier"
   ],
-  "keywords": [],
-  "author": "node-a-team",
+  "keywords": [
+    "cosmos",
+    "blockchain"
+  ],
+  "author": "everett-protocol",
   "license": "Apache-2.0",
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "^4.63.2",
