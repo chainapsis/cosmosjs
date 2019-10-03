@@ -122,6 +122,9 @@ export class MsgCreateValidator extends Msg {
     this.value = value;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     const addr = [this.delegatorAddress];
 
@@ -171,6 +174,9 @@ export class MsgEditValidator extends Msg {
     this.minSelfDelegation = minSelfDelegation;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     return [new AccAddress(this.validatorAddress.toBytes())];
   }
@@ -203,6 +209,9 @@ export class MsgDelegate extends Msg {
     this.validatorAddress = validatorAddress;
     this.amount = amount;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
 
   public getSigners(): AccAddress[] {
     return [this.delegatorAddress];
@@ -244,6 +253,9 @@ export class MsgBeginRedelegate extends Msg {
     this.amount = amount;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     return [this.delegatorAddress];
   }
@@ -276,6 +288,9 @@ export class MsgUndelegate extends Msg {
     this.validatorAddress = validatorAddress;
     this.amount = amount;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
 
   public getSigners(): AccAddress[] {
     return [this.delegatorAddress];

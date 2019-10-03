@@ -15,6 +15,9 @@ export class MsgUnjail extends Msg {
     this.validatorAddr = validatorAddr;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     return [new AccAddress(this.validatorAddr.toBytes())];
   }

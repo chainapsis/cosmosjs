@@ -20,6 +20,9 @@ class MsgTest extends Msg {
     super();
     this.address = new AccAddress(address);
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  validateBasic(): void {}
 }
 
 describe("Test std tx", () => {

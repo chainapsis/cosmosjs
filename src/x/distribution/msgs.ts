@@ -21,6 +21,9 @@ export class MsgSetWithdrawAddress extends Msg {
     this.withdrawAddress = withdrawAddress;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     return [this.delegatorAddress];
   }
@@ -44,6 +47,9 @@ export class MsgWithdrawDelegatorReward extends Msg {
     this.validatorAddress = validatorAddress;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
+
   public getSigners(): AccAddress[] {
     return [this.delegatorAddress];
   }
@@ -60,6 +66,9 @@ export class MsgWithdrawValidatorCommission extends Msg {
     super();
     this.validatorAddress = validatorAddress;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public validateBasic(): void {}
 
   public getSigners(): AccAddress[] {
     return [new AccAddress(this.validatorAddress.toBytes())];

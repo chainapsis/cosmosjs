@@ -14,14 +14,13 @@ export interface Tx {
   validateBasic(): void;
 }
 
-export class Msg {
+export abstract class Msg {
   /**
    * ValidateBasic does a simple validation check that
    * doesn't require access to any other information.
    * You can throw error in this when msg is invalid.
    */
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public validateBasic(): void {}
+  public abstract validateBasic(): void;
   /**
    * Get the canonical byte representation of the Msg.
    * @return Return sorted by alphabetically amino encoded json by default.
