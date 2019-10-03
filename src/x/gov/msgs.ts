@@ -22,7 +22,6 @@ export class ProposalKind {
   }
 
   @Field.Uint8(0)
-  // tslint:disable-next-line: variable-name
   private _kind: number;
 
   constructor(kind: 0 | 1 | 2 | 3) {
@@ -59,7 +58,6 @@ export class VoteOption {
   }
 
   @Field.Uint8(0)
-  // tslint:disable-next-line: variable-name
   private _option: number;
 
   constructor(option: 0 | 1 | 2 | 3 | 4) {

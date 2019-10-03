@@ -20,7 +20,7 @@ export class Msg {
    * doesn't require access to any other information.
    * You can throw error in this when msg is invalid.
    */
-  // tslint:disable-next-line: no-empty
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   public validateBasic(): void {}
   /**
    * Get the canonical byte representation of the Msg.

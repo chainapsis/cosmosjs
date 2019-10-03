@@ -39,11 +39,8 @@ export interface CoreConfig<R extends Rest> {
 }
 
 export class Api<R extends Rest> {
-  // tslint:disable-next-line: variable-name
   private _context: Context;
-  // tslint:disable-next-line: variable-name
   private _rpc: TendermintRPC;
-  // tslint:disable-next-line: variable-name
   private _rest: R;
 
   constructor(config: ApiConfig, coreConfig: CoreConfig<R>) {

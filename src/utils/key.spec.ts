@@ -1,5 +1,4 @@
 import assert from "assert";
-// tslint:disable-next-line:no-implicit-dependencies
 import "mocha";
 import * as Key from "./key";
 

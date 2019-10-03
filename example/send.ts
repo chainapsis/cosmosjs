@@ -1,4 +1,3 @@
-// tslint:disable-next-line: no-implicit-dependencies no-var-requires
 require("babel-polyfill");
 
 import { GaiaApi } from "../src/gaia/api";

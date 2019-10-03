@@ -3,12 +3,10 @@ import { Context } from "./context";
 import { AccAddress, useBech32Config } from "../common/address";
 import { WalletProvider } from "./walletProvider";
 import { Buffer } from "buffer/";
-// tslint:disable: no-var-requires
 const TransportWebUSB: any = require("@ledgerhq/hw-transport-webusb").default;
 const TransportU2F: any = require("@ledgerhq/hw-transport-u2f").default;
 const TransportHID: any = require("@ledgerhq/hw-transport-node-hid").default;
 const CosmosApp: any = require("ledger-cosmos-js").default;
-// tslint:enable: no-var-requires
 
 /**
  * This wallet provider provides a basic client interface to communicate with a Tendermint/Cosmos App running in a Ledger Nano S/X
@@ -52,7 +50,6 @@ export class LedgerWalletProvider implements WalletProvider {
       throw new Error(`[${response.error_message}] ${response.error_message}`);
     }
 
-    // tslint:disable: no-console
     console.log("Response received!");
     console.log(
       `App Version ${response.major}.${response.minor}.${response.patch}`
@@ -61,7 +58,6 @@ export class LedgerWalletProvider implements WalletProvider {
     console.log(`Test mode: ${response.test_mode}`);
     console.log("Full response:");
     console.log(response);
-    // tslint:enable: no-console
 
     this.path = context.get("bip44").path(index, change);
 

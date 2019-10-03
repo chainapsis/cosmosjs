@@ -1,5 +1,4 @@
 import assert from "assert";
-// tslint:disable-next-line:no-implicit-dependencies
 import "mocha";
 import { PrivKeySecp256k1 } from "./secp256k1";
 import { Buffer } from "buffer/";
