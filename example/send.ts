@@ -29,7 +29,7 @@ import bigInteger from "big-integer";
   // You should sign in before using your wallet
   await api.enable();
 
-  const key = (await api.wallet.getKeys(api.context))[0];
+  const key = (await api.getKeys())[0];
   const accAddress = new AccAddress(key.address);
 
   await api.sendMsgs(

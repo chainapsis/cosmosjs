@@ -4,7 +4,7 @@ import { TxEncoder, Msg } from "./tx";
 import { TxBuilder, TxBuilderConfig } from "./txBuilder";
 import { Bech32Config } from "./bech32Config";
 import { useGlobalBech32Config } from "../common/address";
-import { WalletProvider } from "./walletProvider";
+import { Key, WalletProvider } from "./walletProvider";
 import { TendermintRPC } from "../rpc/tendermint";
 import { Rest } from "./rest";
 import { QueryAccount } from "./account";
@@ -74,6 +74,10 @@ export class Api<R extends Rest> {
   public async enable(): Promise<void> {
     await this.wallet.enable(this.context);
     return Promise.resolve();
+  }
+
+  public async getKeys(): Promise<Key[]> {
+    return await this.wallet.getKeys(this.context);
   }
 
   /**
