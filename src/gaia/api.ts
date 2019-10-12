@@ -13,6 +13,7 @@ import { Account } from "../core/account";
 import { BIP44 } from "../core/bip44";
 import { defaultBech32Config } from "../core/bech32Config";
 import { Codec } from "@node-a-team/ts-amino";
+import { queryAccount } from "../core/query";
 import * as Crypto from "../crypto";
 
 export class GaiaApi extends Api<GaiaRest> {
@@ -31,7 +32,11 @@ export class GaiaApi extends Api<GaiaRest> {
           context: Context,
           address: string | Uint8Array
         ): Promise<Account> => {
-          return this.rest.getAccount(address);
+          return queryAccount(
+            context.get("bech32Config"),
+            context.get("rpcInstance"),
+            address
+          );
         },
         bech32Config: defaultBech32Config("cosmos"),
         bip44: new BIP44(44, 118, 0),
