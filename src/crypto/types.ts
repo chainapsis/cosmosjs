@@ -25,19 +25,34 @@ export class Address {
   }
 
   public toBytes(): Uint8Array {
+    // Return uint8array newly, because address could have been made from buffer.
     return new Uint8Array(this.address);
   }
 }
 
 export interface PubKey {
   toAddress(): Address;
+  /**
+   * @returns Return amino encoded bytes (including prefix bytes for concrete type).
+   */
   toBytes(): Uint8Array;
+  /**
+   * @returns Return bytes without type info.
+   */
+  serialize(): Uint8Array;
   verify(msg: Uint8Array, sig: Uint8Array): boolean;
   equals(pubKey: PubKey): boolean;
 }
 
 export interface PrivKey {
+  /**
+   * @returns Return amino encoded bytes (including prefix bytes for concrete type).
+   */
   toBytes(): Uint8Array;
+  /**
+   * @returns Return bytes without type info.
+   */
+  serialize(): Uint8Array;
   sign(msg: Uint8Array): Uint8Array;
   toPubKey(): PubKey;
   equals(privKey: PrivKey): boolean;

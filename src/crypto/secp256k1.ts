@@ -15,8 +15,18 @@ export class PrivKeySecp256k1 implements PrivKey {
     this.privKey = privKey;
   }
 
+  /**
+   * @returns Return amino encoded bytes (including prefix bytes for concrete type).
+   */
   public toBytes(): Uint8Array {
     return marshalBinaryBare(this);
+  }
+
+  /**
+   * @returns Return bytes without type info.
+   */
+  public serialize(): Uint8Array {
+    return new Uint8Array(this.privKey);
   }
 
   public toPubKey(): PubKey {
@@ -52,8 +62,18 @@ export class PubKeySecp256k1 implements PubKey {
     this.pubKey = pubKey;
   }
 
+  /**
+   * @returns Return amino encoded bytes (including prefix bytes for concrete type).
+   */
   public toBytes(): Uint8Array {
     return marshalBinaryBare(this);
+  }
+
+  /**
+   * @returns Return bytes without type info.
+   */
+  public serialize(): Uint8Array {
+    return new Uint8Array(this.pubKey);
   }
 
   public toAddress(): Address {
