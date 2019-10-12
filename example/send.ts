@@ -27,10 +27,10 @@ import bigInteger from "big-integer";
   });
 
   // You should sign in before using your wallet
-  await api.signIn(0);
+  await api.enable();
 
-  const account = (await api.wallet.getSignerAccounts(api.context))[0];
-  const accAddress = new AccAddress(account.address);
+  const key = (await api.wallet.getKeys(api.context))[0];
+  const accAddress = new AccAddress(key.address);
 
   await api.sendMsgs(
     [

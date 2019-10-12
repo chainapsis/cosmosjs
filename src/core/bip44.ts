@@ -23,10 +23,14 @@ export class BIP44 {
    */
   public readonly change: number;
 
-  constructor(purpose: number, coinType: number, change: number) {
+  constructor(purpose: number, coinType: number, change: number = 0) {
     this.purpose = purpose;
     this.coinType = coinType;
     this.change = change;
+  }
+
+  public withChange(change: number): BIP44 {
+    return new BIP44(this.purpose, this.coinType, change);
   }
 
   /**
@@ -56,8 +60,8 @@ export class BIP44 {
     return [this.purpose, this.coinType, account, this.change, index];
   }
 
-  public pathString(index: number, change: number = 0): string {
-    const path = this.path(index, change);
+  public pathString(account: number, index: number): string {
+    const path = this.path(account, index);
     return `m/${path[0]}'/${path[1]}'/${path[2]}'/${path[3]}/${path[4]}`;
   }
 }

@@ -71,8 +71,8 @@ export class Api<R extends Rest> {
     }
   }
 
-  public async signIn(index: number, change: number = 0): Promise<void> {
-    await this.wallet.signIn(this.context, index, change);
+  public async enable(): Promise<void> {
+    await this.wallet.enable(this.context);
     return Promise.resolve();
   }
 

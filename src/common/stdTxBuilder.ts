@@ -4,6 +4,7 @@ import { StdTx, StdFee, StdSignature, StdSignDoc } from "./stdTx";
 import { Context } from "../core/context";
 import { AccAddress, useBech32ConfigPromise } from "./address";
 import bigInteger from "big-integer";
+import { PubKey, PubKeySecp256k1 } from "../crypto";
 
 function nullableBnToBI(
   bn: bigInteger.BigNumber | undefined
@@ -44,6 +45,8 @@ export const stdTxBuilder: TxBuilder = (
         }
       }
 
+      const keys = await context.get("walletProvider").getKeys(context);
+
       const signatures: StdSignature[] = [];
       for (const signer of signers) {
         let accountNumber = nullableBnToBI(config.accountNumber);
@@ -74,13 +77,20 @@ export const stdTxBuilder: TxBuilder = (
 
         const sig = await context
           .get("walletProvider")
-          .sign(context, signer.toBytes(), signDoc.getSignBytes());
+          .sign(context, signer.toBech32(), signDoc.getSignBytes());
 
-        const pubKey = await context
-          .get("walletProvider")
-          .getPubKey(context, signer.toBytes());
+        let pubKey: PubKey | undefined;
+        for (const key of keys) {
+          if (key.bech32Address === signer.toBech32()) {
+            if (key.algo === "secp256k1") {
+              pubKey = new PubKeySecp256k1(key.pubKey);
+            } else {
+              throw new Error(`Unsupported algo: ${key.algo}`);
+            }
+          }
+        }
 
-        const signature = new StdSignature(pubKey, sig);
+        const signature = new StdSignature(pubKey!, sig);
 
         signatures.push(signature);
       }

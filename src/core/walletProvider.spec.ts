@@ -1,17 +1,20 @@
 import assert from "assert";
 import "mocha";
 import { LocalWalletProvider } from "./walletProvider";
-import { Address } from "../crypto";
 
 import crypto from "crypto";
+import { PubKeySecp256k1 } from "../crypto";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
 import { Codec } from "@node-a-team/ts-amino";
+import { defaultBech32Config } from "./bech32Config";
 
 describe("Test local wallet provider", () => {
   it("local wallet provider should generate correct priv key", async () => {
     const localWalletProvider = new LocalWalletProvider(
       "anger river nuclear pig enlist fish demand dress library obtain concert nasty wolf episode ring bargain rely off vibrant iron cram witness extra enforce",
+      0,
+      0,
       (array: any): any => {
         return crypto.randomBytes(array.length);
       }
@@ -21,7 +24,7 @@ describe("Test local wallet provider", () => {
       chainId: "",
       txEncoder: undefined as any,
       txBuilder: undefined as any,
-      bech32Config: undefined as any,
+      bech32Config: defaultBech32Config("cosmos"),
       walletProvider: undefined as any,
       rpcInstance: undefined as any,
       restInstance: undefined as any,
@@ -30,26 +33,19 @@ describe("Test local wallet provider", () => {
       codec: new Codec()
     });
 
-    await localWalletProvider.signIn(context, 0);
+    await localWalletProvider.enable(context);
 
-    const accounts = await localWalletProvider.getSignerAccounts(context);
-    assert.equal(accounts.length, 1);
+    const keys = await localWalletProvider.getKeys(context);
+    assert.equal(keys.length, 1);
 
-    const account = accounts[0];
+    const key = keys[0];
+    assert.equal(key.algo, "secp256k1");
     assert.equal(
-      account.pubKey.toAddress().toBech32("cosmos"),
+      new PubKeySecp256k1(key.pubKey).toAddress().toBech32("cosmos"),
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );
     assert.equal(
-      (await localWalletProvider.getPubKey(
-        context,
-        Address.fromBech32(
-          "cosmos",
-          "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
-        ).toBytes()
-      ))
-        .toAddress()
-        .toBech32("cosmos"),
+      key.bech32Address,
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );
   });

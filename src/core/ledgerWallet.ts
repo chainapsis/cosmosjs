@@ -1,7 +1,7 @@
 import { PubKey, PubKeySecp256k1 } from "../crypto";
 import { Context } from "./context";
 import { AccAddress, useBech32Config } from "../common/address";
-import { WalletProvider } from "./walletProvider";
+import { WalletProvider, Key } from "./walletProvider";
 import { Buffer } from "buffer/";
 const TransportWebUSB: any = require("@ledgerhq/hw-transport-webusb").default;
 const TransportU2F: any = require("@ledgerhq/hw-transport-u2f").default;
@@ -15,20 +15,20 @@ const CosmosApp: any = require("ledger-cosmos-js").default;
 export class LedgerWalletProvider implements WalletProvider {
   private app: any;
   private path: number[] | undefined;
-  private account:
+  private key:
     | {
         pubKey: PubKey;
         address: Uint8Array;
       }
     | undefined;
 
-  constructor(public readonly transport: "WebUSB" | "U2F" | "HID") {}
+  constructor(
+    public readonly transport: "WebUSB" | "U2F" | "HID",
+    private readonly account: number = 0,
+    private readonly index: number = 0
+  ) {}
 
-  public async signIn(
-    context: Context,
-    index: number,
-    change: number = 0
-  ): Promise<void> {
+  async enable(context: Context): Promise<void> {
     let transport;
     switch (this.transport) {
       case "WebUSB":
@@ -59,7 +59,7 @@ export class LedgerWalletProvider implements WalletProvider {
     console.log("Full response:");
     console.log(response);
 
-    this.path = context.get("bip44").path(index, change);
+    this.path = context.get("bip44").path(this.account, this.index);
 
     response = await this.app.getAddressAndPubKey(
       this.path,
@@ -70,7 +70,7 @@ export class LedgerWalletProvider implements WalletProvider {
     }
 
     useBech32Config(context.get("bech32Config"), () => {
-      this.account = {
+      this.key = {
         address: AccAddress.fromBech32(response.bech32_address).toBytes(),
         pubKey: new PubKeySecp256k1(response.compressed_pk)
       };
@@ -79,49 +79,39 @@ export class LedgerWalletProvider implements WalletProvider {
     return Promise.resolve();
   }
 
-  public async getPubKey(
-    context: Context,
-    address: Uint8Array
-  ): Promise<PubKey> {
-    if (!this.app || !this.path || !this.account) {
-      throw new Error("Not signed in");
+  getKeys(context: Context): Promise<Key[]> {
+    if (!this.app || !this.path || !this.key) {
+      throw new Error("Not approved");
     }
 
-    return Promise.resolve(this.account.pubKey);
-  }
+    const bech32Address = useBech32Config(context.get("bech32Config"), () => {
+      return new AccAddress(this.key!.address).toBech32();
+    });
 
-  public async getSignerAccounts(
-    context: Context
-  ): Promise<
-    Array<{
-      address: Uint8Array;
-      pubKey: PubKey;
-    }>
-  > {
-    if (!this.app || !this.path || !this.account) {
-      throw new Error("Not signed in");
-    }
+    const key = {
+      address: this.key.address,
+      algo: "secp256k1",
+      pubKey: this.key.pubKey.serialize(),
+      bech32Address
+    };
 
-    return Promise.resolve([this.account]);
+    return Promise.resolve([key]);
   }
 
   public async sign(
     context: Context,
-    address: Uint8Array,
+    bech32Address: string,
     message: Uint8Array
   ): Promise<Uint8Array> {
-    if (!this.app || !this.path) {
+    if (!this.app || !this.path || !this.key) {
       throw new Error("Not signed in");
     }
 
-    const addrAndPubKey = (await this.getSignerAccounts(context))[0];
-    if (addrAndPubKey.address.toString() !== address.toString()) {
-      useBech32Config(context.get("bech32Config"), () => {
-        throw new Error(
-          `Unknown address: ${new AccAddress(address).toBech32()}`
-        );
-      });
-    }
+    useBech32Config(context.get("bech32Config"), () => {
+      if (new AccAddress(this.key!.address).toBech32() !== bech32Address) {
+        throw new Error(`Unknown address: ${bech32Address}`);
+      }
+    });
 
     const response = await this.app.sign(this.path, message);
     if (response.error_message !== "No errors") {
@@ -171,6 +161,6 @@ export class LedgerWalletProvider implements WalletProvider {
       );
     }
 
-    return Promise.resolve(signature);
+    return Promise.resolve(new Uint8Array(signature));
   }
 }

@@ -1,30 +1,33 @@
-import { PubKey, PrivKey } from "../crypto";
+import { PrivKey } from "../crypto";
 import { AccAddress, useBech32Config } from "../common/address";
 import { generateWalletFromMnemonic, generateSeed, RNG } from "../utils/key";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
 
+export interface Key {
+  bech32Address: string;
+  address: Uint8Array;
+  algo: string;
+  pubKey: Uint8Array;
+}
+
 export interface WalletProvider {
   /**
-   * Return path
-   * @param index Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
-   * Public derivation is used at this level.
-   * @param change Constant 0 is used for external chain and constant 1 for internal chain (also known as change addresses). External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments). Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.
-   * Public derivation is used at this level.
+   * Request access to the user's accounts. Wallet can ask the user to approve or deny access. If user deny access, it will throw error.
    */
-  signIn(context: Context, index: number, change?: number): Promise<void>;
-  getPubKey(context: Context, address: Uint8Array): Promise<PubKey>;
-  getSignerAccounts(
-    context: Context
-  ): Promise<
-    Array<{
-      address: Uint8Array;
-      pubKey: PubKey;
-    }>
-  >;
+  enable(context: Context): Promise<void>;
+
+  /**
+   * Get array of keys that includes bech32 address string, address bytes and public key from wallet if user have approved the access.
+   */
+  getKeys(context: Context): Promise<Key[]>;
+
+  /**
+   * Request signature from matched address if user have approved the access.
+   */
   sign(
     context: Context,
-    address: Uint8Array,
+    bech32Address: string,
     message: Uint8Array
   ): Promise<Uint8Array>;
 }
@@ -44,86 +47,73 @@ export class LocalWalletProvider implements WalletProvider {
   public static getPrivKeyFromMnemonic(
     bip44: BIP44,
     mnemonic: string,
-    index: number,
-    change: number
+    account: number = 0,
+    index: number = 0
   ): PrivKey {
     return generateWalletFromMnemonic(
       mnemonic,
-      bip44.pathString(index, change)
+      bip44.pathString(account, index)
     );
   }
   private privKey?: PrivKey;
 
-  constructor(private mnemonic: string = "", private readonly rng?: RNG) {
+  constructor(
+    private readonly mnemonic: string = "",
+    private readonly account: number = 0,
+    private readonly index: number = 0,
+    private readonly rng?: RNG
+  ) {
     if (this.mnemonic === "") {
       this.mnemonic = LocalWalletProvider.generateMnemonic(this.rng);
     }
   }
 
-  public signIn(
-    context: Context,
-    index: number,
-    change: number = 0
-  ): Promise<void> {
+  enable(context: Context): Promise<void> {
     this.privKey = LocalWalletProvider.getPrivKeyFromMnemonic(
       context.get("bip44"),
       this.mnemonic,
-      index,
-      change
+      this.account,
+      this.index
     );
     return Promise.resolve();
   }
 
-  public getPubKey(context: Context, address: Uint8Array): Promise<PubKey> {
+  getKeys(context: Context): Promise<Key[]> {
     if (!this.privKey) {
-      throw new Error("Not signed in");
+      throw new Error("Not approved");
     }
+
     const pubKey = this.privKey.toPubKey();
-    const addressFromPubKey = pubKey.toAddress().toBytes();
-    if (address.toString() !== addressFromPubKey.toString()) {
-      throw new Error("Unknown address");
-    }
-    return Promise.resolve(pubKey);
+    const address = this.privKey.toPubKey().toAddress();
+    const bech32Address = useBech32Config(context.get("bech32Config"), () => {
+      return new AccAddress(address).toBech32();
+    });
+    const key: Key = {
+      bech32Address,
+      address: address.toBytes(),
+      algo: "secp256k1",
+      pubKey: pubKey.serialize()
+    };
+
+    return Promise.resolve([key]);
   }
 
-  public getSignerAccounts(
-    context: Context
-  ): Promise<
-    Array<{
-      address: Uint8Array;
-      pubKey: PubKey;
-    }>
-  > {
-    if (!this.privKey) {
-      throw new Error("Not signed in");
-    }
-    const pubKey = this.privKey.toPubKey();
-    const address = pubKey.toAddress().toBytes();
-    return Promise.resolve([
-      {
-        address,
-        pubKey
-      }
-    ]);
-  }
-
-  public sign(
+  sign(
     context: Context,
-    address: Uint8Array,
+    bech32Address: string,
     message: Uint8Array
   ): Promise<Uint8Array> {
     if (!this.privKey) {
-      throw new Error("Not signed in");
+      throw new Error("Not approved");
     }
     const pubKey = this.privKey.toPubKey();
-    const addressFromPubKey = pubKey.toAddress().toBytes();
-    if (address.toString() !== addressFromPubKey.toString()) {
-      useBech32Config(context.get("bech32Config"), () => {
-        throw new Error(
-          `Unknown address: ${new AccAddress(address).toBech32()}`
-        );
-      });
-    }
+    const address = pubKey.toAddress();
+    useBech32Config(context.get("bech32Config"), () => {
+      const accAddress = new AccAddress(address);
+      if (accAddress.toBech32() !== bech32Address) {
+        throw new Error(`Unknown address: ${bech32Address}`);
+      }
+    });
 
     return Promise.resolve(this.privKey.sign(message));
   }
