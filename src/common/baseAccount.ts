@@ -12,7 +12,11 @@ export class BaseAccount implements Account {
       "auth/Account",
       "auth/BaseVestingAccount",
       "auth/ContinuousVestingAccount",
-      "auth/DelayedVestingAccount"
+      "auth/DelayedVestingAccount",
+      "cosmos-sdk/Account",
+      "cosmos-sdk/BaseVestingAccount",
+      "cosmos-sdk/ContinuousVestingAccount",
+      "cosmos-sdk/DelayedVestingAccount"
     ];
     if (supportedAccountType.indexOf(obj.type) < 0) {
       throw new Error(`Unsupported account type: ${obj.type}`);
