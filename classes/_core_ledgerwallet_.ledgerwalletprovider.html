@@ -106,10 +106,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#getpubkey" class="tsd-kind-icon">get<wbr>Pub<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#getsigneraccounts" class="tsd-kind-icon">get<wbr>Signer<wbr>Accounts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#enable" class="tsd-kind-icon">enable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#sign" class="tsd-kind-icon">sign</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_ledgerwallet_.ledgerwalletprovider.html#signin" class="tsd-kind-icon">sign<wbr>In</a></li>
 							</ul>
 						</section>
 					</div>
@@ -121,19 +120,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Ledger<wbr>Wallet<wbr>Provider<span class="tsd-signature-symbol">(</span>transport<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"WebUSB"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"U2F"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"HID"</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_ledgerwallet_.ledgerwalletprovider.html" class="tsd-signature-type">LedgerWalletProvider</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Ledger<wbr>Wallet<wbr>Provider<span class="tsd-signature-symbol">(</span>transport<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"WebUSB"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"U2F"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"HID"</span>, account<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_ledgerwallet_.ledgerwalletprovider.html" class="tsd-signature-type">LedgerWalletProvider</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L25">core/ledgerWallet.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/ledgerWallet.ts#L23">core/ledgerWallet.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>transport: <span class="tsd-signature-type">"WebUSB"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"U2F"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"HID"</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> account: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> index: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_core_ledgerwallet_.ledgerwalletprovider.html" class="tsd-signature-type">LedgerWalletProvider</a></h4>
@@ -149,7 +154,7 @@
 					<div class="tsd-signature tsd-kind-icon">transport<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"WebUSB"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"U2F"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"HID"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L27">core/ledgerWallet.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/ledgerWallet.ts#L26">core/ledgerWallet.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,17 +162,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getpubkey" class="tsd-anchor"></a>
-					<h3>get<wbr>Pub<wbr>Key</h3>
+					<a name="enable" class="tsd-anchor"></a>
+					<h3>enable</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Pub<wbr>Key<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_crypto_types_.pubkey.html" class="tsd-signature-type">PubKey</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">enable<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getpubkey">getPubKey</a></p>
+								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#enable">enable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L86">core/ledgerWallet.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/ledgerWallet.ts#L31">core/ledgerWallet.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,26 +180,23 @@
 								<li>
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
-								<li>
-									<h5>address: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_crypto_types_.pubkey.html" class="tsd-signature-type">PubKey</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getsigneraccounts" class="tsd-anchor"></a>
-					<h3>get<wbr>Signer<wbr>Accounts</h3>
+					<a name="getkeys" class="tsd-anchor"></a>
+					<h3>get<wbr>Keys</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Signer<wbr>Accounts<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Keys<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_walletprovider_.key.html" class="tsd-signature-type">Key</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getsigneraccounts">getSignerAccounts</a></p>
+								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getkeys">getKeys</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L97">core/ledgerWallet.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/ledgerWallet.ts#L82">core/ledgerWallet.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -203,7 +205,7 @@
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_walletprovider_.key.html" class="tsd-signature-type">Key</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -211,14 +213,14 @@
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, bech32Address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#sign">sign</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L112">core/ledgerWallet.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/ledgerWallet.ts#L101">core/ledgerWallet.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -227,42 +229,13 @@
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 								<li>
-									<h5>address: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<h5>bech32Address: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="signin" class="tsd-anchor"></a>
-					<h3>sign<wbr>In</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<wbr>In<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/ledgerWallet.ts#L29">core/ledgerWallet.ts:29</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
-								</li>
-								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> change: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -293,16 +266,13 @@
 								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#transport" class="tsd-kind-icon">transport</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#getpubkey" class="tsd-kind-icon">get<wbr>Pub<wbr>Key</a>
+								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#enable" class="tsd-kind-icon">enable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#getsigneraccounts" class="tsd-kind-icon">get<wbr>Signer<wbr>Accounts</a>
+								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#sign" class="tsd-kind-icon">sign</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_ledgerwallet_.ledgerwalletprovider.html#signin" class="tsd-kind-icon">sign<wbr>In</a>
 							</li>
 						</ul>
 					</li>

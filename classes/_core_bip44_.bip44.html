@@ -93,7 +93,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#account" class="tsd-kind-icon">account</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#change" class="tsd-kind-icon">change</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#cointype" class="tsd-kind-icon">coin<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#purpose" class="tsd-kind-icon">purpose</a></li>
 							</ul>
@@ -103,6 +103,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#path" class="tsd-kind-icon">path</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#pathstring" class="tsd-kind-icon">path<wbr>String</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_bip44_.bip44.html#withchange" class="tsd-kind-icon">with<wbr>Change</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,13 +115,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new BIP44<span class="tsd-signature-symbol">(</span>purpose<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, coinType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, account<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a></li>
+						<li class="tsd-signature tsd-kind-icon">new BIP44<span class="tsd-signature-symbol">(</span>purpose<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, coinType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L27">core/bip44.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L24">core/bip44.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -132,7 +133,7 @@
 									<h5>coinType: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>account: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> change: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a></h4>
@@ -143,22 +144,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="account" class="tsd-anchor"></a>
-					<h3>account</h3>
-					<div class="tsd-signature tsd-kind-icon">account<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="change" class="tsd-anchor"></a>
+					<h3>change</h3>
+					<div class="tsd-signature tsd-kind-icon">change<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L27">core/bip44.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L24">core/bip44.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>This level splits the key space into independent user identities, so the wallet never mixes the coins across different accounts.
-								Users can use these accounts to organize the funds in the same fashion as bank accounts; for donation purposes (where all addresses are considered public), for saving purposes, for common expenses etc.
-								Accounts are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
-								Hardened derivation is used at this level.
-								Software should prevent a creation of an account if a previous account does not have a transaction history (meaning none of its addresses have been used before).
-							Software needs to discover all used accounts after importing the seed from an external source. Such an algorithm is described in &quot;Account discovery&quot; chapter.</p>
+							<p>Constant 0 is used for external chain and constant 1 for internal chain (also known as change addresses).
+								External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments).
+							Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.</p>
 						</div>
 					</div>
 				</section>
@@ -168,7 +166,7 @@
 					<div class="tsd-signature tsd-kind-icon">coin<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L18">core/bip44.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L18">core/bip44.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -187,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">purpose<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L10">core/bip44.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L10">core/bip44.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -205,13 +203,13 @@
 					<a name="path" class="tsd-anchor"></a>
 					<h3>path</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">(</span>account<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L42">core/bip44.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L43">core/bip44.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -222,16 +220,16 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<h5>account: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
+										<p>Accounts are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
 										Public derivation is used at this level.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> change: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Constant 0 is used for external chain and constant 1 for internal chain (also known as change addresses). External chain is used for addresses that are meant to be visible outside of the wallet (e.g. for receiving payments). Internal chain is used for addresses which are not meant to be visible outside of the wallet and is used for return transaction change.
+										<p>Addresses are numbered from index 0 in sequentially increasing manner. This number is used as child index in BIP32 derivation.
 										Public derivation is used at this level.</p>
 									</div>
 								</li>
@@ -244,25 +242,48 @@
 					<a name="pathstring" class="tsd-anchor"></a>
 					<h3>path<wbr>String</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">path<wbr>String<span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">path<wbr>String<span class="tsd-signature-symbol">(</span>account<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/bip44.ts#L62">core/bip44.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L63">core/bip44.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<h5>account: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> change: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+									<h5>index: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="withchange" class="tsd-anchor"></a>
+					<h3>with<wbr>Change</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Change<span class="tsd-signature-symbol">(</span>change<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/bip44.ts#L32">core/bip44.ts:32</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>change: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -290,7 +311,7 @@
 								<a href="_core_bip44_.bip44.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_core_bip44_.bip44.html#account" class="tsd-kind-icon">account</a>
+								<a href="_core_bip44_.bip44.html#change" class="tsd-kind-icon">change</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_core_bip44_.bip44.html#cointype" class="tsd-kind-icon">coin<wbr>Type</a>
@@ -303,6 +324,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_core_bip44_.bip44.html#pathstring" class="tsd-kind-icon">path<wbr>String</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_core_bip44_.bip44.html#withchange" class="tsd-kind-icon">with<wbr>Change</a>
 							</li>
 						</ul>
 					</li>

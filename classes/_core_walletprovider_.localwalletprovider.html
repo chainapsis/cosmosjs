@@ -100,10 +100,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#getpubkey" class="tsd-kind-icon">get<wbr>Pub<wbr>Key</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#getsigneraccounts" class="tsd-kind-icon">get<wbr>Signer<wbr>Accounts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#enable" class="tsd-kind-icon">enable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#sign" class="tsd-kind-icon">sign</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_core_walletprovider_.localwalletprovider.html#signin" class="tsd-kind-icon">sign<wbr>In</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_core_walletprovider_.localwalletprovider.html#generatemnemonic" class="tsd-kind-icon">generate<wbr>Mnemonic</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_core_walletprovider_.localwalletprovider.html#getprivkeyfrommnemonic" class="tsd-kind-icon">get<wbr>Priv<wbr>Key<wbr>From<wbr>Mnemonic</a></li>
 							</ul>
@@ -117,19 +116,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Local<wbr>Wallet<wbr>Provider<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, rng<span class="tsd-signature-symbol">?: </span><a href="../modules/_utils_key_.html#rng" class="tsd-signature-type">RNG</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_walletprovider_.localwalletprovider.html" class="tsd-signature-type">LocalWalletProvider</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Local<wbr>Wallet<wbr>Provider<span class="tsd-signature-symbol">(</span>mnemonic<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, account<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, rng<span class="tsd-signature-symbol">?: </span><a href="../modules/_utils_key_.html#rng" class="tsd-signature-type">RNG</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_core_walletprovider_.localwalletprovider.html" class="tsd-signature-type">LocalWalletProvider</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L55">core/walletProvider.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L58">core/walletProvider.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> mnemonic: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> account: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> index: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> rng: <a href="../modules/_utils_key_.html#rng" class="tsd-signature-type">RNG</a></h5>
@@ -143,17 +148,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getpubkey" class="tsd-anchor"></a>
-					<h3>get<wbr>Pub<wbr>Key</h3>
+					<a name="enable" class="tsd-anchor"></a>
+					<h3>enable</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Pub<wbr>Key<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_crypto_types_.pubkey.html" class="tsd-signature-type">PubKey</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">enable<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getpubkey">getPubKey</a></p>
+								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#enable">enable</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L77">core/walletProvider.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L71">core/walletProvider.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -161,26 +166,23 @@
 								<li>
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
-								<li>
-									<h5>address: <span class="tsd-signature-type">Uint8Array</span></h5>
-								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_crypto_types_.pubkey.html" class="tsd-signature-type">PubKey</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getsigneraccounts" class="tsd-anchor"></a>
-					<h3>get<wbr>Signer<wbr>Accounts</h3>
+					<a name="getkeys" class="tsd-anchor"></a>
+					<h3>get<wbr>Keys</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Signer<wbr>Accounts<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Keys<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_walletprovider_.key.html" class="tsd-signature-type">Key</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getsigneraccounts">getSignerAccounts</a></p>
+								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#getkeys">getKeys</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L89">core/walletProvider.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L81">core/walletProvider.ts:81</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -189,7 +191,7 @@
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_walletprovider_.key.html" class="tsd-signature-type">Key</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -197,14 +199,14 @@
 					<a name="sign" class="tsd-anchor"></a>
 					<h3>sign</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">sign<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, bech32Address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_core_walletprovider_.walletprovider.html">WalletProvider</a>.<a href="../interfaces/_core_walletprovider_.walletprovider.html#sign">sign</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L110">core/walletProvider.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L101">core/walletProvider.ts:101</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -213,42 +215,13 @@
 									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
 								</li>
 								<li>
-									<h5>address: <span class="tsd-signature-type">Uint8Array</span></h5>
+									<h5>bech32Address: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="signin" class="tsd-anchor"></a>
-					<h3>sign<wbr>In</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sign<wbr>In<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_core_context_.context.html" class="tsd-signature-type">Context</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L63">core/walletProvider.ts:63</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>context: <a href="_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
-								</li>
-								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> change: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -262,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L37">core/walletProvider.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L40">core/walletProvider.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -279,13 +252,13 @@
 					<a name="getprivkeyfrommnemonic" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Priv<wbr>Key<wbr>From<wbr>Mnemonic</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Priv<wbr>Key<wbr>From<wbr>Mnemonic<span class="tsd-signature-symbol">(</span>bip44<span class="tsd-signature-symbol">: </span><a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a>, mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, change<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_crypto_types_.privkey.html" class="tsd-signature-type">PrivKey</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Priv<wbr>Key<wbr>From<wbr>Mnemonic<span class="tsd-signature-symbol">(</span>bip44<span class="tsd-signature-symbol">: </span><a href="_core_bip44_.bip44.html" class="tsd-signature-type">BIP44</a>, mnemonic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, account<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_crypto_types_.privkey.html" class="tsd-signature-type">PrivKey</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/core/walletProvider.ts#L44">core/walletProvider.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/walletProvider.ts#L47">core/walletProvider.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -297,10 +270,10 @@
 									<h5>mnemonic: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>index: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> account: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
 								</li>
 								<li>
-									<h5>change: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> index: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_crypto_types_.privkey.html" class="tsd-signature-type">PrivKey</a></h4>
@@ -331,16 +304,13 @@
 								<a href="_core_walletprovider_.localwalletprovider.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_walletprovider_.localwalletprovider.html#getpubkey" class="tsd-kind-icon">get<wbr>Pub<wbr>Key</a>
+								<a href="_core_walletprovider_.localwalletprovider.html#enable" class="tsd-kind-icon">enable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_walletprovider_.localwalletprovider.html#getsigneraccounts" class="tsd-kind-icon">get<wbr>Signer<wbr>Accounts</a>
+								<a href="_core_walletprovider_.localwalletprovider.html#getkeys" class="tsd-kind-icon">get<wbr>Keys</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_core_walletprovider_.localwalletprovider.html#sign" class="tsd-kind-icon">sign</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_core_walletprovider_.localwalletprovider.html#signin" class="tsd-kind-icon">sign<wbr>In</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="_core_walletprovider_.localwalletprovider.html#generatemnemonic" class="tsd-kind-icon">generate<wbr>Mnemonic</a>
@@ -352,6 +322,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_core_walletprovider_.key.html" class="tsd-kind-icon">Key</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_core_walletprovider_.walletprovider.html" class="tsd-kind-icon">Wallet<wbr>Provider</a>
 					</li>

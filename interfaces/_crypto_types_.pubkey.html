@@ -87,6 +87,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_crypto_types_.pubkey.html#equals" class="tsd-kind-icon">equals</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_crypto_types_.pubkey.html#serialize" class="tsd-kind-icon">serialize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_crypto_types_.pubkey.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_crypto_types_.pubkey.html#tobytes" class="tsd-kind-icon">to<wbr>Bytes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_crypto_types_.pubkey.html#verify" class="tsd-kind-icon">verify</a></li>
@@ -107,7 +108,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/types.ts#L36">crypto/types.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/types.ts#L44">crypto/types.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -121,6 +122,26 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="serialize" class="tsd-anchor"></a>
+					<h3>serialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/types.ts#L42">crypto/types.ts:42</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+							<p>Return bytes without type info.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="toaddress" class="tsd-anchor"></a>
 					<h3>to<wbr>Address</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -130,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/types.ts#L33">crypto/types.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/types.ts#L34">crypto/types.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/_crypto_types_.address.html" class="tsd-signature-type">Address</a></h4>
@@ -147,10 +168,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/types.ts#L34">crypto/types.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/types.ts#L38">crypto/types.ts:38</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+							<p>Return amino encoded bytes (including prefix bytes for concrete type).</p>
 						</li>
 					</ul>
 				</section>
@@ -164,7 +188,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/types.ts#L35">crypto/types.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/types.ts#L43">crypto/types.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -208,6 +232,9 @@
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_crypto_types_.pubkey.html#equals" class="tsd-kind-icon">equals</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_crypto_types_.pubkey.html#serialize" class="tsd-kind-icon">serialize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_crypto_types_.pubkey.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;common/stdTxBuilder&quot; | @everett-protocol/cosmosjs</title>
+	<title>&quot;core/query&quot; | @everett-protocol/cosmosjs</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_common_stdtxbuilder_.html">&quot;common/stdTxBuilder&quot;</a>
+					<a href="_core_query_.html">&quot;core/query&quot;</a>
 				</li>
 			</ul>
-			<h1>External module &quot;common/stdTxBuilder&quot;</h1>
+			<h1>External module &quot;core/query&quot;</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_common_stdtxbuilder_.html#stdtxbuilder" class="tsd-kind-icon">std<wbr>TxBuilder</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="_core_query_.html#queryaccount" class="tsd-kind-icon">query<wbr>Account</a></li>
 							</ul>
 						</section>
 					</div>
@@ -78,31 +78,31 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="stdtxbuilder" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> std<wbr>TxBuilder</h3>
+					<a name="queryaccount" class="tsd-anchor"></a>
+					<h3>query<wbr>Account</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">std<wbr>TxBuilder<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="../classes/_core_context_.context.html" class="tsd-signature-type">Context</a>, msgs<span class="tsd-signature-symbol">: </span><a href="../classes/_core_tx_.msg.html" class="tsd-signature-type">Msg</a><span class="tsd-signature-symbol">[]</span>, config<span class="tsd-signature-symbol">: </span><a href="../interfaces/_core_txbuilder_.txbuilderconfig.html" class="tsd-signature-type">TxBuilderConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_tx_.tx.html" class="tsd-signature-type">Tx</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">query<wbr>Account<span class="tsd-signature-symbol">(</span>bech32Config<span class="tsd-signature-symbol">: </span><a href="../interfaces/_core_bech32config_.bech32config.html" class="tsd-signature-type">Bech32Config</a>, rpcInstance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AxiosInstance</span>, account<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_common_baseaccount_.baseaccount.html" class="tsd-signature-type">BaseAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/common/stdTxBuilder.ts#L25">common/stdTxBuilder.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/core/query.ts#L6">core/query.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>context: <a href="../classes/_core_context_.context.html" class="tsd-signature-type">Context</a></h5>
+									<h5>bech32Config: <a href="../interfaces/_core_bech32config_.bech32config.html" class="tsd-signature-type">Bech32Config</a></h5>
 								</li>
 								<li>
-									<h5>msgs: <a href="../classes/_core_tx_.msg.html" class="tsd-signature-type">Msg</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>rpcInstance: <span class="tsd-signature-type">AxiosInstance</span></h5>
 								</li>
 								<li>
-									<h5>config: <a href="../interfaces/_core_txbuilder_.txbuilderconfig.html" class="tsd-signature-type">TxBuilderConfig</a></h5>
+									<h5>account: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Uint8Array</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_core_tx_.tx.html" class="tsd-signature-type">Tx</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/_common_baseaccount_.baseaccount.html" class="tsd-signature-type">BaseAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -115,14 +115,14 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_common_stdtxbuilder_.html">"common/std<wbr>TxBuilder"</a>
+						<a href="_core_query_.html">"core/query"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="_common_stdtxbuilder_.html#stdtxbuilder" class="tsd-kind-icon">std<wbr>TxBuilder</a>
+						<a href="_core_query_.html#queryaccount" class="tsd-kind-icon">query<wbr>Account</a>
 					</li>
 				</ul>
 			</nav>

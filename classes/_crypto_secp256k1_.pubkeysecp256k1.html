@@ -93,6 +93,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_crypto_secp256k1_.pubkeysecp256k1.html#equals" class="tsd-kind-icon">equals</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_crypto_secp256k1_.pubkeysecp256k1.html#serialize" class="tsd-kind-icon">serialize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_crypto_secp256k1_.pubkeysecp256k1.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_crypto_secp256k1_.pubkeysecp256k1.html#tobytes" class="tsd-kind-icon">to<wbr>Bytes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_crypto_secp256k1_.pubkeysecp256k1.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
@@ -114,7 +115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L49">crypto/secp256k1.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L59">crypto/secp256k1.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -141,7 +142,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_crypto_types_.pubkey.html">PubKey</a>.<a href="../interfaces/_crypto_types_.pubkey.html#equals">equals</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L66">crypto/secp256k1.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L86">crypto/secp256k1.ts:86</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,6 +152,27 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="serialize" class="tsd-anchor"></a>
+					<h3>serialize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">serialize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_crypto_types_.pubkey.html">PubKey</a>.<a href="../interfaces/_crypto_types_.pubkey.html#serialize">serialize</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L75">crypto/secp256k1.ts:75</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+							<p>Return bytes without type info.</p>
 						</li>
 					</ul>
 				</section>
@@ -165,7 +187,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_crypto_types_.pubkey.html">PubKey</a>.<a href="../interfaces/_crypto_types_.pubkey.html#toaddress">toAddress</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L59">crypto/secp256k1.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L79">crypto/secp256k1.ts:79</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_crypto_types_.address.html" class="tsd-signature-type">Address</a></h4>
@@ -183,10 +205,13 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_crypto_types_.pubkey.html">PubKey</a>.<a href="../interfaces/_crypto_types_.pubkey.html#tobytes">toBytes</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L55">crypto/secp256k1.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L68">crypto/secp256k1.ts:68</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+							<p>Return amino encoded bytes (including prefix bytes for concrete type).</p>
 						</li>
 					</ul>
 				</section>
@@ -200,7 +225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L78">crypto/secp256k1.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L98">crypto/secp256k1.ts:98</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -218,7 +243,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_crypto_types_.pubkey.html">PubKey</a>.<a href="../interfaces/_crypto_types_.pubkey.html#verify">verify</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/ab8220d/src/crypto/secp256k1.ts#L70">crypto/secp256k1.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/everett-protocol/cosmosjs/blob/a5cc2bd/src/crypto/secp256k1.ts#L90">crypto/secp256k1.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -262,6 +287,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_crypto_secp256k1_.pubkeysecp256k1.html#equals" class="tsd-kind-icon">equals</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_crypto_secp256k1_.pubkeysecp256k1.html#serialize" class="tsd-kind-icon">serialize</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_crypto_secp256k1_.pubkeysecp256k1.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a>
