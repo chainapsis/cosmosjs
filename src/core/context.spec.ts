@@ -9,8 +9,8 @@ describe("Test context", () => {
     });
 
     const newContext = context.set("test", "test2");
-    assert.equal(context.get("test"), "test1");
-    assert.equal(newContext.get("test"), "test2");
+    assert.strictEqual(context.get("test"), "test1");
+    assert.strictEqual(newContext.get("test"), "test2");
     assert.notEqual(context, newContext);
   });
 });

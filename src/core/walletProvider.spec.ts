@@ -36,15 +36,15 @@ describe("Test local wallet provider", () => {
     await localWalletProvider.enable(context);
 
     const keys = await localWalletProvider.getKeys(context);
-    assert.equal(keys.length, 1);
+    assert.strictEqual(keys.length, 1);
 
     const key = keys[0];
-    assert.equal(key.algo, "secp256k1");
-    assert.equal(
+    assert.strictEqual(key.algo, "secp256k1");
+    assert.strictEqual(
       new PubKeySecp256k1(key.pubKey).toAddress().toBech32("cosmos"),
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );
-    assert.equal(
+    assert.strictEqual(
       key.bech32Address,
       "cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"
     );

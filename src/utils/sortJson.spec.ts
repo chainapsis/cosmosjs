@@ -19,7 +19,7 @@ describe("Test std tx", () => {
       }
     };
 
-    assert.equal(
+    assert.strictEqual(
       sortJSON(JSON.stringify(obj)),
       `{"a":{"e":["a","b"],"f":{"b":"b","c":"c"}},"b":{"a":"a","b":"b","c":"c"}}`
     );

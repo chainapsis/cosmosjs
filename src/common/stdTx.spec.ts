@@ -44,7 +44,7 @@ describe("Test std tx", () => {
         10
       );
 
-      assert.equal(
+      assert.strictEqual(
         signDoc.getSignBytes().toString(),
         `{"account_number":"1","chain_id":"test","fee":{"amount":[{"amount":"10","denom":"test"}],"gas":"1000"},"memo":"test","msgs":[{"type":"test/MsgTest","value":{"address":"cosmos1t68n2ezn5zt8frh4jehmufkk2puakv9glapyz4"}}],"sequence":"10"}`
       );

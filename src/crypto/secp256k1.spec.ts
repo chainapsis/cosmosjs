@@ -46,13 +46,13 @@ describe("Test secp256k1", () => {
       ])
     );
     const pubKey = privKey.toPubKey();
-    assert.equal(
+    assert.strictEqual(
       Buffer.from(pubKey.toBytes()).toString("hex"),
       "eb5ae98721037241cbb79688a20d01ed093ebb06c6fd0341be948090ba0fda36a5efa742fe3d"
     );
 
     const signature = privKey.sign(new Uint8Array([1, 2, 3]));
-    assert.equal(
+    assert.strictEqual(
       Buffer.from(signature).toString("hex"),
       "07fd207549d1d550d567b7951897b19daa8fe01dc34baa90cb741742583b090b0af162b3fddd83a2dd5981bfd66243bcba7d64f8f1ce3bc6855b086edc65378a"
     );

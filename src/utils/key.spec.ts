@@ -11,19 +11,19 @@ describe("Test wallet", () => {
         return crypto.randomBytes(array.length);
       }
     );
-    assert.equal(
+    assert.strictEqual(
       mnemonic.split(" ").length,
       24,
       "should generate 24 words by default"
     );
 
     const recoveredPrivKey = Key.generateWalletFromMnemonic(mnemonic);
-    assert.equal(recoveredPrivKey.toString(), privKey.toString());
-    assert.equal(
+    assert.strictEqual(recoveredPrivKey.toString(), privKey.toString());
+    assert.strictEqual(
       recoveredPrivKey.toPubKey().toString(),
       privKey.toPubKey().toString()
     );
-    assert.equal(
+    assert.strictEqual(
       recoveredPrivKey
         .toPubKey()
         .toAddress()
@@ -41,7 +41,7 @@ describe("Test wallet", () => {
       "m/44'/118'/0'/0/0"
     );
 
-    assert.equal(
+    assert.strictEqual(
       privKey
         .toPubKey()
         .toAddress()
