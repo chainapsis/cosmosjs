@@ -242,7 +242,7 @@ export class Dec {
     return this.int.divide(precision);
   }
 
-  public toString(): string {
+  public toString(prec: number = Dec.precision.toJSNumber()): string {
     const precision = Dec.calcPrecisionMultiplier(bigInteger(0));
     const int = this.int.abs();
     const { quotient: interger, remainder: fraction } = int.divmod(precision);
@@ -255,6 +255,7 @@ export class Dec {
     ) {
       fractionStr = "0" + fractionStr;
     }
+    fractionStr = fractionStr.substring(0, prec);
 
     return (
       (this.isNegative() ? "-" : "") + interger.toString(10) + "." + fractionStr

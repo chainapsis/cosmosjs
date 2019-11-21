@@ -7,9 +7,11 @@ describe("Test decimals", () => {
   it("dec should be parsed from str properly", () => {
     let dec = new Dec("10.009");
     assert.strictEqual(dec.toString(), "10.009000000000000000");
+    assert.strictEqual(dec.toString(2), "10.00");
 
     dec = new Dec("-123.45678900");
     assert.strictEqual(dec.toString(), "-123.456789000000000000");
+    assert.strictEqual(dec.toString(3), "-123.456");
 
     dec = new Dec("10");
     assert.strictEqual(dec.toString(), "10.000000000000000000");
