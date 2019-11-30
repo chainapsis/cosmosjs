@@ -3,6 +3,7 @@ import { AccAddress, useBech32Config } from "../common/address";
 import { generateWalletFromMnemonic, generateSeed, RNG } from "../utils/key";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
+import { TxBuilderConfig } from "./txBuilder";
 
 export interface Key {
   bech32Address: string;
@@ -21,6 +22,17 @@ export interface WalletProvider {
    * Get array of keys that includes bech32 address string, address bytes and public key from wallet if user have approved the access.
    */
   getKeys(context: Context): Promise<Key[]>;
+
+  /**
+   * Request tx builder config from provider.
+   * This is optional method.
+   * If provider supports this method, tx builder will request tx config with prefered tx config that is defined by developer who uses cosmosjs.
+   * Received tx builder config can be changed in the client. The wallet provider must verify that it is the same as the tx builder config sent earlier or warn the user before signing.
+   */
+  getTxBuilderConfig?(
+    context: Context,
+    config: TxBuilderConfig
+  ): Promise<TxBuilderConfig>;
 
   /**
    * Request signature from matched address if user have approved the access.
