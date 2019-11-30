@@ -31,6 +31,11 @@ export const stdTxBuilder: TxBuilder = (
   return useBech32ConfigPromise(
     context.get("bech32Config"),
     async (): Promise<Tx> => {
+      const walletProvider = context.get("walletProvider");
+      if (walletProvider.getTxBuilderConfig) {
+        config = await walletProvider.getTxBuilderConfig(context, config);
+      }
+
       let fee: Coin[] = [];
       if (config.fee instanceof Coin) {
         fee = [config.fee];
@@ -52,7 +57,7 @@ export const stdTxBuilder: TxBuilder = (
         }
       }
 
-      const keys = await context.get("walletProvider").getKeys(context);
+      const keys = await walletProvider.getKeys(context);
 
       const signatures: StdSignature[] = [];
       for (const signer of signers) {
@@ -82,9 +87,11 @@ export const stdTxBuilder: TxBuilder = (
           sequence
         );
 
-        const sig = await context
-          .get("walletProvider")
-          .sign(context, signer.toBech32(), signDoc.getSignBytes());
+        const sig = await walletProvider.sign(
+          context,
+          signer.toBech32(),
+          signDoc.getSignBytes()
+        );
 
         let pubKey: PubKey | undefined;
         for (const key of keys) {
