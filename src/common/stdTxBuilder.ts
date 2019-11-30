@@ -5,6 +5,7 @@ import { Context } from "../core/context";
 import { AccAddress, useBech32ConfigPromise } from "./address";
 import bigInteger from "big-integer";
 import { PubKey, PubKeySecp256k1 } from "../crypto";
+import { Coin } from "./coin";
 
 function nullableBnToBI(
   bn: bigInteger.BigNumber | undefined
@@ -30,7 +31,13 @@ export const stdTxBuilder: TxBuilder = (
   return useBech32ConfigPromise(
     context.get("bech32Config"),
     async (): Promise<Tx> => {
-      const stdFee = new StdFee([config.fee], config.gas);
+      let fee: Coin[] = [];
+      if (config.fee instanceof Coin) {
+        fee = [config.fee];
+      } else {
+        fee = config.fee;
+      }
+      const stdFee = new StdFee(fee, config.gas);
 
       const seenSigners: any = {};
       const signers: AccAddress[] = [];

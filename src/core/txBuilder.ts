@@ -24,9 +24,7 @@ export interface TxBuilderConfig {
    */
   gasAdjustment?: number;
   memo: string;
-  // TODO: support multi-asset fee
-  fee: Coin;
-  // TODO: support multi-asset fee
+  fee: Coin[] | Coin;
   gasPrice?: number;
 }
 
