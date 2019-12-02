@@ -26,4 +26,8 @@ export class Coin {
     this.denom = denom;
     this.amount = amount instanceof Int ? amount : new Int(amount);
   }
+
+  public toString(): string {
+    return `${this.amount.toString()}${this.denom}`;
+  }
 }
