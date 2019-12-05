@@ -34,10 +34,44 @@ export const stdTxBuilder: TxBuilder = (
       const walletProvider = context.get("walletProvider");
       if (walletProvider.getTxBuilderConfig) {
         config = await walletProvider.getTxBuilderConfig(context, config);
+
+        /*
+         * If config is delivered from third party wallet, it probably can be produced in another scope.
+         * Though type of fee is `Coin` in third party wallet, it can be not the same with `Coin` type in this scope.
+         * So, if the fee is likely to be `Coin` type, change the prototype to the `Coin` of the current scope.
+         */
+        const tempFee = config.fee as any;
+        if (Array.isArray(tempFee)) {
+          for (let i = 0; i < tempFee.length; i++) {
+            if (!(tempFee[i] instanceof Coin)) {
+              const fee = tempFee[i];
+              const configFee = config.fee as Coin[];
+              configFee[i] = new Coin(
+                fee.denom,
+                bigInteger(fee.amount.toString())
+              );
+            }
+          }
+        } else {
+          if (!(tempFee instanceof Coin)) {
+            config.fee = new Coin(
+              tempFee.denom,
+              bigInteger(tempFee.amount.toString())
+            );
+          }
+        }
+
+        config.gas = bigInteger(config.gas.toString());
+        if (config.sequence) {
+          config.sequence = bigInteger(config.sequence.toString());
+        }
+        if (config.accountNumber) {
+          config.accountNumber = bigInteger(config.accountNumber.toString());
+        }
       }
 
       let fee: Coin[] = [];
-      if (config.fee instanceof Coin) {
+      if (!Array.isArray(config.fee)) {
         fee = [config.fee];
       } else {
         fee = config.fee;
