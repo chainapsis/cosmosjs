@@ -9,7 +9,7 @@ import { sortJSON } from "../utils/sortJson";
 import { Context } from "../core/context";
 
 export function registerCodec(codec: Codec) {
-  codec.registerConcrete("auth/StdTx", StdTx.prototype);
+  codec.registerConcrete("cosmos-sdk/StdTx", StdTx.prototype);
 }
 
 @DefineStruct()
