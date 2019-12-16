@@ -41,6 +41,9 @@ export class Dec {
       if (int.length === 0) {
         throw new Error("empty string");
       }
+      if (!/^(-?\d+\.\d+)$|^(-?\d+)$/.test(int)) {
+        throw new Error(`invalid decimal: ${int}`);
+      }
       if (int.indexOf(".") >= 0) {
         prec = int.length - int.indexOf(".") - 1;
         int = int.replace(".", "");
