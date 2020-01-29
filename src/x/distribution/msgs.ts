@@ -62,15 +62,20 @@ export class MsgWithdrawValidatorCommission extends Msg {
   })
   public validatorAddress: ValAddress;
 
-  constructor(validatorAddress: ValAddress) {
+  public bech32PrefixAccAddr: string;
+
+  constructor(validatorAddress: ValAddress, bech32PrefixAccAddr: string) {
     super();
     this.validatorAddress = validatorAddress;
+    this.bech32PrefixAccAddr = bech32PrefixAccAddr;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public validateBasic(): void {}
 
   public getSigners(): AccAddress[] {
-    return [new AccAddress(this.validatorAddress.toBytes())];
+    return [
+      new AccAddress(this.validatorAddress.toBytes(), this.bech32PrefixAccAddr)
+    ];
   }
 }

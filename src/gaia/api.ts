@@ -33,9 +33,11 @@ export class GaiaApi extends Api<GaiaRest> {
           address: string | Uint8Array
         ): Promise<Account> => {
           return queryAccount(
-            context.get("bech32Config"),
             context.get("rpcInstance"),
-            address
+            address,
+            coreConfig.bech32Config
+              ? coreConfig.bech32Config.bech32PrefixAccAddr
+              : "cosmos"
           );
         },
         bech32Config: defaultBech32Config("cosmos"),

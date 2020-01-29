@@ -12,6 +12,7 @@ import { defaultBech32Config } from "./bech32Config";
 describe("Test local wallet provider", () => {
   it("local wallet provider should generate correct priv key", async () => {
     const localWalletProvider = new LocalWalletProvider(
+      "cosmos",
       "anger river nuclear pig enlist fish demand dress library obtain concert nasty wolf episode ring bargain rely off vibrant iron cram witness extra enforce",
       0,
       0,

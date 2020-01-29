@@ -1,5 +1,3 @@
-require("babel-polyfill");
-
 import { GaiaApi } from "../src/gaia/api";
 import { LedgerWalletProvider } from "../src/core/ledgerWallet";
 import { MsgSend } from "../src/x/bank";
@@ -11,7 +9,7 @@ import bigInteger from "big-integer";
 (async () => {
   // Here you can see the type of transport
   // https://github.com/LedgerHQ/ledgerjs
-  const wallet = new LedgerWalletProvider("HID");
+  const wallet = new LedgerWalletProvider("HID", "cosmos");
   /*
     // You should not use local wallet provider in production
     const wallet = new LocalWalletProvider(
@@ -20,7 +18,7 @@ import bigInteger from "big-integer";
   */
 
   const api = new GaiaApi({
-    chainId: "cosmoshub-2",
+    chainId: "cosmoshub-3",
     walletProvider: wallet,
     rpc: "http://localhost:26657",
     rest: "http://localhost:1317"
@@ -30,7 +28,7 @@ import bigInteger from "big-integer";
   await api.enable();
 
   const key = (await api.getKeys())[0];
-  const accAddress = new AccAddress(key.address);
+  const accAddress = new AccAddress(key.address, "cosmos");
 
   await api.sendMsgs(
     [

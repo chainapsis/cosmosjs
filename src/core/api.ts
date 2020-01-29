@@ -3,7 +3,6 @@ import Axios from "axios";
 import { TxEncoder, Msg } from "./tx";
 import { TxBuilder, TxBuilderConfig } from "./txBuilder";
 import { Bech32Config } from "./bech32Config";
-import { useGlobalBech32Config } from "../common/address";
 import { Key, WalletProvider } from "./walletProvider";
 import { TendermintRPC } from "../rpc/tendermint";
 import { Rest } from "./rest";
@@ -19,7 +18,6 @@ export interface ApiConfig {
   rpc: string;
   /** Endpoint of rest api */
   rest: string;
-  disableGlobalBech32Config?: boolean;
 }
 
 export interface CoreConfig<R extends Rest> {
@@ -65,10 +63,6 @@ export class Api<R extends Rest> {
 
     this._rpc = new TendermintRPC(this.context);
     this._rest = coreConfig.restFactory(this.context);
-
-    if (!config.disableGlobalBech32Config) {
-      useGlobalBech32Config(coreConfig.bech32Config);
-    }
   }
 
   public async enable(): Promise<void> {

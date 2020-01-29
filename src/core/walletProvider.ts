@@ -1,5 +1,5 @@
 import { PrivKey } from "../crypto";
-import { AccAddress, useBech32Config } from "../common/address";
+import { AccAddress } from "../common/address";
 import { generateWalletFromMnemonic, generateSeed, RNG } from "../utils/key";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
@@ -70,6 +70,7 @@ export class LocalWalletProvider implements WalletProvider {
   private privKey?: PrivKey;
 
   constructor(
+    public readonly bech32PrefixAccAddr: string,
     private readonly mnemonic: string = "",
     private readonly account: number = 0,
     private readonly index: number = 0,
@@ -97,9 +98,11 @@ export class LocalWalletProvider implements WalletProvider {
 
     const pubKey = this.privKey.toPubKey();
     const address = this.privKey.toPubKey().toAddress();
-    const bech32Address = useBech32Config(context.get("bech32Config"), () => {
-      return new AccAddress(address).toBech32();
-    });
+    const bech32Address = new AccAddress(
+      address,
+      this.bech32PrefixAccAddr
+    ).toBech32();
+
     const key: Key = {
       bech32Address,
       address: address.toBytes(),
@@ -120,12 +123,10 @@ export class LocalWalletProvider implements WalletProvider {
     }
     const pubKey = this.privKey.toPubKey();
     const address = pubKey.toAddress();
-    useBech32Config(context.get("bech32Config"), () => {
-      const accAddress = new AccAddress(address);
-      if (accAddress.toBech32() !== bech32Address) {
-        throw new Error(`Unknown address: ${bech32Address}`);
-      }
-    });
+    const accAddress = new AccAddress(address, this.bech32PrefixAccAddr);
+    if (accAddress.toBech32() !== bech32Address) {
+      throw new Error(`Unknown address: ${bech32Address}`);
+    }
 
     return Promise.resolve(this.privKey.sign(message));
   }

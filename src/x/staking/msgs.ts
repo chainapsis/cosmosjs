@@ -132,7 +132,12 @@ export class MsgCreateValidator extends Msg {
       this.delegatorAddress.toBytes().toString() !==
       this.validatorAddress.toBytes().toString()
     ) {
-      addr.push(new AccAddress(this.validatorAddress.toBytes()));
+      addr.push(
+        new AccAddress(
+          this.validatorAddress.toBytes(),
+          this.delegatorAddress.bech32Prefix
+        )
+      );
     }
 
     return addr;
@@ -161,24 +166,31 @@ export class MsgEditValidator extends Msg {
   })
   public minSelfDelegation: Int;
 
+  public bech32PrefixAccAddr: string;
+
   constructor(
     description: Description,
     validatorAddress: ValAddress,
     commisionRate: Dec,
-    minSelfDelegation: Int
+    minSelfDelegation: Int,
+    bech32PrefixAccAddr: string
   ) {
     super();
     this.description = description;
     this.validatorAddress = validatorAddress;
     this.commisionRate = commisionRate;
     this.minSelfDelegation = minSelfDelegation;
+
+    this.bech32PrefixAccAddr = bech32PrefixAccAddr;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public validateBasic(): void {}
 
   public getSigners(): AccAddress[] {
-    return [new AccAddress(this.validatorAddress.toBytes())];
+    return [
+      new AccAddress(this.validatorAddress.toBytes(), this.bech32PrefixAccAddr)
+    ];
   }
 }
 

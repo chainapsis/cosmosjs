@@ -21,38 +21,37 @@ npm install --save @everett-protocol/cosmosjs
 ## How to use
 More examples will be provided [here](https://github.com/everett-protocol/cosmosjs/tree/master/example) soon.
 ```ts
-import { GaiaApi } from "@everett-protocol/cosmosjs/gaia/api";
-import { defaultBech32Config } from "@everett-protocol/cosmosjs/core/bech32Config";
-import { LedgerWalletProvider } from "@everett-protocol/cosmosjs/core/ledgerWallet";
-import { MsgSend } from "@everett-protocol/cosmosjs/x/bank";
-import { AccAddress, useGlobalBech32Config } from "@everett-protocol/cosmosjs/common/address";
-import { Coin } from "@everett-protocol/cosmosjs/common/coin";
-import { Int } from "@everett-protocol/cosmosjs/common/int";
+import { GaiaApi } from "../src/gaia/api";
+import { LedgerWalletProvider } from "../src/core/ledgerWallet";
+import { MsgSend } from "../src/x/bank";
+import { AccAddress } from "../src/common/address";
+import { Coin } from "../src/common/coin";
+import { Int } from "../src/common/int";
 import bigInteger from "big-integer";
 
 (async () => {
   // Here you can see the type of transport
   // https://github.com/LedgerHQ/ledgerjs
-  const wallet = new LedgerWalletProvider("HID");
+  const wallet = new LedgerWalletProvider("HID", "cosmos");
   /*
     // You should not use local wallet provider in production
     const wallet = new LocalWalletProvider(
-      "anger river nuclear pig enlist fish demand dress library obtain concert nasty wolf episode ring bargain rely off vibrant iron cram witness extra enforce"
-    );
+    "anger river nuclear pig enlist fish demand dress library obtain concert nasty wolf episode ring bargain rely off vibrant iron cram witness extra enforce"
+  );
   */
 
   const api = new GaiaApi({
-    chainId: "cosmoshub-2",
+    chainId: "cosmoshub-3",
     walletProvider: wallet,
     rpc: "http://localhost:26657",
     rest: "http://localhost:1317"
   });
 
   // You should sign in before using your wallet
-  await api.signIn(0);
+  await api.enable();
 
-  const account = (await api.wallet.getSignerAccounts(api.context))[0];
-  const accAddress = new AccAddress(account.address);
+  const key = (await api.getKeys())[0];
+  const accAddress = new AccAddress(key.address, "cosmos");
 
   await api.sendMsgs(
     [

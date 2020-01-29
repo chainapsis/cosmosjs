@@ -1,6 +1,6 @@
 import { PubKey, PubKeySecp256k1 } from "../crypto";
 import { Context } from "./context";
-import { AccAddress, useBech32Config } from "../common/address";
+import { AccAddress } from "../common/address";
 import { WalletProvider, Key } from "./walletProvider";
 import { Buffer } from "buffer/";
 const TransportWebUSB: any = require("@ledgerhq/hw-transport-webusb").default;
@@ -24,6 +24,7 @@ export class LedgerWalletProvider implements WalletProvider {
 
   constructor(
     public readonly transport: "WebUSB" | "U2F" | "HID",
+    public readonly bech32PrefixAccAddr: string,
     private readonly account: number = 0,
     private readonly index: number = 0
   ) {}
@@ -69,12 +70,13 @@ export class LedgerWalletProvider implements WalletProvider {
       throw new Error(`[${response.error_message}] ${response.error_message}`);
     }
 
-    useBech32Config(context.get("bech32Config"), () => {
-      this.key = {
-        address: AccAddress.fromBech32(response.bech32_address).toBytes(),
-        pubKey: new PubKeySecp256k1(response.compressed_pk)
-      };
-    });
+    this.key = {
+      address: AccAddress.fromBech32(
+        this.bech32PrefixAccAddr,
+        response.bech32_address
+      ).toBytes(),
+      pubKey: new PubKeySecp256k1(response.compressed_pk)
+    };
 
     return Promise.resolve();
   }
@@ -84,9 +86,10 @@ export class LedgerWalletProvider implements WalletProvider {
       throw new Error("Not approved");
     }
 
-    const bech32Address = useBech32Config(context.get("bech32Config"), () => {
-      return new AccAddress(this.key!.address).toBech32();
-    });
+    const bech32Address = new AccAddress(
+      this.key!.address,
+      this.bech32PrefixAccAddr
+    ).toBech32();
 
     const key = {
       address: this.key.address,
@@ -107,11 +110,12 @@ export class LedgerWalletProvider implements WalletProvider {
       throw new Error("Not signed in");
     }
 
-    useBech32Config(context.get("bech32Config"), () => {
-      if (new AccAddress(this.key!.address).toBech32() !== bech32Address) {
-        throw new Error(`Unknown address: ${bech32Address}`);
-      }
-    });
+    if (
+      new AccAddress(this.key!.address, this.bech32PrefixAccAddr).toBech32() !==
+      bech32Address
+    ) {
+      throw new Error(`Unknown address: ${bech32Address}`);
+    }
 
     const response = await this.app.sign(this.path, message);
     if (response.error_message !== "No errors") {

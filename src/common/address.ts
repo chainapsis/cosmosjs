@@ -3,79 +3,48 @@ const { Field, DefineType } = Amino;
 import bech32 from "bech32";
 import { Address } from "../crypto";
 import { Buffer } from "buffer/";
-import { Bech32Config } from "../core/bech32Config";
-
-let bech32Config: Bech32Config | undefined;
-let globalBech32Config: Bech32Config | undefined;
-const bech32ConfigStack: Bech32Config[] = [];
-
-export function useGlobalBech32Config(config: Bech32Config | undefined) {
-  globalBech32Config = config;
-  if (bech32ConfigStack.length === 0) {
-    bech32Config = config;
-  }
-}
-
-/**
- * If bech32config is just global variable, it make conflicts when you use mutiple chain api in an application.
- * So, to overcome this, each config should be used in separated way.
- * Use Bech32 encoding, decoding within this function.
- * But if you just use only one chain api in general way, you can use [[useGlobalBech32Config]] for convenience
- */
-export function useBech32Config<T>(config: Bech32Config, fn: () => T): T {
-  bech32ConfigStack.push(config);
-  bech32Config = config;
-  const result = fn();
-  bech32ConfigStack.pop();
-  bech32Config =
-    bech32ConfigStack.length > 0
-      ? bech32ConfigStack[bech32ConfigStack.length - 1]
-      : globalBech32Config;
-  return result;
-}
-
-export async function useBech32ConfigPromise<T>(
-  config: Bech32Config,
-  fn: () => Promise<T>
-): Promise<T> {
-  bech32ConfigStack.push(config);
-  bech32Config = config;
-  const result = await fn();
-  bech32ConfigStack.pop();
-  bech32Config =
-    bech32ConfigStack.length > 0
-      ? bech32ConfigStack[bech32ConfigStack.length - 1]
-      : globalBech32Config;
-
-  return result;
-}
 
 @DefineType()
 export class AccAddress {
-  public static fromBech32(bech32Addr: string): AccAddress {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+  /**
+   * Parse the address from bech32.
+   * @param bech32Addr bech32 address string.
+   * @param prefix If prefix is not provided, parse the address without verifying with suggested prefix.
+   */
+  public static fromBech32(bech32Addr: string, prefix?: string): AccAddress {
+    if (prefix === "") {
+      throw new Error("Empty bech32 prefix");
     }
     const { prefix: b32Prefix, words } = bech32.decode(bech32Addr);
-    if (b32Prefix !== bech32Config.bech32PrefixAccAddr) {
+    if (prefix != null && b32Prefix !== prefix) {
       throw new Error("Prefix doesn't match");
     }
-    return new AccAddress(bech32.fromWords(words));
+    return new AccAddress(
+      bech32.fromWords(words),
+      prefix != null ? prefix : b32Prefix
+    );
   }
 
   @Field.Array(0, { type: Type.Uint8 })
-  private address: Uint8Array;
+  private readonly address: Uint8Array;
 
-  constructor(address: Uint8Array | Address) {
+  public readonly bech32Prefix: string;
+
+  constructor(address: Uint8Array | Address, bech32Prefix: string) {
+    if (!bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
+    }
+
     this.address = address instanceof Address ? address.toBytes() : address;
+    this.bech32Prefix = bech32Prefix;
   }
 
   public toBech32(): string {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+    if (!this.bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
     }
     const words = bech32.toWords(Buffer.from(this.address) as any);
-    return bech32.encode(bech32Config.bech32PrefixAccAddr, words);
+    return bech32.encode(this.bech32Prefix, words);
   }
 
   public toBytes(): Uint8Array {
@@ -89,30 +58,45 @@ export class AccAddress {
 
 @DefineType()
 export class ValAddress {
-  public static fromBech32(bech32Addr: string): ValAddress {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+  /**
+   * Parse the address from bech32.
+   * @param bech32Addr bech32 address string.
+   * @param prefix If prefix is not provided, parse the address without verifying with suggested prefix.
+   */
+  public static fromBech32(bech32Addr: string, prefix?: string): ValAddress {
+    if (prefix === "") {
+      throw new Error("Empty bech32 prefix");
     }
     const { prefix: b32Prefix, words } = bech32.decode(bech32Addr);
-    if (b32Prefix !== bech32Config.bech32PrefixValAddr) {
+    if (prefix != null && b32Prefix !== prefix) {
       throw new Error("Prefix doesn't match");
     }
-    return new ValAddress(bech32.fromWords(words));
+    return new ValAddress(
+      bech32.fromWords(words),
+      prefix != null ? prefix : b32Prefix
+    );
   }
 
   @Field.Array(0, { type: Type.Uint8 })
-  private address: Uint8Array;
+  private readonly address: Uint8Array;
 
-  constructor(address: Uint8Array | Address) {
+  public readonly bech32Prefix: string;
+
+  constructor(address: Uint8Array | Address, bech32Prefix: string) {
+    if (!bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
+    }
+
     this.address = address instanceof Address ? address.toBytes() : address;
+    this.bech32Prefix = bech32Prefix;
   }
 
   public toBech32(): string {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+    if (!this.bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
     }
     const words = bech32.toWords(Buffer.from(this.address) as any);
-    return bech32.encode(bech32Config.bech32PrefixValAddr, words);
+    return bech32.encode(this.bech32Prefix, words);
   }
 
   public toBytes(): Uint8Array {
@@ -126,30 +110,45 @@ export class ValAddress {
 
 @DefineType()
 export class ConsAddress {
-  public static fromBech32(bech32Addr: string): ConsAddress {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+  /**
+   * Parse the address from bech32.
+   * @param bech32Addr bech32 address string.
+   * @param prefix If prefix is not provided, parse the address without verifying with suggested prefix.
+   */
+  public static fromBech32(bech32Addr: string, prefix?: string): ConsAddress {
+    if (prefix === "") {
+      throw new Error("Empty bech32 prefix");
     }
     const { prefix: b32Prefix, words } = bech32.decode(bech32Addr);
-    if (b32Prefix !== bech32Config.bech32PrefixConsAddr) {
+    if (prefix != null && b32Prefix !== prefix) {
       throw new Error("Prefix doesn't match");
     }
-    return new ConsAddress(bech32.fromWords(words));
+    return new ConsAddress(
+      bech32.fromWords(words),
+      prefix != null ? prefix : b32Prefix
+    );
   }
 
   @Field.Array(0, { type: Type.Uint8 })
-  private address: Uint8Array;
+  private readonly address: Uint8Array;
 
-  constructor(address: Uint8Array | Address) {
+  public readonly bech32Prefix: string;
+
+  constructor(address: Uint8Array | Address, bech32Prefix: string) {
+    if (!bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
+    }
+
     this.address = address instanceof Address ? address.toBytes() : address;
+    this.bech32Prefix = bech32Prefix;
   }
 
   public toBech32(): string {
-    if (!bech32Config) {
-      throw new Error("bech32 config is null");
+    if (!this.bech32Prefix) {
+      throw new Error("Empty bech32 prefix");
     }
     const words = bech32.toWords(Buffer.from(this.address) as any);
-    return bech32.encode(bech32Config.bech32PrefixConsAddr, words);
+    return bech32.encode(this.bech32Prefix, words);
   }
 
   public toBytes(): Uint8Array {
