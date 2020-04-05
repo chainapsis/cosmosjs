@@ -1,5 +1,5 @@
 import { Context } from "./context";
-import Axios from "axios";
+import Axios, { AxiosInstance } from "axios";
 import { TxEncoder, Msg } from "./tx";
 import { TxBuilder, TxBuilderConfig } from "./txBuilder";
 import { Bech32Config } from "./bech32Config";
@@ -29,6 +29,8 @@ export interface CoreConfig<R extends Rest> {
    * Builder for transaction.
    */
   txBuilder: TxBuilder;
+  rpcInstanceFactory?: (rpc: string) => AxiosInstance;
+  restInstanceFactory?: (rpc: string) => AxiosInstance;
   restFactory: (context: Context) => R;
   queryAccount: QueryAccount;
   bech32Config: Bech32Config;
@@ -48,12 +50,16 @@ export class Api<R extends Rest> {
       txBuilder: coreConfig.txBuilder,
       bech32Config: coreConfig.bech32Config,
       walletProvider: config.walletProvider,
-      rpcInstance: Axios.create({
-        baseURL: config.rpc
-      }),
-      restInstance: Axios.create({
-        baseURL: config.rest
-      }),
+      rpcInstance: coreConfig.rpcInstanceFactory
+        ? coreConfig.rpcInstanceFactory(config.rpc)
+        : Axios.create({
+            baseURL: config.rpc
+          }),
+      restInstance: coreConfig.restInstanceFactory
+        ? coreConfig.restInstanceFactory(config.rest)
+        : Axios.create({
+            baseURL: config.rest
+          }),
       queryAccount: coreConfig.queryAccount,
       bip44: coreConfig.bip44,
       codec: new Codec()
