@@ -50,7 +50,7 @@ export class StdTx implements Tx {
 }
 
 const defaultTxEncoder: TxEncoder = (context: Context, tx: Tx): Uint8Array => {
-  return context.get("codec").marshalBinaryLengthPrefixed(tx);
+  return context.get("codec").marshalBinaryBare(tx);
 };
 
 export { defaultTxEncoder };
