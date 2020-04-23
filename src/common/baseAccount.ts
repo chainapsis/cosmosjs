@@ -32,7 +32,9 @@ export class BaseAccount implements Account {
       }
       let pubKey: PubKey | undefined;
       if (value.public_key) {
-        if (value.public_key.type !== "tendermint/PubKeySecp256k1") {
+        if (value.public_key.type === undefined) {
+          pubKey = new PubKeySecp256k1(Buffer.from(value.public_key, "base64"));
+        } else if (value.public_key.type !== "tendermint/PubKeySecp256k1") {
           throw new Error(
             `Unsupported public key type: ${value.public_key.type}`
           );
