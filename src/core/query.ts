@@ -6,11 +6,7 @@ import { AxiosInstance } from "axios";
 export async function queryAccount(
   rpcInstance: AxiosInstance,
   account: string | Uint8Array,
-  bech32PrefixAccAddr?: string,
-  options?: {
-    querierRoute?: string;
-    data?: string;
-  }
+  bech32PrefixAccAddr?: string
 ) {
   if (typeof account === "string" && !bech32PrefixAccAddr) {
     throw new Error("Empty bech32 prefix");
@@ -21,18 +17,48 @@ export async function queryAccount(
       ? AccAddress.fromBech32(account, bech32PrefixAccAddr)
       : new AccAddress(account, bech32PrefixAccAddr!);
 
-  const result = await rpcInstance.get("abci_query", {
+  let result = await rpcInstance.get("abci_query", {
     params: {
       path: "0x" + Buffer.from("custom/auth/account").toString("hex"),
       data:
-        options && options.data
-          ? options.data
-          : "0x" +
-            Buffer.from(
-              JSON.stringify({
-                account: accAddress.toBech32()
-              })
-            ).toString("hex")
+        "0x" +
+        Buffer.from(
+          JSON.stringify({
+            account: accAddress.toBech32()
+          })
+        ).toString("hex")
+    }
+  });
+
+  if (result.status !== 200) {
+    throw new Error(result.statusText);
+  }
+
+  let value: any;
+
+  if (result.data) {
+    const r = result.data;
+    if (r.result && r.result.response) {
+      const response = r.result.response;
+
+      if (response.code !== undefined && response.code !== 0) {
+        throw new Error(response.log);
+      }
+
+      value = JSON.parse(Buffer.from(response.value, "base64").toString());
+    }
+  }
+
+  result = await rpcInstance.get("abci_query", {
+    params: {
+      path: "0x" + Buffer.from("custom/bank/all_balances").toString("hex"),
+      data:
+        "0x" +
+        Buffer.from(
+          JSON.stringify({
+            Address: accAddress.toBech32()
+          })
+        ).toString("hex")
     }
   });
 
@@ -49,13 +75,15 @@ export async function queryAccount(
         throw new Error(response.log);
       }
 
-      const value = JSON.parse(
+      value.value.coins = JSON.parse(
         Buffer.from(response.value, "base64").toString()
       );
-
-      return BaseAccount.fromJSON(value);
     }
   }
 
-  throw new Error("Unknown error");
+  if (value) {
+    return BaseAccount.fromJSON(value);
+  } else {
+    throw new Error("Unknown error");
+  }
 }
