@@ -30,10 +30,7 @@ export class PrivKeySecp256k1 implements PrivKey {
   }
 
   public toPubKey(): PubKey {
-    const pubKey = secp256k1.publicKeyCreate(
-      Buffer.from(this.privKey) as any,
-      true
-    );
+    const pubKey = secp256k1.publicKeyCreate(this.privKey, true);
     return new PubKeySecp256k1(pubKey);
   }
 
@@ -42,10 +39,8 @@ export class PrivKeySecp256k1 implements PrivKey {
   }
 
   public sign(msg: Uint8Array): Uint8Array {
-    return secp256k1.sign(
-      Buffer.from(new sha256().update(msg).digest()) as any,
-      Buffer.from(this.privKey) as any
-    ).signature;
+    return secp256k1.ecdsaSign(new sha256().update(msg).digest(), this.privKey)
+      .signature;
   }
 
   public toString(): string {
@@ -88,11 +83,7 @@ export class PubKeySecp256k1 implements PubKey {
   }
 
   public verify(msg: Uint8Array, sig: Uint8Array): boolean {
-    return secp256k1.verify(
-      Buffer.from(msg) as any,
-      Buffer.from(sig) as any,
-      Buffer.from(this.pubKey) as any
-    );
+    return secp256k1.ecdsaVerify(msg, sig, this.pubKey);
   }
 
   public toString(): string {
