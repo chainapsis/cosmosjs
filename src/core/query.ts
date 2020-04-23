@@ -23,20 +23,14 @@ export async function queryAccount(
 
   const result = await rpcInstance.get("abci_query", {
     params: {
-      path:
-        "0x" +
-        Buffer.from(
-          `custom/${
-            options && options.querierRoute ? options.querierRoute : "acc"
-          }/account`
-        ).toString("hex"),
+      path: "0x" + Buffer.from("custom/auth/account").toString("hex"),
       data:
         options && options.data
           ? options.data
           : "0x" +
             Buffer.from(
               JSON.stringify({
-                Address: accAddress.toBech32()
+                account: accAddress.toBech32()
               })
             ).toString("hex")
     }
