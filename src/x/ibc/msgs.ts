@@ -20,7 +20,7 @@ export class MsgTransfer extends Msg {
   public sourceChannel: string;
 
   @Field.Uint64(2, {
-    jsonName: "dest_height"
+    jsonName: "destination_height"
   })
   public destHeight: bigInteger.BigInteger;
 
