@@ -11,15 +11,15 @@
 
 Our goal is to create a general purpose library for the Cosmos ecosystem. Through this library, blockchains that use cosmos-sdk, as well as Cosmos hub (Gaia), can create their own API for JavaScript client side.  
 
-Documentation can be found [here](https://everett-protocol.github.io/cosmosjs/).  
+Documentation can be found [here](https://chainapsis.github.io/cosmosjs/).  
 
 ## Install
 ```sh
-npm install --save @everett-protocol/cosmosjs
+npm install --save @chainapsis/cosmosjs
 ```
 
 ## How to use
-More examples will be provided [here](https://github.com/everett-protocol/cosmosjs/tree/master/example) soon.
+More examples will be provided [here](https://github.com/chainapsis/cosmosjs/tree/master/example) soon.
 ```ts
 import { GaiaApi } from "../src/gaia/api";
 import { LedgerWalletProvider } from "../src/core/ledgerWallet";
@@ -71,7 +71,7 @@ import bigInteger from "big-integer";
 
 ## Making your own messages
 Below is Gaia's basic sending message.
-More examples are [here](https://github.com/everett-protocol/cosmosjs/tree/master/src/x).
+More examples are [here](https://github.com/chainapsis/cosmosjs/tree/master/src/x).
 ```ts
 import { Amino, Type } from "ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
@@ -137,7 +137,7 @@ export class MsgSend extends Msg {
 ```
 
 ## Making api for your own blockchain
-Check out [this](https://github.com/everett-protocol/cosmosjs/tree/master/src/gaia).
+Check out [this](https://github.com/chainapsis/cosmosjs/tree/master/src/gaia).
 
 ## Run tests
 ```sh
@@ -145,6 +145,6 @@ npm run test
 ```
 
 ## Author
-👤 **everett-protocol**
+👤 **chainapsis**
 * Twitter: [@EverettProtocol](https://twitter.com/@everettprotocol)
-* Github: [everett-protocol](https://github.com/everett-protocol)
+* Github: [chainapsis](https://github.com/chainapsis)

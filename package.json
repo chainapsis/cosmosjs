@@ -1,7 +1,7 @@
 {
-  "name": "@everett-protocol/cosmosjs",
+  "name": "@chainapsis/cosmosjs",
   "version": "v0.0.3-alpha.2",
-  "homepage": "https://github.com/everett-protocol/cosmosjs",
+  "homepage": "https://github.com/chainapsis/cosmosjs",
   "description": "General purpose library for cosmos-sdk",
   "main": "index.js",
   "types": "index.d.ts",
@@ -22,7 +22,7 @@
     "cosmos",
     "blockchain"
   ],
-  "author": "everett-protocol",
+  "author": "chainapsis",
   "license": "Apache-2.0",
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "^5.15.0",
