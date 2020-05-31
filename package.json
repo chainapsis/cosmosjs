@@ -35,18 +35,16 @@
     "bip32": "^2.0.3",
     "bip39": "^3.0.2",
     "buffer": "^5.2.1",
-    "ledger-cosmos-js": "^2.0.2",
-    "ripemd160": "^2.0.2",
-    "secp256k1": "^3.7.0",
-    "sha.js": "^2.4.11"
+    "crypto-js": "^4.0.0",
+    "elliptic": "^6.5.2",
+    "ledger-cosmos-js": "^2.0.2"
   },
   "devDependencies": {
     "@types/bech32": "^1.1.1",
+    "@types/crypto-js": "^3.1.47",
+    "@types/elliptic": "^6.4.12",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.13.2",
-    "@types/ripemd160": "^2.0.0",
-    "@types/secp256k1": "^3.5.0",
-    "@types/sha.js": "^2.4.0",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
     "babel-polyfill": "^6.26.0",

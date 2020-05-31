@@ -1,9 +1,8 @@
 import { Amino, Type } from "@node-a-team/ts-amino";
 const { Field, DefineType, marshalBinaryBare } = Amino;
 import { Buffer } from "buffer/";
-import ripemd160 from "ripemd160";
-import secp256k1 from "secp256k1";
-import { sha256 } from "sha.js";
+import EC from "elliptic";
+import CryptoJS from "crypto-js";
 import { Address, PrivKey, PubKey } from "./types";
 
 @DefineType()
@@ -30,11 +29,12 @@ export class PrivKeySecp256k1 implements PrivKey {
   }
 
   public toPubKey(): PubKey {
-    const pubKey = secp256k1.publicKeyCreate(
-      Buffer.from(this.privKey) as any,
-      true
+    const secp256k1 = new EC.ec("secp256k1");
+
+    const key = secp256k1.keyFromPrivate(this.privKey);
+    return new PubKeySecp256k1(
+      new Uint8Array(key.getPublic().encodeCompressed("array"))
     );
-    return new PubKeySecp256k1(pubKey);
   }
 
   public equals(privKey: PrivKey): boolean {
@@ -42,10 +42,16 @@ export class PrivKeySecp256k1 implements PrivKey {
   }
 
   public sign(msg: Uint8Array): Uint8Array {
-    return secp256k1.sign(
-      Buffer.from(new sha256().update(msg).digest()) as any,
-      Buffer.from(this.privKey) as any
-    ).signature;
+    const secp256k1 = new EC.ec("secp256k1");
+    const key = secp256k1.keyFromPrivate(this.privKey);
+
+    const hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(msg)).toString();
+
+    const signature = key.sign(Buffer.from(hash, "hex"), {
+      canonical: true
+    });
+
+    return new Uint8Array(signature.r.toArray().concat(signature.s.toArray()));
   }
 
   public toString(): string {
@@ -77,8 +83,10 @@ export class PubKeySecp256k1 implements PubKey {
   }
 
   public toAddress(): Address {
-    let hash = new sha256().update(this.pubKey).digest("latin1");
-    hash = new ripemd160().update(hash, "latin1").digest("hex");
+    let hash = CryptoJS.SHA256(
+      CryptoJS.lib.WordArray.create(this.pubKey)
+    ).toString();
+    hash = CryptoJS.RIPEMD160(CryptoJS.enc.Hex.parse(hash)).toString();
 
     return new Address(Buffer.from(hash, "hex"));
   }
@@ -88,11 +96,17 @@ export class PubKeySecp256k1 implements PubKey {
   }
 
   public verify(msg: Uint8Array, sig: Uint8Array): boolean {
-    return secp256k1.verify(
-      Buffer.from(msg) as any,
-      Buffer.from(sig) as any,
-      Buffer.from(this.pubKey) as any
-    );
+    const secp256k1 = new EC.ec("secp256k1");
+    const key = secp256k1.keyFromPublic(this.pubKey);
+
+    const hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(msg)).toString();
+
+    const signature = {
+      r: sig.slice(0, 32),
+      s: sig.slice(32)
+    };
+
+    return key.verify(Buffer.from(hash, "hex"), signature);
   }
 
   public toString(): string {
