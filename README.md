@@ -2,8 +2,8 @@
 <h1  align="center">Welcome to cosmosjs 👋</h1>
 <p>
 <img  src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-<a  href="https://twitter.com/Node_Ateam">
-<img  alt="Twitter: Node_Ateam"  src="https://img.shields.io/twitter/follow/Node_Ateam.svg?style=social"  target="_blank" />
+<a  href="https://twitter.com/Chainapsis">
+<img  alt="Twitter: Chainapsis"  src="https://img.shields.io/twitter/follow/Chainapsis.svg?style=social"  target="_blank" />
 </a>
 </p>
 
