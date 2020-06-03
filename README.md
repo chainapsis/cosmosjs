@@ -146,5 +146,5 @@ npm run test
 
 ## Author
 👤 **chainapsis**
-* Twitter: [@EverettProtocol](https://twitter.com/@everettprotocol)
+* Twitter: [@Chainapsis](https://twitter.com/chainapsis)
 * Github: [chainapsis](https://github.com/chainapsis)
