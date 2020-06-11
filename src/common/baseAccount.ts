@@ -8,6 +8,10 @@ import { Account } from "../core/account";
 
 export class BaseAccount implements Account {
   public static fromJSON(obj: any): BaseAccount {
+    if (obj.height) {
+      obj = obj.result;
+    }
+
     const supportedAccountType = [
       "auth/Account",
       "auth/BaseVestingAccount",
