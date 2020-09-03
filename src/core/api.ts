@@ -9,7 +9,7 @@ import { Rest } from "./rest";
 import { QueryAccount } from "./account";
 import { ResultBroadcastTx, ResultBroadcastTxCommit } from "../rpc/tx";
 import { BIP44 } from "./bip44";
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 
 export interface ApiConfig {
   chainId: string;

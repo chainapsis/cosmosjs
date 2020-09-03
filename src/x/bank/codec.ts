@@ -1,4 +1,4 @@
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 import { MsgSend } from "./msgs";
 
 export function registerCodec(codec: Codec) {

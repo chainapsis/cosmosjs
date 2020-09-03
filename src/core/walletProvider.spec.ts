@@ -6,7 +6,7 @@ import crypto from "crypto";
 import { PubKeySecp256k1 } from "../crypto";
 import { Context } from "./context";
 import { BIP44 } from "./bip44";
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 import { defaultBech32Config } from "./bech32Config";
 
 describe("Test local wallet provider", () => {

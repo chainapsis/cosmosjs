@@ -1,5 +1,5 @@
 import { AccAddress } from "../common/address";
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 import { Buffer } from "buffer/";
 import { sortJSON } from "../utils/sortJson";
 import { Context } from "./context";

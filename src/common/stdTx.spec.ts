@@ -6,7 +6,7 @@ import { Int } from "./int";
 import { StdSignDoc, StdFee, registerCodec } from "./stdTx";
 import { Msg } from "../core/tx";
 import { AccAddress } from "./address";
-import { Amino } from "@node-a-team/ts-amino";
+import { Amino } from "@chainapsis/ts-amino";
 const { Field, Concrete, DefineStruct } = Amino;
 
 @Concrete("test/MsgTest")

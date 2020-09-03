@@ -1,5 +1,5 @@
 import bigInteger from "big-integer";
-import { Amino, Type } from "@node-a-team/ts-amino";
+import { Amino, Type } from "@chainapsis/ts-amino";
 const { Method, DefineStruct } = Amino;
 
 @DefineStruct()

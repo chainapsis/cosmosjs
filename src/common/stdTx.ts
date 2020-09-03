@@ -1,5 +1,5 @@
 import { Tx, Msg, TxEncoder } from "../core/tx";
-import { Amino, Type, Codec } from "@node-a-team/ts-amino";
+import { Amino, Type, Codec } from "@chainapsis/ts-amino";
 const { Field, DefineStruct, DefineType, marshalJson } = Amino;
 import { Coin } from "./coin";
 import bigInteger from "big-integer";

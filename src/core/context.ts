@@ -5,7 +5,7 @@ import { Bech32Config } from "./bech32Config";
 import { WalletProvider } from "./walletProvider";
 import { QueryAccount } from "./account";
 import { BIP44 } from "./bip44";
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 
 export class ImmutableContext<T> {
   constructor(private context: T) {}

@@ -1,4 +1,4 @@
-import { Amino, Type } from "@node-a-team/ts-amino";
+import { Amino, Type } from "@chainapsis/ts-amino";
 const { Field, DefineType, marshalBinaryBare } = Amino;
 import { Buffer } from "buffer/";
 import EC from "elliptic";

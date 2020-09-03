@@ -1,4 +1,4 @@
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 import { PrivKeySecp256k1, PubKeySecp256k1 } from "./secp256k1";
 
 export function registerCodec(codec: Codec) {

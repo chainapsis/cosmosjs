@@ -2,7 +2,7 @@ import assert from "assert";
 import "mocha";
 import { PrivKeySecp256k1 } from "./secp256k1";
 import { Buffer } from "buffer/";
-import { Amino } from "@node-a-team/ts-amino";
+import { Amino } from "@chainapsis/ts-amino";
 import { registerCodec } from "./codec";
 
 describe("Test secp256k1", () => {

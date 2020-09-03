@@ -12,7 +12,7 @@ import { Context } from "../core/context";
 import { Account } from "../core/account";
 import { BIP44 } from "../core/bip44";
 import { defaultBech32Config } from "../core/bech32Config";
-import { Codec } from "@node-a-team/ts-amino";
+import { Codec } from "@chainapsis/ts-amino";
 import { queryAccount } from "../core/query";
 import * as Crypto from "../crypto";
 
