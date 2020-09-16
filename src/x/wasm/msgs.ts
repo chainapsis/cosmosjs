@@ -1,4 +1,4 @@
-import { Amino, Codec, Type } from "@node-a-team/ts-amino";
+import { Amino, Type } from "@chainapsis/ts-amino";
 const { Field, DefineStruct, DefineType } = Amino;
 import { Msg } from "../../core/tx";
 import { AccAddress } from "../../common/address";
@@ -6,7 +6,6 @@ import { Coin } from "../../common/coin";
 import { Int } from "../../common/int";
 
 import { Buffer } from "buffer/";
-import { sortJSON } from "../../utils/sortJson";
 
 @DefineType()
 class RawMessage {
@@ -71,16 +70,5 @@ export class MsgExecuteContract extends Msg {
         throw new Error("Send amount is invalid");
       }
     }
-  }
-
-  public getSignBytes(codec: Codec): Uint8Array {
-    const result = sortJSON(codec.marshalJson(this));
-    if (!this.sentFunds || this.sentFunds.length === 0) {
-      const alt = JSON.parse(result);
-      alt.value["sent_funds"] = [];
-      return Buffer.from(sortJSON(JSON.stringify(alt)), "utf8");
-    }
-
-    return Buffer.from(result, "utf8");
   }
 }
