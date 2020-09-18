@@ -40,9 +40,7 @@ export class MsgExecuteContract extends Msg {
     3,
     { type: Type.Defined },
     {
-      jsonName: "sent_funds",
-      writeEmpty: true,
-      emptyElements: true
+      jsonName: "sent_funds"
     }
   )
   public sentFunds: Coin[];
@@ -66,6 +64,71 @@ export class MsgExecuteContract extends Msg {
 
   public validateBasic(): void {
     for (const coin of this.sentFunds) {
+      if (coin.amount.lte(new Int(0))) {
+        throw new Error("Send amount is invalid");
+      }
+    }
+  }
+}
+
+@DefineStruct()
+export class MsgInstantiateContract extends Msg {
+  @Field.Defined(0, {
+    jsonName: "sender"
+  })
+  public sender: AccAddress;
+
+  @Field.Defined(1, {
+    jsonName: "admin",
+    jsonOmitEmpty: true
+  })
+  public admin: AccAddress;
+
+  @Field.Uint64(2, {
+    jsonName: "code_id"
+  })
+  public codeId: number;
+
+  @Field.String(3, {
+    jsonName: "label"
+  })
+  public label: string;
+
+  @Field.Slice(4, { type: Type.Defined }, { jsonName: "init_msg" })
+  public initMsg: RawMessage;
+
+  @Field.Slice(
+    5,
+    { type: Type.Defined },
+    {
+      jsonName: "init_funds"
+    }
+  )
+  public initFunds: Coin[];
+
+  constructor(
+    sender: AccAddress,
+    admin: AccAddress,
+    codeId: number,
+    label: string,
+    initMsg: object,
+    initFunds: Coin[]
+  ) {
+    super();
+    this.sender = sender;
+    this.admin = admin;
+    this.codeId = codeId;
+    this.label = label;
+    this.initMsg = new RawMessage(Buffer.from(JSON.stringify(initMsg), "utf8"));
+    this.initFunds = initFunds;
+  }
+
+  public getSigners(): AccAddress[] {
+    return [this.sender];
+  }
+
+  public validateBasic(): void {
+    for (const coin of this.initFunds) {
       if (coin.amount.lte(new Int(0))) {
         throw new Error("Send amount is invalid");
       }
