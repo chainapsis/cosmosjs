@@ -82,7 +82,7 @@ export class MsgInstantiateContract extends Msg {
     jsonName: "admin",
     jsonOmitEmpty: true
   })
-  public admin: AccAddress;
+  public admin: AccAddress | undefined;
 
   @Field.Uint64(2, {
     jsonName: "code_id"
@@ -108,7 +108,7 @@ export class MsgInstantiateContract extends Msg {
 
   constructor(
     sender: AccAddress,
-    admin: AccAddress,
+    admin: AccAddress | undefined,
     codeId: number,
     label: string,
     initMsg: object,
