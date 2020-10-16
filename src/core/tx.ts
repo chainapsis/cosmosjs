@@ -33,4 +33,4 @@ export abstract class Msg {
   }
 }
 
-export type TxEncoder = (conext: Context, tx: Tx) => Uint8Array;
+export type TxEncoder = (conext: Context, tx: Tx, json: boolean) => Uint8Array;

@@ -10,6 +10,7 @@ import { QueryAccount } from "./account";
 import { ResultBroadcastTx, ResultBroadcastTxCommit } from "../rpc/tx";
 import { BIP44 } from "./bip44";
 import { Codec } from "@chainapsis/ts-amino";
+import { Buffer } from "buffer/";
 
 export interface ApiConfig {
   chainId: string;
@@ -62,7 +63,8 @@ export class Api<R extends Rest> {
           }),
       queryAccount: coreConfig.queryAccount,
       bip44: coreConfig.bip44,
-      codec: new Codec()
+      codec: new Codec(),
+      isStargate: false
     });
 
     coreConfig.registerCodec(this.context.get("codec"));
@@ -90,12 +92,25 @@ export class Api<R extends Rest> {
     config: TxBuilderConfig,
     mode: "commit" | "sync" | "async" = "sync"
   ): Promise<ResultBroadcastTx | ResultBroadcastTxCommit> {
+    const isStargate = this.context.get("isStargate");
+
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
-    const bz = this.context.get("txEncoder")(this.context, tx);
-    if (mode === "commit") {
-      return this.rpc.broadcastTxCommit(bz);
+    const bz = this.context.get("txEncoder")(this.context, tx, isStargate);
+    const stdTxJson = JSON.parse(Buffer.from(bz).toString());
+
+    // If the api is for stargate mode,
+    // Use the rest api to send the transaction.
+    if (isStargate) {
+      return this.context.get("restInstance").post("/txs", {
+        tx: stdTxJson.value,
+        mode: mode === "commit" ? "block" : mode
+      });
     } else {
-      return this.rpc.broadcastTx(bz, mode);
+      if (mode === "commit") {
+        return this.rpc.broadcastTxCommit(bz);
+      } else {
+        return this.rpc.broadcastTx(bz, mode);
+      }
     }
   }
 
@@ -113,5 +128,19 @@ export class Api<R extends Rest> {
 
   get rest(): R {
     return this._rest;
+  }
+
+  /**
+   * Return whether api is stargate mode or not.
+   */
+  get isStargate(): boolean {
+    return this.context.get("isStargate");
+  }
+
+  /**
+   * Set whether api is stargate mode or not.
+   */
+  set isStargate(value: boolean) {
+    this._context = this.context.set("isStargate", value);
   }
 }

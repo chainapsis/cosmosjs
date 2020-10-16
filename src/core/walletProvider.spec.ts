@@ -31,7 +31,8 @@ describe("Test local wallet provider", () => {
       restInstance: undefined as any,
       queryAccount: undefined as any,
       bip44: new BIP44(44, 118, 0),
-      codec: new Codec()
+      codec: new Codec(),
+      isStargate: false
     });
 
     await localWalletProvider.enable(context);

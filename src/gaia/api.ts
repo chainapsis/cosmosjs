@@ -31,14 +31,18 @@ export class GaiaApi extends Api<GaiaRest> {
         },
         queryAccount: (
           context: Context,
-          address: string | Uint8Array
+          address: string | Uint8Array,
+          isStargate: boolean
         ): Promise<Account> => {
           return queryAccount(
             context.get("rpcInstance"),
             address,
             coreConfig.bech32Config
               ? coreConfig.bech32Config.bech32PrefixAccAddr
-              : "cosmos"
+              : "cosmos",
+            {
+              isStargate
+            }
           );
         },
         bech32Config: defaultBech32Config("cosmos"),

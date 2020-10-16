@@ -10,6 +10,7 @@ export async function queryAccount(
   options?: {
     querierRoute?: string;
     data?: string;
+    isStargate?: boolean;
   }
 ) {
   if (typeof account === "string" && !bech32PrefixAccAddr) {
@@ -27,7 +28,11 @@ export async function queryAccount(
         "0x" +
         Buffer.from(
           `custom/${
-            options && options.querierRoute ? options.querierRoute : "acc"
+            options && options.querierRoute
+              ? options.querierRoute
+              : options && options.isStargate
+              ? "auth"
+              : "acc"
           }/account`
         ).toString("hex"),
       data:
@@ -36,7 +41,9 @@ export async function queryAccount(
           : "0x" +
             Buffer.from(
               JSON.stringify({
-                Address: accAddress.toBech32()
+                [options && options.isStargate
+                  ? "address"
+                  : "Address"]: accAddress.toBech32()
               })
             ).toString("hex")
     }

@@ -49,7 +49,14 @@ export class StdTx implements Tx {
   }
 }
 
-const defaultTxEncoder: TxEncoder = (context: Context, tx: Tx): Uint8Array => {
+const defaultTxEncoder: TxEncoder = (
+  context: Context,
+  tx: Tx,
+  json: boolean = false
+): Uint8Array => {
+  if (json) {
+    return Buffer.from(context.get("codec").marshalJson(tx));
+  }
   return context.get("codec").marshalBinaryLengthPrefixed(tx);
 };
 

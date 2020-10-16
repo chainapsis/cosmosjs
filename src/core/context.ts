@@ -30,6 +30,7 @@ export interface IContext<> {
   queryAccount: QueryAccount;
   bip44: BIP44;
   codec: Codec;
+  isStargate: boolean;
 }
 
 export class Context extends ImmutableContext<IContext> {}

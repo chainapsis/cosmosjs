@@ -14,5 +14,6 @@ export interface Account {
 
 export type QueryAccount = (
   context: Context,
-  address: string | Uint8Array
+  address: string | Uint8Array,
+  isStargate: boolean
 ) => Promise<Account>;

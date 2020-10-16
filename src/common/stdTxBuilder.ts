@@ -95,7 +95,8 @@ export const stdTxBuilder: TxBuilder = async (
     if (accountNumber.lt(bigInteger(0)) || sequence.lt(bigInteger(0))) {
       const account = await context.get("queryAccount")(
         context,
-        signers[0].toBech32()
+        signers[0].toBech32(),
+        context.get("isStargate")
       );
       if (accountNumber.lt(bigInteger(0))) {
         accountNumber = account.getAccountNumber();
