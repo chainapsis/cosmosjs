@@ -96,11 +96,11 @@ export class Api<R extends Rest> {
 
     const tx = await this.context.get("txBuilder")(this.context, msgs, config);
     const bz = this.context.get("txEncoder")(this.context, tx, isStargate);
-    const stdTxJson = JSON.parse(Buffer.from(bz).toString());
 
     // If the api is for stargate mode,
     // Use the rest api to send the transaction.
     if (isStargate) {
+      const stdTxJson = JSON.parse(Buffer.from(bz).toString());
       return this.context.get("restInstance").post("/txs", {
         tx: stdTxJson.value,
         mode: mode === "commit" ? "block" : mode
