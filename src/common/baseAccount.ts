@@ -6,6 +6,19 @@ import { Int } from "./int";
 import { Buffer } from "buffer/";
 import { Account } from "../core/account";
 
+const vestingAccountTypes = [
+  "auth/ContinuousVestingAccount",
+  "auth/DelayedVestingAccount",
+  "auth/PeriodicVestingAccount",
+  "cosmos-sdk/ContinuousVestingAccount",
+  "cosmos-sdk/DelayedVestingAccount",
+  "cosmos-sdk/PeriodicVestingAccount"
+];
+
+function isVestingAccountType(type: string): boolean {
+  return vestingAccountTypes.indexOf(type) > -1;
+}
+
 export class BaseAccount implements Account {
   public static fromJSON(obj: any): BaseAccount {
     if (obj.height) {
@@ -14,46 +27,56 @@ export class BaseAccount implements Account {
 
     const supportedAccountType = [
       "auth/Account",
-      "auth/BaseVestingAccount",
-      "auth/ContinuousVestingAccount",
-      "auth/DelayedVestingAccount",
       "cosmos-sdk/Account",
       "cosmos-sdk/BaseAccount",
-      "cosmos-sdk/BaseVestingAccount",
-      "cosmos-sdk/ContinuousVestingAccount",
-      "cosmos-sdk/DelayedVestingAccount"
+      ...vestingAccountTypes
     ];
     if (supportedAccountType.indexOf(obj.type) < 0) {
       throw new Error(`Unsupported account type: ${obj.type}`);
     }
     if (obj.value) {
-      const value = obj.value;
-      const address = AccAddress.fromBech32(value.address);
-      const coins: Coin[] = [];
-      if (value.coins) {
-        for (const coin of value.coins) {
-          coins.push(new Coin(coin.denom, new Int(coin.amount)));
+      const toBaseAccount = (value: any): BaseAccount => {
+        const address = AccAddress.fromBech32(value.address);
+        const coins: Coin[] = [];
+        if (value.coins) {
+          for (const coin of value.coins) {
+            coins.push(new Coin(coin.denom, new Int(coin.amount)));
+          }
         }
-      }
-      let pubKey: PubKey | undefined;
-      if (value.public_key) {
-        if (value.public_key.type === undefined) {
-          pubKey = new PubKeySecp256k1(Buffer.from(value.public_key, "base64"));
-        } else if (value.public_key.type !== "tendermint/PubKeySecp256k1") {
-          throw new Error(
-            `Unsupported public key type: ${value.public_key.type}`
-          );
-        } else {
-          pubKey = new PubKeySecp256k1(
-            Buffer.from(value.public_key.value, "base64")
-          );
+        let pubKey: PubKey | undefined;
+        if (value.public_key) {
+          if (value.public_key.type === undefined) {
+            pubKey = new PubKeySecp256k1(
+              Buffer.from(value.public_key, "base64")
+            );
+          } else if (value.public_key.type !== "tendermint/PubKeySecp256k1") {
+            throw new Error(
+              `Unsupported public key type: ${value.public_key.type}`
+            );
+          } else {
+            pubKey = new PubKeySecp256k1(
+              Buffer.from(value.public_key.value, "base64")
+            );
+          }
         }
+
+        const accountNumber = value.account_number;
+        const sequence = value.sequence;
+
+        return new BaseAccount(address, pubKey, accountNumber, sequence, coins);
+      };
+
+      if (isVestingAccountType(obj.type)) {
+        // If account is vesting account, take out the base account from it with ignoring the vesting.
+        const baseVestingAccountObj =
+          obj.value.BaseVestingAccount || obj.value.baseVestingAccount;
+        const baseAccountObj =
+          baseVestingAccountObj.BaseAccount ||
+          baseVestingAccountObj.baseAccount;
+
+        return toBaseAccount(baseAccountObj);
       }
-
-      const accountNumber = value.account_number;
-      const sequence = value.sequence;
-
-      return new BaseAccount(address, pubKey, accountNumber, sequence, coins);
+      return toBaseAccount(obj.value);
     } else {
       throw new Error("Invalid base account");
     }
