@@ -73,6 +73,26 @@ export class VoteOption {
   public get option(): number {
     return this._option;
   }
+
+  public marshalJSON(): string {
+    let str = "";
+
+    switch (this._option) {
+      case 1:
+        str = "Yes";
+        break;
+      case 2:
+        str = "Abstain";
+        break;
+      case 3:
+        str = "No";
+        break;
+      case 4:
+        str = "NoWithVeto";
+    }
+
+    return `"${str}"`;
+  }
 }
 
 @DefineStruct()
