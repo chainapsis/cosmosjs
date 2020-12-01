@@ -70,9 +70,15 @@ export class BaseAccount implements Account {
         // If account is vesting account, take out the base account from it with ignoring the vesting.
         const baseVestingAccountObj =
           obj.value.BaseVestingAccount || obj.value.baseVestingAccount;
-        const baseAccountObj =
-          baseVestingAccountObj.BaseAccount ||
-          baseVestingAccountObj.baseAccount;
+        let baseAccountObj: any;
+
+        if (baseVestingAccountObj) {
+          baseAccountObj =
+            baseVestingAccountObj.BaseAccount ||
+            baseVestingAccountObj.baseAccount;
+        } else {
+          baseAccountObj = obj.value;
+        }
 
         return toBaseAccount(baseAccountObj);
       }
