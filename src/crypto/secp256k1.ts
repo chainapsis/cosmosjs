@@ -51,7 +51,9 @@ export class PrivKeySecp256k1 implements PrivKey {
       canonical: true
     });
 
-    return new Uint8Array(signature.r.toArray().concat(signature.s.toArray()));
+    return new Uint8Array(
+      signature.r.toArray("be", 32).concat(signature.s.toArray("be", 32))
+    );
   }
 
   public toString(): string {
